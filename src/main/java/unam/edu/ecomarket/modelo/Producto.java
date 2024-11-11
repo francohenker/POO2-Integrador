@@ -13,6 +13,13 @@ import lombok.Setter;
 @Getter @Setter @NoArgsConstructor
 public class Producto {
 
+    public Producto(String nombre, String descripcion, Categoria categoria, double precio) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.categoria = categoria;
+        this.precio = precio;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Setter(AccessLevel.NONE)
@@ -27,7 +34,7 @@ public class Producto {
     @Column(nullable = false, length = 255)
     private String descripcion;
 
-
+    @Enumerated(EnumType.STRING)
     private Categoria categoria;
 
     @NotBlank
