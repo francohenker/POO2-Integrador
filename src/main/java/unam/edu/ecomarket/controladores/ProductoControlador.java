@@ -11,7 +11,9 @@ import unam.edu.ecomarket.modelo.Categoria;
 import unam.edu.ecomarket.modelo.Producto;
 import unam.edu.ecomarket.servicios.ProductoServicio;
 
-import javax.naming.Binding;
+/**
+ * Clase controlador para los productos en ecomarket.
+ */
 
 @Controller
 public class ProductoControlador {
