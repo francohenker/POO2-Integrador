@@ -23,7 +23,7 @@ public class Producto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Setter(AccessLevel.NONE)
-    private Integer id;
+    private Long id;
 
     @NotBlank
     @Size(min = 2, max = 50)
@@ -35,12 +35,20 @@ public class Producto {
     private String descripcion;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Categoria categoria;
 
     @NotBlank
     @Column(nullable = false)
     private double precio;
 
+    @NotBlank
+    @Column(nullable = false)
+    private Integer stock = 0;
+
+
+    @Lob
+    private byte[] imagen;
 
 
 
