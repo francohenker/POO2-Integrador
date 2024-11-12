@@ -29,7 +29,22 @@ public class Producto {
         this.categoria = categoria;
         this.precio = precio;
     }
+    public Producto(String nombre, String descripcion, Categoria categoria, double precio, Integer stock) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.categoria = categoria;
+        this.precio = precio;
+        this.stock = stock;
+    }
 
+    public Producto(String nombre, String descripcion, Categoria categoria, double precio, Integer stock, byte[] imagen) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.categoria = categoria;
+        this.precio = precio;
+        this.stock = stock;
+        this.imagen = imagen;
+    }
     /**
      * El identificador unico del producto.
      */
@@ -78,7 +93,7 @@ public class Producto {
      * La imagen del producto.
      */
     @Lob
-    private byte[] imagen;
+    private byte[] imagen = null;
 
 
 
