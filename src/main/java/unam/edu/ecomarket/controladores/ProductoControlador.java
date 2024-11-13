@@ -1,20 +1,20 @@
 package unam.edu.ecomarket.controladores;
 
 
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import unam.edu.ecomarket.modelo.Categoria;
 import unam.edu.ecomarket.modelo.Producto;
 import unam.edu.ecomarket.servicios.ProductoServicio;
 
-import javax.naming.Binding;
+/**
+ * Clase controlador para los productos en ecomarket.
+ */
 
 @Controller
+@RequestMapping("/producto")
 public class ProductoControlador {
 
     @Autowired
@@ -24,7 +24,7 @@ public class ProductoControlador {
         this.productoServicio = productoServicio;
     }
 
-    @GetMapping("/productos")
+    @GetMapping
     public String productos(Model modelo) {
         var productos = productoServicio.obtenerProductos(Categoria.VACIO);
         modelo.addAttribute("producto", productos);
@@ -32,15 +32,28 @@ public class ProductoControlador {
     }
 
 
-    @PostMapping("/productos")
-    public String agregarProducto(@Valid Producto producto, Categoria categoria, BindingResult resultado) {
-        if(resultado.hasErrors()) {
+    @PostMapping
+    public String agregarProducto(
+            @RequestParam String nombre,
+            @RequestParam String descripcion,
+            @RequestParam double precio,
+            @RequestParam String categoria
+            )
+    {
+
+
+        Producto producto = new Producto(nombre, descripcion, Categoria.VACIO, precio);
+
+        try {
+            Categoria categoriaEnum = Categoria.valueOf(categoria.toUpperCase());
+            producto.setCategoria(categoriaEnum);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Categoria no valida");
             return "productos";
         }
         productoServicio.agregarProducto(producto);
         return "productos";
     }
-
 
 
 
