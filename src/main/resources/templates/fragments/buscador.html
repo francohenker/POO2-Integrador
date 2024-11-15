@@ -1,0 +1,16 @@
+<form action="/search" method="GET" class="flex justify-center items-center mx-auto max-w-md">
+    <input
+            type="search"
+            name="query"
+            placeholder="Buscar productos..."
+            class="border rounded-lg px-4 py-2 w-full"
+            th:value="${query}"
+            required
+    />
+    <button
+            type="submit"
+            class="ml-2 text-gray-500 hover:text-gray-700"
+    >
+        <i class="fa-solid fa-magnifying-glass"></i>
+    </button>
+</form>
