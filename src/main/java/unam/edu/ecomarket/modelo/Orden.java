@@ -31,16 +31,15 @@ public class Orden {
     private LocalDate fechaOrden = LocalDate.now();
 
     /**
-     * Detalle de la orden.
+     * Detalle de un pedido.
      */
-    @NotBlank
     @OneToMany(mappedBy = "orden", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DetalleOrden> detalleOrden;
 
     /**
      * Agrega un detalle a la orden.
      *
-     * @param detalleOrden El detalle de la orden a agregar.
+     * @param detalleOrden El producto del pedido a agregar.
      */
 
     public void agregarDetalle(DetalleOrden detalleOrden) {
@@ -51,7 +50,7 @@ public class Orden {
     /**
      * Elimina un detalle de la orden.
      *
-     * @param detalleOrden El detalle de la orden a eliminar.
+     * @param detalleOrden El producto del pedido a eliminar.
      */
     public void eliminarDetalle(DetalleOrden detalleOrden) {
         this.detalleOrden.remove(detalleOrden);

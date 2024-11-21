@@ -24,7 +24,7 @@ public class OrdenServicio {
     }
 
     public Orden obtenerOrdenPorId(Integer id) {
-        return ordenRepositorio.findById(id).get();
+        return ordenRepositorio.findById(id).orElse(null);
     }
 
     public Orden crearOrden(Orden orden) {

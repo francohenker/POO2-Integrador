@@ -20,7 +20,7 @@ public class Venta {
      * @param orden La orden de la venta.
      */
     public Venta(Orden orden) {
-        this.orden = orden;
+        this.orden = orden ;
     }
 
     /**
