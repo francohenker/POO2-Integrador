@@ -3,7 +3,6 @@ package unam.edu.ecomarket.modelo;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
-import jdk.jfr.StackTrace;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +14,11 @@ import java.util.List;
 @Getter @Setter
 @NoArgsConstructor
 public class Categoria {
+    public Categoria(String nombre, String descripcion) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Setter(AccessLevel.NONE)
@@ -28,8 +32,11 @@ public class Categoria {
     @Column(nullable = false, length = 255)
     private String descripcion;
 
-
+    @OneToMany(mappedBy = "padre")
     private List<Categoria> subcategorias;
+
+    @ManyToOne
+    private Categoria padre;
 
 
 }

@@ -1,10 +1,9 @@
 package unam.edu.ecomarket.controladores;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import unam.edu.ecomarket.modelo.Categoria;
 import unam.edu.ecomarket.modelo.Producto;
 import unam.edu.ecomarket.servicios.ProductoServicio;
 
@@ -24,8 +23,8 @@ public class ProductoControlador {
     }
 
     @GetMapping
-    public String productos(Model modelo) {
-        var productos = productoServicio.obtenerProductos(Categoria.VACIO);
+    public String productos(Model modelo, Categoria categoria) {
+        var productos = productoServicio.obtenerProductos(categoria);
         modelo.addAttribute("producto", productos);
         return "productos";
     }
@@ -41,16 +40,14 @@ public class ProductoControlador {
             @RequestParam(name = "stock", required = false) Integer stock
             )
     {
-
-        Producto producto = new Producto(nombre, descripcion, Categoria.VACIO, precio, stock, imagen);
+        Categoria categoriaNombre  = new Categoria(categoria, "");
         try {
-            Categoria categoriaEnum = Categoria.valueOf(categoria.toUpperCase());
-            producto.setCategoria(categoriaEnum);
+            Producto producto = new Producto(nombre, descripcion, categoriaNombre, precio, stock, imagen);
+            productoServicio.agregarProducto(producto);
+
         } catch (IllegalArgumentException e) {
-            System.out.println("Categoria no valida");
             return "productos";
         }
-        productoServicio.agregarProducto(producto);
         return "productos";
     }
 

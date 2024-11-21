@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 /**
- * Clase que representa una venta en ecomarket 😎.
+ * Clase que representa una venta en ecomarket.
  */
 @Entity
 @Getter @NoArgsConstructor
@@ -20,7 +20,7 @@ public class Venta {
      * @param orden La orden de la venta.
      */
     public Venta(Orden orden) {
-        this.orden = orden;
+        this.orden = orden ;
     }
 
     /**

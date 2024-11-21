@@ -4,6 +4,7 @@ package unam.edu.ecomarket.servicios;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import unam.edu.ecomarket.modelo.Categoria;
 import unam.edu.ecomarket.modelo.Producto;
 import unam.edu.ecomarket.repositorios.ProductoRepositorio;
 

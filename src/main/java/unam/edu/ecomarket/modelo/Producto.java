@@ -14,7 +14,7 @@ import lombok.Setter;
  */
 @Entity
 @Getter @Setter @NoArgsConstructor
-public class Producto {
+public class Producto extends ProductoItem{
     /**
      * Constructor para crear un nuevo producto.
      *
@@ -37,7 +37,7 @@ public class Producto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Setter(AccessLevel.NONE)
-    private Long id;
+    private Integer id;
 
     /**
      * El nombre del producto.
@@ -57,8 +57,7 @@ public class Producto {
     /**
      * La categoria del producto.
      */
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @ManyToOne
     private Categoria categoria;
 
     /**
@@ -78,10 +77,15 @@ public class Producto {
     /**
      * La imagen del producto.
      */
+    // IMPLEMENTAR DESPUES
     @Lob
     private byte[] imagen = null;
 
 
+    @Override
+    public double calcularPrecio() {
+        return this.precio;
+    }
 
 
 
