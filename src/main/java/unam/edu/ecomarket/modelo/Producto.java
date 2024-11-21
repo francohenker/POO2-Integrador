@@ -23,27 +23,13 @@ public class Producto {
      * @param categoria   La categoria del producto.
      * @param precio      El precio del producto.
      */
-    public Producto(String nombre, String descripcion, Categoria categoria, double precio) {
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.categoria = categoria;
-        this.precio = precio;
-    }
-    public Producto(String nombre, String descripcion, Categoria categoria, double precio, Integer stock) {
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.categoria = categoria;
-        this.precio = precio;
-        this.stock = stock;
-    }
-
     public Producto(String nombre, String descripcion, Categoria categoria, double precio, Integer stock, byte[] imagen) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.categoria = categoria;
         this.precio = precio;
-        this.stock = stock;
-        this.imagen = imagen;
+        this.imagen = (imagen != null) ? imagen : null;
+        this.stock = (stock != null) ? stock : 0;
     }
     /**
      * El identificador unico del producto.

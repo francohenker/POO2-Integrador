@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import unam.edu.ecomarket.modelo.Categoria;
 import unam.edu.ecomarket.modelo.Producto;
 import unam.edu.ecomarket.servicios.ProductoServicio;
 
@@ -34,16 +33,16 @@ public class ProductoControlador {
 
     @PostMapping
     public String agregarProducto(
-            @RequestParam String nombre,
-            @RequestParam String descripcion,
-            @RequestParam double precio,
-            @RequestParam String categoria
+            @RequestParam(name = "nombre") String nombre,
+            @RequestParam(name = "descripcion") String descripcion,
+            @RequestParam(name = "precio") double precio,
+            @RequestParam(name = "categoria") String categoria,
+            @RequestParam(required = false) byte[] imagen,
+            @RequestParam(name = "stock", required = false) Integer stock
             )
     {
 
-
-        Producto producto = new Producto(nombre, descripcion, Categoria.VACIO, precio);
-
+        Producto producto = new Producto(nombre, descripcion, Categoria.VACIO, precio, stock, imagen);
         try {
             Categoria categoriaEnum = Categoria.valueOf(categoria.toUpperCase());
             producto.setCategoria(categoriaEnum);

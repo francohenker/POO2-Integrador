@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 /**
- * Clase que representa una venta en ecomarket.
+ * Clase que representa una venta en ecomarket 😎.
  */
 @Entity
 @Getter @NoArgsConstructor
