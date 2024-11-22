@@ -1,9 +1,7 @@
 package unam.edu.ecomarket.modelo;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,12 +14,15 @@ import java.util.Collections;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Setter
+@Getter
 @Table(name = "usuarios")
+
 public class Usuario implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idUsuario;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer idUsuario;
 
     @Column(nullable = false, length = 100)
     private String nombre;
@@ -42,12 +43,16 @@ public class Usuario implements UserDetails {
     @Column(nullable = false)
     private RolUsuario rol;
 
-    public Usuario(String correo, String password){
+
+    public Usuario(String nombre, String apellido, String correo, String password){
+        this.nombre = nombre;
+        this.apellido = apellido;
         this.correo = correo;
         this.password = password;
         this.rol = RolUsuario.CLIENTE;
-        this.nombre = "";
-}
+    }
+
+
 
     //Implementacion de UserDateils de Spring Security para manejo de sesion
     @Override
@@ -56,14 +61,10 @@ public class Usuario implements UserDetails {
     }
 
     @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
     public String getUsername() {
         return correo;
     }
+
 
     @Override
     public boolean isAccountNonExpired() {
