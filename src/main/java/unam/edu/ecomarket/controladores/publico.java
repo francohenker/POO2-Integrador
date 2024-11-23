@@ -1,12 +1,24 @@
 package unam.edu.ecomarket.controladores;
 
+
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
+@NoArgsConstructor
 public class publico {
-    @GetMapping("/register")
+
     public String home() {
-        return "register";
-    }
+        return "home";
 }
+
+
+
+
+
+
+
+
+
+}
+

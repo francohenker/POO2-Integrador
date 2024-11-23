@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import unam.edu.ecomarket.modelo.Usuario;
 
 @Repository
-public interface UsuarioRepositorio extends JpaRepository<Usuario, Long> {
+public interface UsuarioRepositorio extends JpaRepository<Usuario, Integer> {
     Usuario findByCorreo(String correo);
 }
