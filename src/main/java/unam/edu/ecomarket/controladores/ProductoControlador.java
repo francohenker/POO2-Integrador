@@ -32,13 +32,12 @@ public class ProductoControlador {
     public String productos(Model modelo, Categoria categoria) {
         var productos = productoServicio.obtenerProductos(categoria);
         modelo.addAttribute("producto", productos);
-        return "productos";
+        return "agregarProducto";
     }
 
     @GetMapping("/agregar")
     public String insertarProductoDePrueba() {
-        productoServicio.insertarProductoDePrueba();
-        return "redirect:/productos";
+        return "agregarProducto";
     }
 
 
@@ -62,10 +61,10 @@ public class ProductoControlador {
             return "redirect:/productos";
         } catch (IOException e) {
             System.out.println("Error al guardar la imagen: " + e);
-            return "productos";
+            return "agregarProducto";
         } catch (IllegalArgumentException e) {
             System.out.println("Error al agregar producto: " + e);
-            return "productos";
+            return "agregarProducto";
         }
     }
 
