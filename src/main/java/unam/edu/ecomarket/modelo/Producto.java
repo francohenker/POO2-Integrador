@@ -13,7 +13,9 @@ import lombok.Setter;
  * Clase entidad que representa el producto en ecomarket.
  */
 @Entity
-@Getter @Setter @NoArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
 public class Producto extends ProductoItem{
     /**
      * Constructor para crear un nuevo producto.
@@ -23,12 +25,12 @@ public class Producto extends ProductoItem{
      * @param categoria   La categoria del producto.
      * @param precio      El precio del producto.
      */
-    public Producto(String nombre, String descripcion, Categoria categoria, double precio, Integer stock, byte[] imagen) {
+    public Producto(String nombre, String descripcion, Categoria categoria, double precio, Integer stock, Imagen imagen) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.categoria = categoria;
         this.precio = precio;
-        this.imagen = (imagen != null) ? imagen : null;
+        this.imagen = imagen;
         this.stock = (stock != null) ? stock : 0;
     }
     /**
@@ -78,8 +80,11 @@ public class Producto extends ProductoItem{
      * La imagen del producto.
      */
     // IMPLEMENTAR DESPUES
-    @Lob
-    private byte[] imagen = null;
+    // @Lob
+    // private byte[] imagen = null;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "imagen_id", referencedColumnName = "id")
+    private Imagen imagen;
 
 
     @Override
