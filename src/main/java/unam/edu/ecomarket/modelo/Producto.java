@@ -13,8 +13,10 @@ import lombok.Setter;
  * Clase entidad que representa el producto en ecomarket.
  */
 @Entity
-@Getter @Setter @NoArgsConstructor
-public class Producto {
+@Getter
+@Setter
+@NoArgsConstructor
+public class Producto extends ProductoItem{
     /**
      * Constructor para crear un nuevo producto.
      *
@@ -23,27 +25,13 @@ public class Producto {
      * @param categoria   La categoria del producto.
      * @param precio      El precio del producto.
      */
-    public Producto(String nombre, String descripcion, Categoria categoria, double precio) {
+    public Producto(String nombre, String descripcion, Categoria categoria, double precio, Integer stock, Imagen imagen) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.categoria = categoria;
         this.precio = precio;
-    }
-    public Producto(String nombre, String descripcion, Categoria categoria, double precio, Integer stock) {
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.categoria = categoria;
-        this.precio = precio;
-        this.stock = stock;
-    }
-
-    public Producto(String nombre, String descripcion, Categoria categoria, double precio, Integer stock, byte[] imagen) {
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.categoria = categoria;
-        this.precio = precio;
-        this.stock = stock;
         this.imagen = imagen;
+        this.stock = (stock != null) ? stock : 0;
     }
     /**
      * El identificador unico del producto.
@@ -51,7 +39,7 @@ public class Producto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Setter(AccessLevel.NONE)
-    private Long id;
+    private Integer id;
 
     /**
      * El nombre del producto.
@@ -71,8 +59,7 @@ public class Producto {
     /**
      * La categoria del producto.
      */
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @ManyToOne
     private Categoria categoria;
 
     /**
@@ -92,10 +79,18 @@ public class Producto {
     /**
      * La imagen del producto.
      */
-    @Lob
-    private byte[] imagen = null;
+    // IMPLEMENTAR DESPUES
+    // @Lob
+    // private byte[] imagen = null;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "imagen_id", referencedColumnName = "id")
+    private Imagen imagen;
 
 
+    @Override
+    public double calcularPrecio() {
+        return this.precio;
+    }
 
 
 

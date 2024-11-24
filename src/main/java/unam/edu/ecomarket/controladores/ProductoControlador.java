@@ -1,13 +1,15 @@
 package unam.edu.ecomarket.controladores;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import unam.edu.ecomarket.modelo.Categoria;
+import unam.edu.ecomarket.modelo.Imagen;
 import unam.edu.ecomarket.modelo.Producto;
 import unam.edu.ecomarket.servicios.ProductoServicio;
+
+import java.io.IOException;
 
 /**
  * Clase controlador para los productos en ecomarket.
@@ -18,41 +20,52 @@ import unam.edu.ecomarket.servicios.ProductoServicio;
 public class ProductoControlador {
 
     @Autowired
-    ProductoServicio productoServicio;
+    private ProductoServicio productoServicio;
 
+    /*
     public ProductoControlador(ProductoServicio productoServicio) {
         this.productoServicio = productoServicio;
     }
+     */
 
     @GetMapping
-    public String productos(Model modelo) {
-        var productos = productoServicio.obtenerProductos(Categoria.VACIO);
+    public String productos(Model modelo, Categoria categoria) {
+        var productos = productoServicio.obtenerProductos(categoria);
         modelo.addAttribute("producto", productos);
-        return "productos";
+        return "agregarProducto";
+    }
+
+    @GetMapping("/agregar")
+    public String insertarProductoDePrueba() {
+        return "agregarProducto";
     }
 
 
     @PostMapping
     public String agregarProducto(
-            @RequestParam String nombre,
-            @RequestParam String descripcion,
-            @RequestParam double precio,
-            @RequestParam String categoria
+            @RequestParam(name = "nombre") String nombre,
+            @RequestParam(name = "descripcion") String descripcion,
+            @RequestParam(name = "precio") double precio,
+            @RequestParam(name = "categoria") String categoria,
+            @RequestParam(name = "imagen", required = false) MultipartFile imagen,
+            @RequestParam(name = "stock", required = false) Integer stock
             )
     {
-
-
-        Producto producto = new Producto(nombre, descripcion, Categoria.VACIO, precio);
-
+        // Categoria categoriaNombre  = new Categoria(categoria, "");
         try {
-            Categoria categoriaEnum = Categoria.valueOf(categoria.toUpperCase());
-            producto.setCategoria(categoriaEnum);
+            Categoria categoriaObj = productoServicio.obtenerCategoriaPorNombre(categoria);
+            String rutaImagen = productoServicio.guardarImagen(imagen);
+            Imagen nuevaImagen = new Imagen(rutaImagen);
+            Producto producto = new Producto(nombre, descripcion, categoriaObj, precio, stock, nuevaImagen);
+            productoServicio.agregarProducto(producto);
+            return "redirect:/productos";
+        } catch (IOException e) {
+            System.out.println("Error al guardar la imagen: " + e);
+            return "agregarProducto";
         } catch (IllegalArgumentException e) {
-            System.out.println("Categoria no valida");
-            return "productos";
+            System.out.println("Error al agregar producto: " + e);
+            return "agregarProducto";
         }
-        productoServicio.agregarProducto(producto);
-        return "productos";
     }
 
 
