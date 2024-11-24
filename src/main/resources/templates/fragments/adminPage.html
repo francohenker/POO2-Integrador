@@ -1,0 +1,151 @@
+<!-- src/main/resources/templates/fragments/header.html -->
+<header th:fragment="header">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Incluir Font Awesome CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
+    <nav class="bg-gray-100 border-blue-500 px-4 lg:px-6 py-1.5">
+        <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
+            <a href="javascript:void(0)" class="flex items-center" id="logo" onclick="toggleSidebar()">
+                <img src="/static/images/logoHeader.png" class="mr-3 h-10 sm:h-14" alt="EcoMarket Logo" />
+                <span class="self-center text-xl font-semibold whitespace-nowrap">EcoMarket</span>
+            </a>
+            <div class="flex items-center lg:order-2">
+                <a href="#" class="text-gray-700 hover:bg-yellow-700 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-1.5 mr-2 focus:outline-none">Ingresar</a>
+                <!-- Menú móvil, si es necesario -->
+                <button class="p-2 bg-gray-100 rounded-full text-gray-600 hover:bg-yellow-700 focus:outline-none">
+                    <i class="fas fa-eye"></i> <!-- Icono del ojo -->
+                </button>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<script>
+    // Función para alternar el sidebar
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        sidebar.classList.toggle('hidden');
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const dropdownButton = document.getElementById("dropdownDividerButton");
+        const dropdownMenu = document.getElementById("dropdownDivider");
+
+        dropdownButton.addEventListener("click", () => {
+            dropdownMenu.classList.toggle("hidden");
+        });
+    })
+</script>
+<!-- src/main/resources/templates/fragments/sidebar.html -->
+<div class="flex">
+    <!-- Sidebar -->
+    <div class="flex">
+        <!-- Sidebar -->
+        <div id="sidebar" class="flex h-screen w-40 flex-col justify-between border-e bg-white hidden">
+            <div>
+                <div class="border-t border-gray-100">
+                    <div class="px-2">
+                        <!-- Dropdown Producto -->
+                        <div class="py-4">
+                            <button id="dropdownProductoButton" class="w-full text-left flex items-center px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-700">
+                                <i class="fas fa-cogs mr-2"></i> Productos
+                                <i class="fas fa-chevron-down ml-auto"></i>
+                            </button>
+                            <div id="dropdownProducto" class="hidden pl-8">
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700">Agregar Producto</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700">Editar Producto</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700">Eliminar Producto</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700">Ver Productos</a>
+                            </div>
+                        </div>
+
+                        <!-- Dropdown Categoría -->
+                        <div class="py-4">
+                            <button id="dropdownCategoriaButton" class="w-full text-left flex items-center px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-700">
+                                <i class="fas fa-list-ul mr-2"></i> Categorías
+                                <i class="fas fa-chevron-down ml-auto"></i>
+                            </button>
+                            <div id="dropdownCategoria" class="hidden pl-8">
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700">Agregar Categoría</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700">Editar Categoría</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700">Eliminar Categoría</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700">Ver Categorías</a>
+                            </div>
+                        </div>
+
+                        <!-- Dropdown Descuentos -->
+                        <div class="py-4">
+                            <button id="dropdownDescuentosButton" class="w-full text-left flex items-center px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-700">
+                                <i class="fas fa-percent mr-2"></i> Descuentos
+                                <i class="fas fa-chevron-down ml-auto"></i>
+                            </button>
+                            <div id="dropdownDescuentos" class="hidden pl-8">
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700">Agregar Descuento</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700">Editar Descuento</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700">Eliminar Descuento</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700">Ver Descuentos</a>
+                            </div>
+                        </div>
+
+                        <!-- Dropdown Ventas -->
+                        <div class="py-4">
+                            <button id="dropdownVentasButton" class="w-full text-left flex items-center px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-700">
+                                <i class="fas fa-chart-line mr-2"></i> Ventas
+                                <i class="fas fa-chevron-down ml-auto"></i>
+                            </button>
+                            <div id="dropdownVentas" class="hidden pl-8">
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700">Ver Ventas</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700">Informes</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer del Sidebar -->
+            <div class="sticky inset-x-0 bottom-0 border-t border-gray-100 bg-white p-2">
+                <form action="#">
+                    <button type="submit" class="group relative flex w-full justify-center rounded-lg px-2 py-1.5 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="size-5 opacity-75" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                        </svg>
+
+                        <span class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">Logout</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Dropdown Producto
+        const dropdownProductoButton = document.getElementById("dropdownProductoButton");
+        const dropdownProducto = document.getElementById("dropdownProducto");
+        dropdownProductoButton.addEventListener("click", () => {
+            dropdownProducto.classList.toggle("hidden");
+        });
+
+        // Dropdown Categoría
+        const dropdownCategoriaButton = document.getElementById("dropdownCategoriaButton");
+        const dropdownCategoria = document.getElementById("dropdownCategoria");
+        dropdownCategoriaButton.addEventListener("click", () => {
+            dropdownCategoria.classList.toggle("hidden");
+        });
+
+        // Dropdown Descuentos
+        const dropdownDescuentosButton = document.getElementById("dropdownDescuentosButton");
+        const dropdownDescuentos = document.getElementById("dropdownDescuentos");
+        dropdownDescuentosButton.addEventListener("click", () => {
+            dropdownDescuentos.classList.toggle("hidden");
+        });
+
+        // Dropdown Ventas
+        const dropdownVentasButton = document.getElementById("dropdownVentasButton");
+        const dropdownVentas = document.getElementById("dropdownVentas");
+        dropdownVentasButton.addEventListener("click", () => {
+            dropdownVentas.classList.toggle("hidden");
+        });
+    });
+</script>

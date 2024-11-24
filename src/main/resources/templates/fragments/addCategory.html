@@ -1,0 +1,52 @@
+<section class="bg-white">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
+        <h2 class="mb-4 text-xl font-bold text-gray-900">Agregar una Categoría</h2>
+        <form action="#" method="POST">
+            <!-- Campo para el nombre de la categoría -->
+            <div class="mb-4">
+                <label for="category-name" class="block mb-2 text-sm font-medium text-gray-900">Nombre de la Categoría</label>
+                <input
+                        type="text"
+                        name="category-name"
+                        id="category-name"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                        placeholder="Ingresa el nombre de la categoría"
+                        required>
+            </div>
+
+            <!-- Campo para seleccionar la categoría padre -->
+            <div class="mb-4">
+                <label for="parent-category" class="block mb-2 text-sm font-medium text-gray-900">Categoría Padre</label>
+                <select
+                        name="parent-category"
+                        id="parent-category"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                    <option value="">Sin categoría padre (raíz)</option>
+                    <option value="1">Categoría A</option>
+                    <option value="2">Categoría B</option>
+                    <option value="3">Categoría C</option>
+                    <!-- Agrega más opciones dinámicamente si es necesario -->
+                </select>
+            </div>
+
+            <!-- Campo para la descripción -->
+            <div class="mb-6">
+                <label for="category-description" class="block mb-2 text-sm font-medium text-gray-900">Descripción</label>
+                <textarea
+                        name="category-description"
+                        id="category-description"
+                        rows="4"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                        placeholder="Agrega una breve descripción de la categoría"></textarea>
+            </div>
+
+            <!-- Botón para agregar la categoría -->
+            <button
+                    type="submit"
+                    class="bg-green-600 hover:bg-green-800 text-white font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center focus:outline-none focus:ring-4 focus:ring-green-300">
+                Añadir Categoría
+            </button>
+        </form>
+    </div>
+</section>
