@@ -11,15 +11,14 @@
 
 # Diseño OO
 
-[Ver diagrama de clase](https://app.diagrams.net/#G1dhtH5_mKPAMMXkK95dOQLLSukZ_KvHiq#%7B%22pageId%22%3A%228-AYVthF0uPXiU_x2BDl%22%7D)
+[Ver diagrama de clase](https://drive.google.com/file/d/1mCOEVy7r7qrnQRL06inOdS6ZAwTX7Uq6/view)
+
 
 ---
 
 # Wireframe y caso de uso
 
-<<un boceto simple (o algunos) de cómo se verá la interfaz
-de usuario, acompañado de casos de uso para describir cómo interactúa el usuario
-con la aplicación.>>
+
 
 ## Vista desde administración
 Panel de administración
