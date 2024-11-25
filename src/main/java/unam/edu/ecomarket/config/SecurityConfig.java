@@ -1,6 +1,5 @@
 package unam.edu.ecomarket.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -8,15 +7,10 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
-import unam.edu.ecomarket.repositorios.UsuarioRepositorio;
 import unam.edu.ecomarket.servicios.UsuarioDetallesServicio;
-import unam.edu.ecomarket.servicios.UsuarioServicio;
 
 @Configuration
 @EnableWebSecurity
@@ -56,8 +50,11 @@ public class SecurityConfig  {
                 .csrf(csrf -> csrf.disable()) // Deshabilitar CSRF si es necesario
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login", "/register", "/public/**").permitAll() // Rutas públicas
+                        .requestMatchers("/admin", "/admin/**").hasRole("ADMINISTRADOR") // Rutas públicas
                         .anyRequest().authenticated() // Protege todas las demás rutas
+
                 )
+
                 .formLogin(form -> form
                         .loginPage("/login") // Página personalizada para el login
                         .defaultSuccessUrl("/home", true) // Redirección después del login exitoso
