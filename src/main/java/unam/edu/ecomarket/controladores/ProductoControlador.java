@@ -10,6 +10,8 @@ import unam.edu.ecomarket.modelo.Producto;
 import unam.edu.ecomarket.servicios.ProductoServicio;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Clase controlador para los productos en ecomarket.
@@ -29,14 +31,15 @@ public class ProductoControlador {
      */
 
     @GetMapping
-    public String productos(Model modelo, Categoria categoria) {
-        var productos = productoServicio.obtenerProductos(categoria);
-        modelo.addAttribute("producto", productos);
-        return "agregarProducto";
+    public String productos(Model modelo) {
+        modelo.addAttribute("contenidoAdmin", "/admin/viewProducts");
+        return "/admin/adminPage";
     }
 
     @GetMapping("/crear")
     public String crearProducto(Model model) {
+        List<Categoria> categorias = productoServicio.obtenerTodasLasCategorias();
+        model.addAttribute("categorias", categorias);
         model.addAttribute("contenidoAdmin", "/admin/addProducts");
         return "/admin/adminPage";
     }
@@ -47,18 +50,25 @@ public class ProductoControlador {
             @RequestParam(name = "nombre") String nombre,
             @RequestParam(name = "descripcion") String descripcion,
             @RequestParam(name = "precio") double precio,
-            @RequestParam(name = "categoria") String categoria,
-            @RequestParam(name = "imagen", required = false) MultipartFile imagen,
+            @RequestParam(name = "categoria") Long categoria,
+            @RequestParam(name = "imagenes", required = false) MultipartFile[] imagenes,
             @RequestParam(name = "stock", required = false) Integer stock
             )
     {
         try {
-            Categoria categoriaObj = productoServicio.obtenerCategoriaPorNombre(categoria);
-            String rutaImagen = productoServicio.guardarImagen(imagen);
-            Imagen nuevaImagen = new Imagen(rutaImagen);
-            Producto producto = new Producto(nombre, descripcion, categoriaObj, precio, stock, nuevaImagen);
+            Categoria categoriaObj = productoServicio.obtenerCategoriaPorId(categoria);
+            Producto producto = new Producto(nombre, descripcion, categoriaObj, precio, stock, new ArrayList<>());
+
+            if (imagenes != null) {
+                for (MultipartFile imagen : imagenes) {
+                    String rutaImagen = productoServicio.guardarImagen(imagen);
+                    Imagen nuevaImagen = new Imagen(rutaImagen);
+                    nuevaImagen.setProducto(producto);
+                    producto.getImagenes().add(nuevaImagen);
+                }
+            }
             productoServicio.agregarProducto(producto);
-            return "redirect:/productos";
+            return "redirect:/admin/producto";
         } catch (IOException e) {
             System.out.println("Error al guardar la imagen: " + e);
             return "agregarProducto";
