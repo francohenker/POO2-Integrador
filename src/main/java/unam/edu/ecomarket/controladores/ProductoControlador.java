@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import unam.edu.ecomarket.modelo.Categoria;
 import unam.edu.ecomarket.modelo.Imagen;
 import unam.edu.ecomarket.modelo.Producto;
+import unam.edu.ecomarket.servicios.CategoriaServicio;
 import unam.edu.ecomarket.servicios.ProductoServicio;
 
 import java.io.IOException;
@@ -24,11 +25,8 @@ public class ProductoControlador {
     @Autowired
     private ProductoServicio productoServicio;
 
-    /*
-    public ProductoControlador(ProductoServicio productoServicio) {
-        this.productoServicio = productoServicio;
-    }
-     */
+    @Autowired
+    private CategoriaServicio categoriaServicio;
 
     @GetMapping
     public String productos(Model modelo) {
@@ -38,7 +36,7 @@ public class ProductoControlador {
 
     @GetMapping("/crear")
     public String crearProducto(Model model) {
-        List<Categoria> categorias = productoServicio.obtenerTodasLasCategorias();
+        List<Categoria> categorias = categoriaServicio.obtenerTodasLasCategorias();
         model.addAttribute("categorias", categorias);
         model.addAttribute("contenidoAdmin", "/admin/addProducts");
         return "/admin/adminPage";
@@ -56,7 +54,7 @@ public class ProductoControlador {
             )
     {
         try {
-            Categoria categoriaObj = productoServicio.obtenerCategoriaPorId(categoria);
+            Categoria categoriaObj = categoriaServicio.obtenerCategoriaPorId(categoria);
             Producto producto = new Producto(nombre, descripcion, categoriaObj, precio, stock, new ArrayList<>());
 
             if (imagenes != null) {

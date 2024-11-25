@@ -19,6 +19,12 @@ public class Categoria {
         this.descripcion = descripcion;
     }
 
+    public Categoria(String nombre, String descripcion, Categoria padre) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.padre = padre;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Setter(AccessLevel.NONE)
