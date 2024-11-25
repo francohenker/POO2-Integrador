@@ -57,9 +57,7 @@ public class ProductoServicio {
         return productoRepositorio.save(producto);
     }
 
-    public Categoria obtenerCategoriaPorId(Long id) {
-        return categoriaRepositorio.findById(id).orElseThrow(() -> new IllegalArgumentException("Categoría no encontrada"));
-    }
+
 
     /*
     public void insertarProductoDePrueba() {
@@ -75,8 +73,6 @@ public class ProductoServicio {
     }
      */
 
-    public List<Categoria> obtenerTodasLasCategorias() {
-        return categoriaRepositorio.findAll();
-    }
+
 
 }

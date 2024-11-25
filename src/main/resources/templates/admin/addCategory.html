@@ -1,0 +1,46 @@
+<div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
+    <h2 class="mb-4 text-xl font-bold text-gray-900">Agregar una Categoría</h2>
+    <form action="#" method="post">
+        <!-- Campo para el nombre de la categoría -->
+        <div class="mb-4">
+            <label for="nombre" class="block mb-2 text-sm font-medium text-gray-900">Nombre de la Categoría</label>
+            <input
+                    type="text"
+                    name="nombre"
+                    id="nombre"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                    placeholder="Ingresa el nombre de la categoría"
+                    required>
+        </div>
+
+        <!-- Campo para seleccionar la categoría padre -->
+        <div class="mb-4">
+            <label for="categoria" class="block mb-2 text-sm font-medium text-gray-900">Categoría Padre</label>
+            <select
+                    name="padre_id"
+                    id="categoria"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
+                <option value="" th:text="'Seleccione una Categoria'"></option>
+                <option th:each="cat : ${categorias}" th:value="${cat.id}" th:text="${cat.nombre}"></option>
+            </select>
+        </div>
+
+        <!-- Campo para la descripción -->
+        <div class="mb-6">
+            <label for="descripcion" class="block mb-2 text-sm font-medium text-gray-900">Descripción</label>
+            <textarea
+                    name="descripcion"
+                    id="descripcion"
+                    rows="4"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                    placeholder="Agrega una breve descripción de la categoría"></textarea>
+        </div>
+
+        <!-- Botón para agregar la categoría -->
+        <button
+                type="submit"
+                class="bg-green-600 hover:bg-green-800 text-white font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center focus:outline-none focus:ring-4 focus:ring-green-300">
+            Añadir Categoría
+        </button>
+    </form>
+</div>
