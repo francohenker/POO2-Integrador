@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class HomeControlador {
-    @GetMapping("/")
+    @GetMapping("/home")
     public String home(Model model) {
         return "index";
     }
@@ -15,6 +15,7 @@ public class HomeControlador {
     @GetMapping("/admin")
     @PreAuthorize("hasRole('ADMINISTRADOR')")
     public String admin(Model model) {
-        return "admin/home";
+        model.addAttribute("contenidoAdmin", "/admin/home");
+        return "admin/adminPage";
     }
 }

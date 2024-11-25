@@ -1,0 +1,148 @@
+<div th:fragment="sidebarAdmin">
+    <!-- Sidebar -->
+    <div id="sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen pt-14 flex flex-col justify-between border-e bg-white">
+        <div>
+            <div class="border-t border-gray-100">
+                <div class="px-2">
+                    <!-- Dashboard -->
+                    <ul>
+                        <li>
+                            <a th:href="@{/admin}" class="flex items-center p-2 w-full text-base font-normal text-gray-600 rounded-lg transition duration-75 group hover:bg-gray-50">
+                                <i class="fa-solid fa-house-chimney-window"></i>
+                                <span class="ml-3">Dashboard</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- Dropdown Producto -->
+                    <ul>
+                        <li>
+                            <button type="button" class="flex items-center p-2 w-full text-base font-normal text-gray-600 rounded-lg transition duration-75 group hover:bg-gray-50" aria-controls="dropdown-productos" data-collapse-toggle="dropdown-productos">
+                                <i class="fa-solid fa-box-archive"></i>
+                                <span class="flex-1 ml-3 text-left whitespace-nowrap">Productos</span>
+                                <i class="fas fa-chevron-down ml-auto"></i>
+                            </button>
+                            <ul id="dropdown-productos" class="hidden py-2 space-y-2">
+                                <li>
+                                    <a href="#" class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-500 rounded-lg transition duration-75 group hover:bg-gray-50">Ver Producto</a>
+                                </li>
+                                <li>
+                                    <a th:href="@{/admin/producto/crear}" class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-500 rounded-lg transition duration-75 group hover:bg-gray-50">Agregar Productos</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+
+                    <!-- Dropdown Categoría -->
+                    <ul>
+                        <li>
+                            <button type="button" class="flex items-center p-2 w-full text-base font-normal text-gray-600 rounded-lg transition duration-75 group hover:bg-gray-50" aria-controls="dropdown-categorias" data-collapse-toggle="dropdown-categorias">
+                                <i class="fas fa-list-ul mr-2"></i>
+                                <span class="flex-1 ml-3 text-left whitespace-nowrap">Categorias</span>
+                                <i class="fas fa-chevron-down ml-auto"></i>
+                            </button>
+                            <ul id="dropdown-categorias" class="hidden py-2 space-y-2">
+                                <li>
+                                    <a href="#" class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-500 rounded-lg transition duration-75 group hover:bg-gray-50">Ver Categorias</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-500 rounded-lg transition duration-75 group hover:bg-gray-50">Agregar Categoria</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <!-- Dropdown Descuentos -->
+                    <ul>
+                        <li>
+                            <button type="button" class="flex items-center p-2 w-full text-base font-normal text-gray-600 rounded-lg transition duration-75 group hover:bg-gray-50" aria-controls="dropdown-descuentos" data-collapse-toggle="dropdown-descuentos">
+                                <i class="fas fa-percent mr-2"></i>
+                                <span class="flex-1 ml-3 text-left whitespace-nowrap">Descuentos</span>
+                                <i class="fas fa-chevron-down ml-auto"></i>
+                            </button>
+                            <ul id="dropdown-descuentos" class="hidden py-2 space-y-2">
+                                <li>
+                                    <a href="#" class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-500 rounded-lg transition duration-75 group hover:bg-gray-50">Ver Descuentos</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-500 rounded-lg transition duration-75 group hover:bg-gray-50">Agregar Descuento</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <!-- Dropdown Ventas -->
+                    <ul>
+                        <li>
+                            <button type="button" class="flex items-center p-2 w-full text-base font-normal text-gray-600 rounded-lg transition duration-75 group hover:bg-gray-50" aria-controls="dropdown-ventas" data-collapse-toggle="dropdown-ventas">
+                                <i class="fas fa-chart-line mr-2"></i>
+                                <span class="flex-1 ml-3 text-left whitespace-nowrap">Ventas</span>
+                                <i class="fas fa-chevron-down ml-auto"></i>
+                            </button>
+                            <ul id="dropdown-ventas" class="hidden py-2 space-y-2">
+                                <li>
+                                    <a href="#" class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-500 rounded-lg transition duration-75 group hover:bg-gray-50">Ver Ventas</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer del Sidebar -->
+        <div class="sticky inset-x-0 bottom-0 border-t border-gray-100 bg-white p-2">
+            <form action="#">
+                <button type="submit" class="group relative flex w-full justify-center rounded-lg px-2 py-1.5 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="size-5 opacity-75" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>
+
+                    <span class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">Logout</span>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Dropdown Producto
+        console.log("Hola mundo desde el producto");
+        const dropdownProductoButton = document.getElementById("dropdownProductoButton");
+        const dropdownProducto = document.getElementById("dropdownProducto");
+        if (dropdownProductoButton && dropdownProducto) {
+            console.log("Hola mundo desde el producto en el if");
+            dropdownProductoButton.addEventListener("click", () => {
+                dropdownProducto.classList.toggle("hidden");
+            });
+        }
+
+        // Dropdown Categoría
+        const dropdownCategoriaButton = document.getElementById("dropdownCategoriaButton");
+        const dropdownCategoria = document.getElementById("dropdownCategoria");
+        if (dropdownCategoriaButton && dropdownCategoria) {
+            dropdownCategoriaButton.addEventListener("click", () => {
+                dropdownCategoria.classList.toggle("hidden");
+            });
+        }
+
+        // Dropdown Descuentos
+        const dropdownDescuentosButton = document.getElementById("dropdownDescuentosButton");
+        const dropdownDescuentos = document.getElementById("dropdownDescuentos");
+        if (dropdownDescuentosButton && dropdownDescuentos) {
+            dropdownDescuentosButton.addEventListener("click", () => {
+                dropdownDescuentos.classList.toggle("hidden");
+            });
+        }
+
+        // Dropdown Ventas
+        const dropdownVentasButton = document.getElementById("dropdownVentasButton");
+        const dropdownVentas = document.getElementById("dropdownVentas");
+        if (dropdownVentasButton && dropdownVentas) {
+            dropdownVentasButton.addEventListener("click", () => {
+                dropdownVentas.classList.toggle("hidden");
+            });
+        }
+    });
+</script>

@@ -16,7 +16,7 @@ import java.io.IOException;
  */
 
 @Controller
-@RequestMapping("/producto")
+@RequestMapping("/admin/producto")
 public class ProductoControlador {
 
     @Autowired
@@ -35,9 +35,10 @@ public class ProductoControlador {
         return "agregarProducto";
     }
 
-    @GetMapping("/agregar")
-    public String insertarProductoDePrueba() {
-        return "agregarProducto";
+    @GetMapping("/crear")
+    public String crearProducto(Model model) {
+        model.addAttribute("contenidoAdmin", "/admin/addProducts");
+        return "/admin/adminPage";
     }
 
 
@@ -51,7 +52,6 @@ public class ProductoControlador {
             @RequestParam(name = "stock", required = false) Integer stock
             )
     {
-        // Categoria categoriaNombre  = new Categoria(categoria, "");
         try {
             Categoria categoriaObj = productoServicio.obtenerCategoriaPorNombre(categoria);
             String rutaImagen = productoServicio.guardarImagen(imagen);

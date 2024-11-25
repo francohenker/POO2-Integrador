@@ -35,7 +35,8 @@ public class LoginControlador {
         } catch (Exception e) {
             return "login";
         }
-        return "prueba";
+
+        return "redirect:/";
     }
 
     @GetMapping("/logout")
