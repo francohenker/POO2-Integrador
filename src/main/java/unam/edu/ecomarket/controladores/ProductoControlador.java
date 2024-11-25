@@ -79,7 +79,53 @@ public class ProductoControlador {
         }
     }
 
+    @GetMapping("/{id}/editar")
+    public String editarProducto(@PathVariable Integer id, Model model) {
+        Producto producto = productoServicio.obtenerProductoPorId(id);
+        List<Categoria> categorias = categoriaServicio.obtenerTodasLasCategorias();
+        model.addAttribute("producto", producto);
+        model.addAttribute("categorias", categorias);
+        model.addAttribute("contenidoAdmin", "/admin/editProduct");
+        return "/admin/adminPage";
+    }
 
+    @PutMapping("/{id}")
+    public String actualizarProducto(
+            @PathVariable Integer id,
+            @RequestParam(name = "nombre") String nombre,
+            @RequestParam(name = "descripcion") String descripcion,
+            @RequestParam(name = "precio") double precio,
+            @RequestParam(name = "categoria") Long categoria,
+            @RequestParam(name = "imagenes", required = false) MultipartFile[] imagenes,
+            @RequestParam(name = "stock", required = false) Integer stock
+    ) {
+        try {
+            Categoria categoriaObj = categoriaServicio.obtenerCategoriaPorId(categoria);
+            Producto producto = productoServicio.obtenerProductoPorId(id);
+            producto.setNombre(nombre);
+            producto.setDescripcion(descripcion);
+            producto.setPrecio(precio);
+            producto.setCategoria(categoriaObj);
+            producto.setStock(stock);
+
+            if (imagenes != null) {
+                for (MultipartFile imagen : imagenes) {
+                    String rutaImagen = productoServicio.guardarImagen(imagen);
+                    Imagen nuevaImagen = new Imagen(rutaImagen);
+                    nuevaImagen.setProducto(producto);
+                    producto.getImagenes().add(nuevaImagen);
+                }
+            }
+            productoServicio.agregarProducto(producto);
+            return "redirect:/admin/producto";
+        } catch (IOException e) {
+            System.out.println("Error al guardar la imagen: " + e);
+            return "agregarProducto";
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error al agregar producto: " + e);
+            return "agregarProducto";
+        }
+    }
 
 
 

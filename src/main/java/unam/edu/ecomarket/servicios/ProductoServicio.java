@@ -40,6 +40,10 @@ public class ProductoServicio {
         return productoRepositorio.findAllByCategoria(categoria);
     }
 
+    public Producto obtenerProductoPorId(Integer id) {
+        return productoRepositorio.findById(id).orElse(null);
+    }
+
     public String guardarImagen(MultipartFile file) throws IOException {
         if (file.isEmpty()) {
             throw new IOException("El archivo está vacío.");
