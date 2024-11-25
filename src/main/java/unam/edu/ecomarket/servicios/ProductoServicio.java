@@ -32,8 +32,16 @@ public class ProductoServicio {
         this.productoRepositorio = productoRepositorio;
     }
 
+    public List<Producto> obtenerTodosLosProductos() {
+        return productoRepositorio.findAll();
+    }
+
     public List<Producto> obtenerProductos(Categoria categoria) {
         return productoRepositorio.findAllByCategoria(categoria);
+    }
+
+    public Producto obtenerProductoPorId(Integer id) {
+        return productoRepositorio.findById(id).orElse(null);
     }
 
     public String guardarImagen(MultipartFile file) throws IOException {
