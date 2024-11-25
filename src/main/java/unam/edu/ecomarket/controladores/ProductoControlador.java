@@ -30,9 +30,12 @@ public class ProductoControlador {
 
     @GetMapping
     public String productos(Model modelo) {
+        List<Producto> productos = productoServicio.obtenerTodosLosProductos();
+        modelo.addAttribute("productos", productos);
         modelo.addAttribute("contenidoAdmin", "/admin/viewProducts");
         return "/admin/adminPage";
     }
+
 
     @GetMapping("/crear")
     public String crearProducto(Model model) {
