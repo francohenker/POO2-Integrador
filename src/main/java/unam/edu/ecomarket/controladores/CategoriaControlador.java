@@ -1,5 +1,6 @@
 package unam.edu.ecomarket.controladores;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,7 +25,10 @@ public class CategoriaControlador {
     private CategoriaServicio categoriaServicio;
 
     @GetMapping
-    public String categoria(Model modelo) {
+    public String categoria(HttpSession session, Model modelo) {
+        if(session.getAttribute("usuario").toString() == null){
+            return "login";
+        }
         modelo.addAttribute("contenidoAdmin", "/admin/viewCategory");
         return "/admin/adminPage";
     }

@@ -25,19 +25,20 @@ public class LoginControlador {
     public String login() {
         return "login";
     }
-
-    @PostMapping("/login")
-    public String loginPost(HttpSession session, @RequestParam String correo, @RequestParam String password) throws Exception {
-        try{
-            Usuario usuario = usuarioServicio.loginUsuario(correo, password);
-            session.setAttribute("usuario", usuario);
-
-        } catch (Exception e) {
-            return "login";
-        }
-
-        return "redirect:/";
-    }
+//
+//    @PostMapping("/login")
+//    public String loginPost(HttpSession session, @RequestParam String correo, @RequestParam String password) throws Exception {
+//        try{
+//            session.getAttribute("usuario").toString();
+//            Usuario usuario = usuarioServicio.loginUsuario(correo, password);
+//            session.setAttribute("usuario", usuario);
+//
+//        } catch (Exception e) {
+//            return "login";
+//        }
+//
+//        return "redirect:/";
+//    }
 
     @GetMapping("/logout")
     public String logout(HttpSession session){

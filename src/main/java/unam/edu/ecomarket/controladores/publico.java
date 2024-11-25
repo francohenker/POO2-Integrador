@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 @NoArgsConstructor
 public class publico {
 
-    @GetMapping("/")
-    public String homee(HttpSession session) {
-        String user = session.getAttribute("usuario").toString();
-        System.out.println("[!] USUARIO: " + user);
-        return "index";
-
-}
+//    @GetMapping("/home")
+//    public String homee(HttpSession session) {
+//        String user = session.getAttribute("usuario").toString();
+//        System.out.println("[!] USUARIO: " + user);
+//        return "prueba";
+//
+//    }
 
 
 

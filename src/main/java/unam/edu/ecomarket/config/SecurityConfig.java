@@ -1,36 +1,48 @@
 package unam.edu.ecomarket.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import unam.edu.ecomarket.repositorios.UsuarioRepositorio;
 import unam.edu.ecomarket.servicios.UsuarioDetallesServicio;
+import unam.edu.ecomarket.servicios.UsuarioServicio;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig {
+public class SecurityConfig  {
+
+    private final UsuarioDetallesServicio usuarioDetallesServicio;
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();
     }
 
-    private final UsuarioRepositorio usuarioRepositorio;
 
-    public SecurityConfig(UsuarioRepositorio usuarioRepositorio) {
-        this.usuarioRepositorio = usuarioRepositorio;
+    public SecurityConfig(UsuarioDetallesServicio usuarioDetallesServicio) {
+        this.usuarioDetallesServicio = usuarioDetallesServicio;
+
     }
 
     @Bean
-    public UserDetailsService userDetailsService() {
-        return new UsuarioDetallesServicio(usuarioRepositorio);
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+
+        authProvider.setUserDetailsService(usuarioDetallesServicio);
+        authProvider.setPasswordEncoder(passwordEncoder());
+
+        return authProvider;
     }
 
     @Bean
@@ -39,29 +51,28 @@ public class SecurityConfig {
     }
 
     @Bean
-    public  SecurityFilterChain securityFilterChain (HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(authorizeRequests ->
-                        authorizeRequests
-                                .requestMatchers("/login", "/**", "/register").permitAll()
-//                                .requestMatchers("/*").permitAll()
-                                .anyRequest().authenticated()
+                .csrf(csrf -> csrf.disable()) // Deshabilitar CSRF si es necesario
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/login", "/register", "/public/**").permitAll() // Rutas públicas
+                        .anyRequest().authenticated() // Protege todas las demás rutas
                 )
-//                .formLogin(formLogin ->
-//                        formLogin
-//                                .loginPage("/login")
-//                                .defaultSuccessUrl("/", true)
-//                                .failureUrl("/login?error=true")
-//                                .permitAll()
-//                )
-                .logout(logout ->
-                        logout
-                                .logoutUrl("/logout")
-                                .permitAll()
+                .formLogin(form -> form
+                        .loginPage("/login") // Página personalizada para el login
+                        .defaultSuccessUrl("/home", true) // Redirección después del login exitoso
+                        .permitAll()
+                )
+                .userDetailsService(usuarioDetallesServicio)
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login?logout")
+                        .permitAll()
                 );
+
         return http.build();
     }
+
 }
 
 
