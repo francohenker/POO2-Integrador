@@ -38,20 +38,30 @@ public class ProductoServicio {
 
     public String guardarImagen(MultipartFile file) throws IOException {
         if (file.isEmpty()) {
-            throw new RuntimeException("Fallo al almacenar archivo vacío " + file.getOriginalFilename());
+            throw new IOException("El archivo está vacío.");
         }
-        Files.copy(file.getInputStream(), this.rootLocation.resolve(file.getOriginalFilename()));
-        return "/images/productos/" + file.getOriginalFilename();
+        String filename = file.getOriginalFilename();
+        Path destinationFile = this.rootLocation.resolve(
+                Paths.get(filename))
+                .normalize().toAbsolutePath();
+        if (!destinationFile.getParent().equals(this.rootLocation.toAbsolutePath())) {
+            throw new RuntimeException("No se puede almacenar el archivo fuera del directorio actual.");
+        }
+        try (var inputStream = file.getInputStream()) {
+            Files.copy(inputStream, destinationFile);
+        }
+        return destinationFile.toString();
     }
 
     public Producto agregarProducto(Producto producto) {
         return productoRepositorio.save(producto);
     }
 
-    public Categoria obtenerCategoriaPorNombre(String nombre) {
-        return categoriaRepositorio.findByNombre(nombre);
+    public Categoria obtenerCategoriaPorId(Long id) {
+        return categoriaRepositorio.findById(id).orElseThrow(() -> new IllegalArgumentException("Categoría no encontrada"));
     }
 
+    /*
     public void insertarProductoDePrueba() {
         Categoria categoria = categoriaRepositorio.findByNombre("Electrónica");
         if (categoria == null) {
@@ -62,6 +72,11 @@ public class ProductoServicio {
         Imagen imagen = new Imagen("/images/productos/ejemplo.jpg");
         Producto producto = new Producto("Producto de Prueba", "Descripción del producto de prueba", categoria, 99.99, 10, imagen);
         productoRepositorio.save(producto);
+    }
+     */
+
+    public List<Categoria> obtenerTodasLasCategorias() {
+        return categoriaRepositorio.findAll();
     }
 
 }

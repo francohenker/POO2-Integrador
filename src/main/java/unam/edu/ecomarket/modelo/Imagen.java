@@ -16,6 +16,10 @@ public class Imagen {
     @Column(nullable = false)
     private String ruta;
 
+    @ManyToOne
+    @JoinColumn(name = "producto_id")
+    private Producto producto;
+
     public Imagen(String ruta) {
         this.ruta = ruta;
     }
