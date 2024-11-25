@@ -1,6 +1,6 @@
 <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
     <h2 class="mb-4 text-xl font-bold text-gray-900">Agregar una Categoría</h2>
-    <form action="#" method="post">
+    <form th:action="@{/admin/categoria}" method="post">
         <!-- Campo para el nombre de la categoría -->
         <div class="mb-4">
             <label for="nombre" class="block mb-2 text-sm font-medium text-gray-900">Nombre de la Categoría</label>
@@ -17,7 +17,7 @@
         <div class="mb-4">
             <label for="categoria" class="block mb-2 text-sm font-medium text-gray-900">Categoría Padre</label>
             <select
-                    name="padre_id"
+                    name="padre"
                     id="categoria"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
                 <option value="" th:text="'Seleccione una Categoria'"></option>
