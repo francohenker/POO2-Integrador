@@ -21,6 +21,23 @@
 de usuario, acompañado de casos de uso para describir cómo interactúa el usuario
 con la aplicación.>>
 
+## Vista desde administración
+Panel de administración
+![Pantalla de inicio](wireframe/admin.jpeg)
+
+Alta de producto
+![Pantalla de inicio](wireframe/altaproducto.jpeg)
+
+Listado de productos
+![Pantalla de inicio](wireframe/productos.jpeg)
+
+## Vista de cliente
+Tienda
+![Pantalla de inicio](wireframe/tienda.jpeg)
+
+Detalle de producto | tienda
+![Pantalla de inicio](wireframe/detalleproducto.jpeg)
+
 ---
 
 # Backlog de iteraciones
