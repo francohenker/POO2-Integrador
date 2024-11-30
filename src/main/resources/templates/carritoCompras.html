@@ -1,0 +1,121 @@
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+<section>
+    <div class="mx-auto max-w-screen-xl border-green-900 px-4 py-8 sm:px-6 sm:py-12 lg:px-8" id="cart-section" name="cart-section">
+        <div class="mx-auto max-w-3xl" id="cart-container" name="cart-container">
+            <header class="text-center" id="cart-header" name="cart-header">
+                <h1 class="text-xl font-bold text-gray-900 sm:text-3xl" id="cart-title" name="cart-title">Carrito de Compras</h1>
+            </header>
+
+            <div class="mt-8 border-t border-green-900" id="cart-items-container" name="cart-items-container">
+                <ul class="space-y-4" id="cart-items-list" name="cart-items-list">
+                    <li class="flex items-center gap-4" id="cart-item-1" name="cart-item-1">
+                        <img
+                                src="https://images.unsplash.com/photo-1618354691373-d851c5c3a990?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=830&q=80"
+                                alt="Producto 1"
+                                class="size-16 rounded object-cover"
+                                id="cart-item-image-1"
+                                name="cart-item-image-1"
+                        />
+
+                        <div id="cart-item-details-1" name="cart-item-details-1">
+                            <h3 class="text-sm text-gray-900" id="cart-item-title-1" name="cart-item-title-1">Basic Tee 6-Pack</h3>
+                            <dl class="mt-0.5 space-y-px text-[10px] text-gray-600" id="cart-item-attributes-1" name="cart-item-attributes-1">
+                                <div>
+                                    <dt class="inline" id="cart-item-size-label-1" name="cart-item-size-label-1">Size:</dt>
+                                    <dd class="inline" id="cart-item-size-1" name="cart-item-size-1">XXS</dd>
+                                </div>
+                                <div>
+                                    <dt class="inline" id="cart-item-color-label-1" name="cart-item-color-label-1">Color:</dt>
+                                    <dd class="inline" id="cart-item-color-1" name="cart-item-color-1">White</dd>
+                                </div>
+                            </dl>
+                        </div>
+
+                        <div class="flex flex-1 items-center justify-end gap-2" id="cart-item-actions-1" name="cart-item-actions-1">
+                            <div>
+                                <label for="cantidad-1" class="sr-only" name="cart-item-quantity-label-1">Cantidad</label>
+                                <div class="flex items-center gap-1">
+                                    <!-- Botón para disminuir la cantidad -->
+                                    <button
+                                            type="button"
+                                            id="decrease-1"
+                                            name="decrease-1"
+                                            class="size-10 leading-10 text-gray-600 transition hover:opacity-75"
+                                    >
+                                        &minus;
+                                    </button>
+
+                                    <!-- Campo de entrada con validaciones -->
+                                    <input
+                                            type="number"
+                                            id="cantidad-1"
+                                            name="cantidad-1"
+                                            value="1"
+                                            min="1"
+                                            step="1"
+                                            class="h-10 w-16 rounded border-gray-200 text-center focus:ring-2 focus:ring-green-500 focus:border-green-500 [-moz-appearance:_textfield] sm:text-sm [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none"
+                                    />
+
+                                    <!-- Botón para aumentar la cantidad -->
+                                    <button
+                                            type="button"
+                                            id="increase-1"
+                                            name="increase-1"
+                                            class="size-10 leading-10 text-gray-600 transition hover:opacity-75"
+                                    >
+                                        &plus;
+                                    </button>
+                                </div>
+                            </div>
+
+                            <button
+                                    class="text-red-600 hover:text-red-700 transition p-1"
+                                    id="delete-item-1"
+                                    name="delete-item-1"
+                            >
+                                <span class="sr-only" name="delete-item-label-1">Eliminar</span>
+                                <i class="fas fa-trash" name="delete-item-icon-1"></i>
+                            </button>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="mt-8 flex justify-end pt-8 background" id="cart-summary-container" name="cart-summary-container">
+                    <div class="w-screen max-w-lg space-y-4 bg-gray-50 border-t border-green-900 rounded-lg px-2 py-2" id="cart-summary" name="cart-summary">
+                        <dl class="space-y-1 text-sm text-gray-700" id="cart-summary-details" name="cart-summary-details">
+                            <div class="flex justify-between font-medium" id="summary-subtotal" name="summary-subtotal">
+                                <dt id="subtotal-label" name="subtotal-label">Subtotal</dt>
+                                <dd id="subtotal-amount" name="subtotal-amount">$666</dd>
+                            </div>
+                            <div class="flex justify-between" id="summary-shipping" name="summary-shipping">
+                                <dt id="shipping-label" name="shipping-label">Envio</dt>
+                                <dd id="shipping-amount" name="shipping-amount">$666</dd>
+                            </div>
+                            <div class="flex justify-between" id="summary-discount" name="summary-discount">
+                                <dt id="discount-label" name="discount-label">Descuento</dt>
+                                <dd id="discount-amount" name="discount-amount">$666</dd>
+                            </div>
+                            <div class="flex justify-between !text-base font-medium" id="summary-total" name="summary-total">
+                                <dt id="total-label" name="total-label">Total</dt>
+                                <dd id="total-amount" name="total-amount">$1998</dd>
+                            </div>
+                        </dl>
+
+                        <div class="flex justify-end">
+                            <a
+                                    href="#"
+                                    class="block rounded bg-green-700 px-5 py-2 text-sm text-gray-100 transition hover:bg-green-500"
+                                    id="checkout-button"
+                                    name="checkout-button"
+                            >
+                                Comprar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
