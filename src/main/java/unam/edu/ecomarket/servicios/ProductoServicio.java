@@ -48,13 +48,14 @@ public class ProductoServicio {
         if (file.isEmpty()) {
             throw new IOException("El archivo está vacío.");
         }
-        String filename = file.getOriginalFilename();
+        String filename = System.currentTimeMillis() + file.getOriginalFilename();
         Path destinationFile = this.rootLocation.resolve(
                 Paths.get(filename))
                 .normalize().toAbsolutePath();
         if (!destinationFile.getParent().equals(this.rootLocation.toAbsolutePath())) {
             throw new RuntimeException("No se puede almacenar el archivo fuera del directorio actual.");
         }
+        Files.createDirectories(this.rootLocation);
         try (var inputStream = file.getInputStream()) {
             Files.copy(inputStream, destinationFile);
         }

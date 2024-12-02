@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -62,6 +63,7 @@ public class Producto extends ProductoItem{
      * La categoria del producto.
      */
     @ManyToOne
+    @JoinColumn(name = "categoria_id")
     private Categoria categoria;
 
     /**
@@ -83,7 +85,7 @@ public class Producto extends ProductoItem{
      */
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto", orphanRemoval = true)
     @Size(max = 10, message = "No se pueden agregar más de 10 imágenes a un producto")
-    private List<Imagen> imagenes;
+    private List<Imagen> imagenes = new ArrayList<>();
 
 
     @Override

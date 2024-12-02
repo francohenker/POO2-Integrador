@@ -25,10 +25,7 @@ public class CategoriaControlador {
     private CategoriaServicio categoriaServicio;
 
     @GetMapping
-    public String categoria(HttpSession session, Model modelo) {
-        if(session.getAttribute("usuario").toString() == null){
-            return "login";
-        }
+    public String categoria(Model modelo) {
         modelo.addAttribute("contenidoAdmin", "/admin/viewCategory");
         return "/admin/adminPage";
     }

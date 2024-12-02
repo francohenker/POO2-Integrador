@@ -52,7 +52,7 @@ public class ProductoControlador {
             @RequestParam(name = "descripcion") String descripcion,
             @RequestParam(name = "precio") double precio,
             @RequestParam(name = "categoria") Long categoria,
-            @RequestParam(name = "imagenes", required = false) MultipartFile[] imagenes,
+            @RequestParam(name = "imagen", required = false) MultipartFile imagen,
             @RequestParam(name = "stock", required = false) Integer stock
             )
     {
@@ -60,22 +60,20 @@ public class ProductoControlador {
             Categoria categoriaObj = categoriaServicio.obtenerCategoriaPorId(categoria);
             Producto producto = new Producto(nombre, descripcion, categoriaObj, precio, stock, new ArrayList<>());
 
-            if (imagenes != null) {
-                for (MultipartFile imagen : imagenes) {
-                    String rutaImagen = productoServicio.guardarImagen(imagen);
-                    Imagen nuevaImagen = new Imagen(rutaImagen);
-                    nuevaImagen.setProducto(producto);
-                    producto.getImagenes().add(nuevaImagen);
-                }
+            if (imagen != null && !imagen.isEmpty()) {
+                String rutaImagen = productoServicio.guardarImagen(imagen);
+                Imagen nuevaImagen = new Imagen(rutaImagen);
+                nuevaImagen.setProducto(producto);
+                producto.getImagenes().add(nuevaImagen);
             }
             productoServicio.agregarProducto(producto);
             return "redirect:/admin/producto";
         } catch (IOException e) {
             System.out.println("Error al guardar la imagen: " + e);
-            return "agregarProducto";
+            return "redirect:/error";
         } catch (IllegalArgumentException e) {
             System.out.println("Error al agregar producto: " + e);
-            return "agregarProducto";
+            return "redirect:/error";
         }
     }
 
@@ -120,10 +118,10 @@ public class ProductoControlador {
             return "redirect:/admin/producto";
         } catch (IOException e) {
             System.out.println("Error al guardar la imagen: " + e);
-            return "agregarProducto";
+            return "redirect:/error";
         } catch (IllegalArgumentException e) {
             System.out.println("Error al agregar producto: " + e);
-            return "agregarProducto";
+            return "redirect:/error";
         }
     }
 
