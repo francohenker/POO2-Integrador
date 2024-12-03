@@ -60,7 +60,7 @@ public class ProductoServicio {
         try (var inputStream = file.getInputStream()) {
             Files.copy(inputStream, destinationFile);
         }
-        return destinationFile.toString();
+        return "/images/productos/" + filename;
     }
 
     public Producto agregarProducto(Producto producto) {

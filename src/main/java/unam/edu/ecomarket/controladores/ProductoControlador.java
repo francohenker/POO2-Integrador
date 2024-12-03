@@ -13,6 +13,10 @@ import unam.edu.ecomarket.servicios.ProductoServicio;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 /**
  * Clase controlador para los productos en ecomarket.
@@ -62,6 +66,13 @@ public class ProductoControlador {
 
             if (imagen != null && !imagen.isEmpty()) {
                 String rutaImagen = productoServicio.guardarImagen(imagen);
+//                Pattern pattern = Pattern.compile("/images/(.*)");
+//                Matcher matcher = pattern.matcher(rutaImagen);
+//
+//                if (matcher.find()) {
+//                    String parteDeLaRuta = matcher.group(1);
+//                }
+
                 Imagen nuevaImagen = new Imagen(rutaImagen);
                 nuevaImagen.setProducto(producto);
                 producto.getImagenes().add(nuevaImagen);

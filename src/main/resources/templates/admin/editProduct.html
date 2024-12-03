@@ -31,9 +31,9 @@
                 <div class="sm:col-span-2">
                     <label for="imagenes" class="block mb-2 text-sm font-medium text-gray-900">Imagen actual</label>
                     <div>
-                        <img th:src="@{'/' + ${producto.imagenes[0].ruta}}" alt="Ups! No hay imagenes cargadas aun" class="w-32 h-32 object-cover">
+                        <img th:src="@{${producto.imagenes[0].ruta}}" alt="Ups! No hay imagenes cargadas aun" class="w-32 h-32 object-cover">
                         <script>
-                            console.log("Imagen actual: " + /*[[${producto.imagenes[0].ruta}]]*/ "");
+                            console.log("Imagen actual: " + ${producto.imagenes[0].ruta});
                         </script>
                     </div>
                     <label for="imagenes" class="block mb-2 text-sm font-medium text-gray-900">Subir imagenes</label>
