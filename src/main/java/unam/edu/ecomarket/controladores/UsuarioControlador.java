@@ -18,7 +18,7 @@ public class UsuarioControlador {
     private UsuarioServicio usuarioServicio;
 
     @GetMapping("/register")
-    public String home(HttpSession session) {
+    public String home() {
         return "register";
     }
 

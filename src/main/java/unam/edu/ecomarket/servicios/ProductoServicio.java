@@ -4,6 +4,7 @@ package unam.edu.ecomarket.servicios;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import unam.edu.ecomarket.modelo.Categoria;
 import unam.edu.ecomarket.modelo.Imagen;
@@ -48,24 +49,38 @@ public class ProductoServicio {
         if (file.isEmpty()) {
             throw new IOException("El archivo está vacío.");
         }
-        String filename = file.getOriginalFilename();
+        String filename = System.currentTimeMillis() + file.getOriginalFilename();
         Path destinationFile = this.rootLocation.resolve(
                 Paths.get(filename))
                 .normalize().toAbsolutePath();
         if (!destinationFile.getParent().equals(this.rootLocation.toAbsolutePath())) {
             throw new RuntimeException("No se puede almacenar el archivo fuera del directorio actual.");
         }
+        Files.createDirectories(this.rootLocation);
         try (var inputStream = file.getInputStream()) {
             Files.copy(inputStream, destinationFile);
         }
-        return destinationFile.toString();
+        return "/images/productos/" + filename;
     }
 
     public Producto agregarProducto(Producto producto) {
         return productoRepositorio.save(producto);
     }
 
-
+    @Transactional
+    public void borrarProducto(Integer id) {
+        Producto producto = productoRepositorio.findById(id).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
+        // Eliminar archivos de imágenes
+        for (Imagen imagen : producto.getImagenes()) {
+            Path rutaImagen = Paths.get(imagen.getRuta());
+            try {
+                Files.deleteIfExists(rutaImagen);
+            } catch (IOException e) {
+                System.out.println("Error al eliminar la imagen: " + e.getMessage());
+            }
+        }
+        productoRepositorio.delete(producto);
+    }
 
     /*
     public void insertarProductoDePrueba() {
