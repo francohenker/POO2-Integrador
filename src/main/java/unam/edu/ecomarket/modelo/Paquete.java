@@ -1,39 +1,38 @@
 package unam.edu.ecomarket.modelo;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@DiscriminatorValue("paquete")
 @NoArgsConstructor
 @Data
-@Entity
 @EqualsAndHashCode(callSuper = true)
 public class Paquete extends ProductoItem {
     private String nombre;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(
             name = "paquete_items",
             joinColumns = @JoinColumn(name = "paquete_id"),
-            inverseJoinColumns = @JoinColumn(name = "producto_item_id")
+            inverseJoinColumns = @JoinColumn(name = "producto_id")
     )
-    private List<ProductoItem> items = new ArrayList<>();
+    private List<Producto> items = new ArrayList<>();
 
-    public void agregarItem(ProductoItem item) {
+    public void agregarItem(Producto item) {
         this.items.add(item);
     }
 
-    public void eliminarItem(ProductoItem item) {
+    public void eliminarItem(Producto item) {
         this.items.remove(item);
     }
 
     @Override
     public double calcularPrecio() {
-        return items.stream().mapToDouble(ProductoItem::calcularPrecio).sum();
+        return items.stream().mapToDouble(Producto::calcularPrecio).sum();
     }
 }
 
