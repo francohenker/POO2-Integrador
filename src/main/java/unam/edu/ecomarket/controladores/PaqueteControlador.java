@@ -55,8 +55,10 @@ public class PaqueteControlador {
     public String editarPaquete(@PathVariable Integer id, Model model) {
         Paquete paquete = paqueteServicio.obtenerPaquetePorId(id);
         List<Producto> productos = productoServicio.obtenerTodosLosProductos();
+        List<Integer> selectedProductIds = paquete.getItems().stream().map(Producto::getId).toList();
         model.addAttribute("paquete", paquete);
         model.addAttribute("productos", productos);
+        model.addAttribute("selectedProductIds", selectedProductIds);
         model.addAttribute("contenidoAdmin", "/admin/editPaquete");
         return "/admin/adminPage";
     }
