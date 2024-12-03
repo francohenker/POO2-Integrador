@@ -19,13 +19,10 @@ public class publico {
 //    }
 
 
-@GetMapping("/error")
-public String error() {
-    return "error";
+    @GetMapping("/error")
+    public String error() {
+        return "error";
     }
-
-
-
 
 
 }

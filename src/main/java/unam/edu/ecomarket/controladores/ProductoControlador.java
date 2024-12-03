@@ -32,16 +32,17 @@ public class ProductoControlador {
     @Autowired
     private CategoriaServicio categoriaServicio;
 
-    @GetMapping
+    @GetMapping({"", "/"})
     public String productos(Model modelo) {
         List<Producto> productos = productoServicio.obtenerTodosLosProductos();
         modelo.addAttribute("productos", productos);
+        System.out.println("Productos: " + productos);
         modelo.addAttribute("contenidoAdmin", "/admin/viewProducts");
         return "/admin/adminPage";
     }
 
 
-    @GetMapping("/crear")
+    @GetMapping({"/crear", "/crear/"})
     public String crearProducto(Model model) {
         List<Categoria> categorias = categoriaServicio.obtenerTodasLasCategorias();
         model.addAttribute("categorias", categorias);
@@ -66,12 +67,6 @@ public class ProductoControlador {
 
             if (imagen != null && !imagen.isEmpty()) {
                 String rutaImagen = productoServicio.guardarImagen(imagen);
-//                Pattern pattern = Pattern.compile("/images/(.*)");
-//                Matcher matcher = pattern.matcher(rutaImagen);
-//
-//                if (matcher.find()) {
-//                    String parteDeLaRuta = matcher.group(1);
-//                }
 
                 Imagen nuevaImagen = new Imagen(rutaImagen);
                 nuevaImagen.setProducto(producto);

@@ -45,6 +45,10 @@ public class ProductoServicio {
         return productoRepositorio.findById(id).orElse(null);
     }
 
+    public List<Producto> obtenerProductosPorIds(List<Integer> ids) {
+        return productoRepositorio.findAllById(ids);
+    }
+
     public String guardarImagen(MultipartFile file) throws IOException {
         if (file.isEmpty()) {
             throw new IOException("El archivo está vacío.");
@@ -81,20 +85,6 @@ public class ProductoServicio {
         }
         productoRepositorio.delete(producto);
     }
-
-    /*
-    public void insertarProductoDePrueba() {
-        Categoria categoria = categoriaRepositorio.findByNombre("Electrónica");
-        if (categoria == null) {
-            categoria = new Categoria("Electrónica", "Productos electrónicos");
-            categoriaRepositorio.save(categoria);
-        }
-
-        Imagen imagen = new Imagen("/images/productos/ejemplo.jpg");
-        Producto producto = new Producto("Producto de Prueba", "Descripción del producto de prueba", categoria, 99.99, 10, imagen);
-        productoRepositorio.save(producto);
-    }
-     */
 
 
 
