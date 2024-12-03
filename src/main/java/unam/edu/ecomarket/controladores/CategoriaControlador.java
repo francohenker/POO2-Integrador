@@ -26,6 +26,8 @@ public class CategoriaControlador {
 
     @GetMapping
     public String categoria(Model modelo) {
+        List<Categoria> categorias = categoriaServicio.obtenerTodasLasCategorias();
+        modelo.addAttribute("categorias", categorias);
         modelo.addAttribute("contenidoAdmin", "/admin/viewCategory");
         return "/admin/adminPage";
     }
