@@ -4,6 +4,7 @@ package unam.edu.ecomarket.servicios;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import unam.edu.ecomarket.modelo.Categoria;
 import unam.edu.ecomarket.modelo.Imagen;
@@ -66,7 +67,20 @@ public class ProductoServicio {
         return productoRepositorio.save(producto);
     }
 
-
+    @Transactional
+    public void borrarProducto(Integer id) {
+        Producto producto = productoRepositorio.findById(id).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
+        // Eliminar archivos de imágenes
+        for (Imagen imagen : producto.getImagenes()) {
+            Path rutaImagen = Paths.get(imagen.getRuta());
+            try {
+                Files.deleteIfExists(rutaImagen);
+            } catch (IOException e) {
+                System.out.println("Error al eliminar la imagen: " + e.getMessage());
+            }
+        }
+        productoRepositorio.delete(producto);
+    }
 
     /*
     public void insertarProductoDePrueba() {

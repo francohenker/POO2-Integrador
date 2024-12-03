@@ -83,6 +83,7 @@ public class ProductoControlador {
         List<Categoria> categorias = categoriaServicio.obtenerTodasLasCategorias();
         model.addAttribute("producto", producto);
         model.addAttribute("categorias", categorias);
+        model.addAttribute("imagenes", producto.getImagenes());
         model.addAttribute("contenidoAdmin", "/admin/editProduct");
         return "/admin/adminPage";
     }
@@ -94,7 +95,7 @@ public class ProductoControlador {
             @RequestParam(name = "descripcion") String descripcion,
             @RequestParam(name = "precio") double precio,
             @RequestParam(name = "categoria") Long categoria,
-            @RequestParam(name = "imagenes", required = false) MultipartFile[] imagenes,
+            @RequestParam(name = "imagenes", required = false) MultipartFile imagen,
             @RequestParam(name = "stock", required = false) Integer stock
     ) {
         try {
@@ -106,13 +107,12 @@ public class ProductoControlador {
             producto.setCategoria(categoriaObj);
             producto.setStock(stock);
 
-            if (imagenes != null) {
-                for (MultipartFile imagen : imagenes) {
-                    String rutaImagen = productoServicio.guardarImagen(imagen);
-                    Imagen nuevaImagen = new Imagen(rutaImagen);
-                    nuevaImagen.setProducto(producto);
-                    producto.getImagenes().add(nuevaImagen);
-                }
+            if (imagen != null && !imagen.isEmpty()) {
+                String rutaImagen = productoServicio.guardarImagen(imagen);
+                Imagen nuevaImagen = new Imagen(rutaImagen);
+                nuevaImagen.setProducto(producto);
+                producto.getImagenes().clear();
+                producto.getImagenes().add(nuevaImagen);
             }
             productoServicio.agregarProducto(producto);
             return "redirect:/admin/producto";
@@ -127,7 +127,11 @@ public class ProductoControlador {
 
 
 
-
+    @DeleteMapping("/{id}")
+    public String borrarProducto(@PathVariable Integer id) {
+        productoServicio.borrarProducto(id);
+        return "redirect:/admin/producto";
+    }
 
 
 

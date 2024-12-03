@@ -23,7 +23,7 @@
                     <thead class="text-xs text-gray-700 uppercase bg-green-800/50">
                     <tr>
                         <th class="px-4 py-2">Producto</th>
-                        <th class="px-4 py-2">Descripcion</th>
+                        <th class="px-4 py-2">Descripción</th>
                         <th class="px-4 py-2">Categoría</th>
                         <th class="px-4 py-2">Cantidad</th>
                         <th class="px-4 py-2">Precio</th>
@@ -33,38 +33,18 @@
                     <tbody>
                     <tr class="border-b" th:each="producto : ${productos}">
                         <td th:text="${producto.nombre}">Nombre</td>
-                        <td th:text="${producto.descripcion}">Descripcion</td>
-                        <td th:text="${producto.categoria.nombre}">Categoria</td>
+                        <td th:text="${producto.descripcion}">Descripción</td>
+                        <td th:text="${producto.categoria.nombre}">Categoría</td>
                         <td th:text="${producto.stock}">Cantidad</td>
                         <td th:text="${'$' + producto.precio}">Precio</td>
-
                         <td class="px-4 py-3 relative">
-                            <button class="dropdown-button inline-flex items-center p-1 text-sm font-medium text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none" type="button">
-                                <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-                                </svg>
-                            </button>
-                            <div class="dropdown-menu hidden absolute right-0 z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow">
-                                <ul class="py-1 text-sm text-gray-700">
-                                    <li><a href="#" class="block py-2 px-4 hover:bg-green-200">Mostrar</a></li>
-                                    <li>
-                                        <form th:action="@{'/admin/producto/' + ${producto.id} + '/editar'}" th:method="get">
-                                            <button class="block py-2 px-4 hover:bg-yellow-200">Editar</button>
-                                        </form>
-                                    </li>
-                                </ul>
-                                <div class="py-1">
-                                    <form th:action="@{/admin/producto/{id}(id=${producto.id})}">
-
-                                    </form>
-                                    <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-red-200 delete-button">Eliminar</a>
-                                </div>
-                            </div>
+                            <button onclick="openShowModal([[${producto.id}]])" class="text-blue-600 hover:underline">Mostrar</button>
+                            <button onclick="openEditModal([[${producto.id}]])" class="text-yellow-600 hover:underline">Editar</button>
+                            <button onclick="openDeleteModal([[${producto.id}]])" class="text-red-600 hover:underline">Eliminar</button>
                         </td>
                     </tr>
                     </tbody>
                 </table>
-
 
 
 
@@ -189,40 +169,7 @@
     });
 
 </script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-       // Obtén los botones de eliminar
-       const deleteButtons = document.querySelectorAll('.delete-button');
-       const deleteModal = document.getElementById('deleteModal');
-       const confirmDeleteButton = document.getElementById('confirmDelete');
-       const cancelDeleteButton = document.getElementById('cancelDelete');
 
-       let rowToDelete; // Variable para guardar la fila a eliminar
-
-       // Mostrar el modal de eliminación cuando se hace clic en un botón de eliminar
-       deleteButtons.forEach(button => {
-           button.addEventListener('click', function(event) {
-               rowToDelete = event.target.closest('tr'); // Encuentra la fila de la que se eliminará el producto
-               deleteModal.classList.remove('hidden'); // Muestra el modal
-           });
-       });
-
-       // Cerrar el modal al hacer clic en "Cancelar"
-       cancelDeleteButton.addEventListener('click', function() {
-           deleteModal.classList.add('hidden'); // Ocultar el modal
-       });
-
-       // Eliminar el producto cuando se confirme
-       confirmDeleteButton.addEventListener('click', function() {
-           if (rowToDelete) {
-               rowToDelete.remove(); // Elimina la fila de la tabla
-           }
-           deleteModal.classList.add('hidden'); // Ocultar el modal
-       });
-   });
-
-
-</script>
 
 
 
