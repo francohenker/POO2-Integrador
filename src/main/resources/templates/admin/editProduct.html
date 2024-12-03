@@ -32,9 +32,6 @@
                     <label for="imagenes" class="block mb-2 text-sm font-medium text-gray-900">Imagen actual</label>
                     <div>
                         <img th:src="@{${producto.imagenes[0].ruta}}" alt="Ups! No hay imagenes cargadas aun" class="w-32 h-32 object-cover">
-                        <script>
-                            console.log("Imagen actual: " + ${producto.imagenes[0].ruta});
-                        </script>
                     </div>
                     <label for="imagenes" class="block mb-2 text-sm font-medium text-gray-900">Subir imagenes</label>
                     <input type="file" name="imagenes" id="imagenes" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2" accept=".jpg, .jpeg, .png">
@@ -42,7 +39,7 @@
                 </div>
             </div>
             <div class="flex justify-end space-x-4">
-                <button type="button" id="cancel-button" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg">Cancelar</button>
+                <button type="button" id="cancel-button" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg" th:onclick="|window.location.href='@{/admin/producto}'|">Cancelar</button>
                 <button type="submit" class="bg-green-600 hover:bg-green-800 text-white px-4 py-2 rounded-lg">Aceptar</button>
             </div>
         </form>
