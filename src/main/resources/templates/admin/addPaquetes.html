@@ -1,4 +1,79 @@
-<div>
-    <h1>ALTA DE PAQUETES</h1>
-    <h3>Proximamente...</h3>
+<div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
+    <h2 class="mb-4 text-xl font-bold text-gray-900">Agregar Paquete</h2>
+    <form th:action="@{/admin/paquete}" method="post">
+        <!-- Campo para el nombre del paquete -->
+        <div class="mb-4">
+            <label for="nombre" class="block mb-2 text-sm font-medium text-gray-900">Nombre del Paquete</label>
+            <input
+                    type="text"
+                    name="nombre"
+                    id="nombre"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                    placeholder="Ingresa el nombre del paquete"
+                    required>
+        </div>
+
+        <!-- Campo para seleccionar los productos que se incluiran en el paquete -->
+        <div class="mb-4">
+            <label for="productos" class="block mb-2 text-sm font-medium text-gray-900">Seleccione los Productos</label>
+            <select
+                    name="productos"
+                    id="productos"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
+                    multiple>
+                <option th:each="producto : ${productos}" th:value="${producto.id}" th:text="${producto.nombre}">Producto</option>
+            </select>
+        </div>
+
+        <!-- Contenedor para los productos seleccionados -->
+        <div class="mb-4">
+            <label class="block mb-2 text-sm font-medium text-gray-900">Productos Seleccionados</label>
+            <div id="selected-products" class="space-y-2"></div>
+        </div>
+
+        <!-- Botón para agregar el paquete -->
+        <button
+                type="submit"
+                class="bg-green-600 hover:bg-green-800 text-white font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center focus:outline-none focus:ring-4 focus:ring-green-300">
+            Añadir Paquete
+        </button>
+    </form>
 </div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const selectElement = document.getElementById('productos');
+        const selectedProductsContainer = document.getElementById('selected-products');
+
+        selectElement.addEventListener('change', () => {
+            const selectedOptions = Array.from(selectElement.selectedOptions);
+            selectedOptions.forEach(option => {
+                if (option.value) {
+                    const productContainer = document.createElement('div');
+                    productContainer.className = 'flex items-center justify-between p-2 bg-gray-100 rounded-lg';
+                    productContainer.innerHTML = `
+                        <span>${option.text}</span>
+                        <input type="hidden" name="productos" value="${option.value}">
+                        <button type="button" class="text-red-500 hover:text-red-700" data-value="${option.value}">Cancelar</button>
+                    `;
+                    selectedProductsContainer.appendChild(productContainer);
+                    option.remove();
+                }
+            });
+        });
+
+        selectedProductsContainer.addEventListener('click', (event) => {
+            if (event.target.tagName === 'BUTTON') {
+                const button = event.target;
+                const value = button.getAttribute('data-value');
+                const text = button.previousElementSibling.previousElementSibling.textContent;
+                const option = document.createElement('option');
+                option.value = value;
+                option.text = text;
+                selectElement.appendChild(option);
+                button.parentElement.remove();
+            }
+        });
+    });
+</script>

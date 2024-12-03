@@ -14,6 +14,10 @@ import java.util.List;
 public class Paquete extends ProductoItem {
     private String nombre;
 
+    private String descripcion = "";
+    private double precio = 0.0;
+    private Integer stock = 0;
+
     @ManyToMany
     @JoinTable(
             name = "paquete_items",
@@ -21,6 +25,14 @@ public class Paquete extends ProductoItem {
             inverseJoinColumns = @JoinColumn(name = "producto_id")
     )
     private List<Producto> items = new ArrayList<>();
+
+    public Paquete(String nombre, List<Producto> items) {
+        this.nombre = nombre;
+        this.descripcion = "";
+        this.precio = 0.0;
+        this.stock = 0;
+        this.items = items;
+    }
 
     public void agregarItem(Producto item) {
         this.items.add(item);

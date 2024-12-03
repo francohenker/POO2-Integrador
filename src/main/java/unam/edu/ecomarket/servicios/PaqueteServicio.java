@@ -17,4 +17,24 @@ public class PaqueteServicio {
     public List<Paquete> obtenerTodosLosPaquetes() {
         return paqueteRepositorio.findAll();
     }
+
+    public Paquete agregarPaquete(Paquete paquete) {
+        return paqueteRepositorio.save(paquete);
+    }
+
+    public Paquete obtenerPaquetePorId(Integer id) {
+        return paqueteRepositorio.findById(id).orElse(null);
+    }
+
+    public void borrarPaquete(Paquete paquete) {
+        paqueteRepositorio.delete(paquete);
+    }
+
+    public void borrarPaquetePorId(Integer id) {
+        paqueteRepositorio.deleteById(id);
+    }
+
+    public Paquete actualizarPaquete(Paquete paquete) {
+        return paqueteRepositorio.save(paquete);
+    }
 }
