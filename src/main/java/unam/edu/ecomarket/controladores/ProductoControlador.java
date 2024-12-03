@@ -13,9 +13,6 @@ import unam.edu.ecomarket.servicios.ProductoServicio;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 /**
@@ -36,7 +33,6 @@ public class ProductoControlador {
     public String productos(Model modelo) {
         List<Producto> productos = productoServicio.obtenerTodosLosProductos();
         modelo.addAttribute("productos", productos);
-        System.out.println("Productos: " + productos);
         modelo.addAttribute("contenidoAdmin", "/admin/viewProducts");
         return "/admin/adminPage";
     }
@@ -131,16 +127,10 @@ public class ProductoControlador {
         }
     }
 
-
-
     @DeleteMapping("/{id}")
     public String borrarProducto(@PathVariable Integer id) {
         productoServicio.borrarProducto(id);
         return "redirect:/admin/producto";
     }
-
-
-
-
 }
 
