@@ -46,5 +46,15 @@ public class Paquete extends ProductoItem {
     public double calcularPrecio() {
         return items.stream().mapToDouble(Producto::calcularPrecio).sum();
     }
+
+    @Override
+    public String getTipo() {
+        return "Paquete";
+    }
+
+    @Override
+    public double getPrecio() {
+        return this.precio;
+    }
 }
 

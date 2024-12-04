@@ -27,6 +27,8 @@
                         <th class="px-4 py-2">Categoría</th>
                         <th class="px-4 py-2">Cantidad</th>
                         <th class="px-4 py-2">Precio</th>
+                        <th class="px-4 py-2">Descuento</th>
+                        <th class="px-4 py-2">Precio con Descuento</th>
                         <th class="px-4 py-2">Acciones</th>
                     </tr>
                     </thead>
@@ -37,6 +39,18 @@
                         <td th:text="${producto.categoria.nombre}">Categoria</td>
                         <td th:text="${producto.stock}">Cantidad</td>
                         <td th:text="${'$' + producto.precio}">Precio</td>
+
+                        <script th:inline="javascript">
+                            console.log([[${producto.tipoDescuentoAplicado}]]);
+                        </script>
+
+                        <td th:text="${producto.tipoDescuentoAplicado == 'FIJO' ? '$' + producto.valorDescuentoAplicado : (producto.tipoDescuentoAplicado == 'PORCENTUAL' ? producto.valorDescuentoAplicado + '%' : '-')}">Descuento</td>
+
+                        <td th:if="${producto.tipoDescuentoAplicado != null}" th:text="${'$' + producto.valorDescuentoAplicado}">Holaaa</td>
+
+
+                        <td th:if="${producto.precioConDescuento != null}" th:text="'$' + ${producto.precioConDescuento}">Precio con Descuento</td>
+                        <td th:unless="${producto.precioConDescuento != null}">-</td>
 
                         <td class="px-4 py-3 relative">
                             <button class="dropdown-button inline-flex items-center p-1 text-sm font-medium text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none" type="button">

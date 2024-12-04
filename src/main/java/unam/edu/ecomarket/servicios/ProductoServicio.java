@@ -1,7 +1,6 @@
 package unam.edu.ecomarket.servicios;
 
 
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,6 +8,10 @@ import org.springframework.web.multipart.MultipartFile;
 import unam.edu.ecomarket.modelo.Categoria;
 import unam.edu.ecomarket.modelo.Imagen;
 import unam.edu.ecomarket.modelo.Producto;
+import unam.edu.ecomarket.modelo.ProductoItem;
+import unam.edu.ecomarket.modelo.descuento.DescuentoStrategy;
+import unam.edu.ecomarket.modelo.descuento.DescuentoFijo;
+import unam.edu.ecomarket.modelo.descuento.DescuentoPorcentual;
 import unam.edu.ecomarket.repositorios.ProductoRepositorio;
 import unam.edu.ecomarket.repositorios.CategoriaRepositorio;
 
@@ -17,6 +20,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductoServicio {
@@ -37,8 +42,14 @@ public class ProductoServicio {
         return productoRepositorio.findAll();
     }
 
-    public List<Producto> obtenerProductos(Categoria categoria) {
-        return productoRepositorio.findAllByCategoria(categoria);
+    public List<ProductoItem> obtenerTodosItemProductos() {
+        return productoRepositorio.findAll().stream()
+                .map(producto -> (ProductoItem) producto)
+                .collect(Collectors.toList());
+    }
+
+    public Optional<ProductoItem> obtenerProductoItemPorId(Integer id) {
+        return productoRepositorio.findById(id).map(producto -> (ProductoItem) producto);
     }
 
     public Producto obtenerProductoPorId(Integer id) {
@@ -69,6 +80,21 @@ public class ProductoServicio {
 
     public Producto agregarProducto(Producto producto) {
         return productoRepositorio.save(producto);
+    }
+
+    public void aplicarDescuento(Integer id, String tipo, double valor) {
+        Optional<Producto> productoOpt = productoRepositorio.findById(id);
+        if (productoOpt.isPresent()) {
+            Producto producto = productoOpt.get();
+            DescuentoStrategy descuento;
+            if ("PORCENTUAL".equals(tipo)) {
+                descuento = new DescuentoPorcentual(valor);
+            } else {
+                descuento = new DescuentoFijo(valor);
+            }
+            producto.setPrecio(descuento.aplicarDescuento(producto.getPrecio()));
+            productoRepositorio.save(producto);
+        }
     }
 
     @Transactional

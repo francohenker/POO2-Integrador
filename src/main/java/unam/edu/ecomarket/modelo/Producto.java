@@ -49,13 +49,22 @@ public class Producto extends ProductoItem {
         this.stock = (stock != null) ? stock : 0;
     }
 
-
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto", orphanRemoval = true)
     @Size(max = 10, message = "No se pueden agregar más de 10 imágenes a un producto")
     private List<Imagen> imagenes = new ArrayList<>();
 
     @Override
     public double calcularPrecio() {
+        return this.precio;
+    }
+
+    @Override
+    public String getTipo() {
+        return "Producto";
+    }
+
+    @Override
+    public double getPrecio() {
         return this.precio;
     }
 }
