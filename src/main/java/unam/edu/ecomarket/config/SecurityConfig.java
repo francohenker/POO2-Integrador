@@ -49,15 +49,15 @@ public class SecurityConfig  {
         http
                 .csrf(csrf -> csrf.disable()) // Deshabilitar CSRF si es necesario
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "/register", "/public/**").permitAll() // Rutas públicas
-                        .requestMatchers("/admin", "/admin/**").hasRole("ADMINISTRADOR") // Rutas públicas
+                        .requestMatchers("/login", "/register", "/home/**").permitAll() // Rutas públicas
+                        .requestMatchers("/admin", "/admin/**").hasRole("ADMINISTRADOR") // Rutas de administrador
                         .anyRequest().authenticated() // Protege todas las demás rutas
 
                 )
 
                 .formLogin(form -> form
                         .loginPage("/login") // Página personalizada para el login
-                        .defaultSuccessUrl("/home", true) // Redirección después del login exitoso
+                        .successHandler(new CustomAuthenticationSuccessHandler())
                         .permitAll()
                 )
                 .userDetailsService(usuarioDetallesServicio)

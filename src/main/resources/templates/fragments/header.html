@@ -5,12 +5,16 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
     <nav class="bg-gray-100 border-blue-500 px-4 lg:px-6 py-1.5">
         <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
-            <a href="https://flowbite.com" class="flex items-center">
+            <a href="/home" class="flex items-center">
                 <img src="/images/logoHeader.png" class="mr-3 h-10 sm:h-14" alt="EcoMarket Logo" />
                 <span class="self-center text-xl font-semibold whitespace-nowrap">EcoMarket</span>
             </a>
             <div class="flex items-center lg:order-2">
-                <a href="#" class="text-gray-700 hover:bg-yellow-700 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-1.5 mr-2 focus:outline-none">Ingresar</a>
+                <a href="/admin" th:if="${role == '[ROLE_ADMINISTRADOR]'}" class="text-gray-700 hover:bg-yellow-700 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-1.5 mr-2 focus:outline-none">Ir a Admin</a>
+
+                <a th:if="${#authentication.name == 'anonymousUser'}" href="/login" class="text-gray-700 hover:bg-yellow-700 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-1.5 mr-2 focus:outline-none">Ingresar</a>
+                <a th:if="${#authentication.name != 'anonymousUser'}" href="/logout" class="text-gray-700 hover:bg-yellow-700 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-1.5 mr-2 focus:outline-none">Salir</a>
+
                 <a href="/cart" class="text-gray-700 hover:bg-yellow-600 focus:ring-4 focus:bg-yellow-800 font-medium rounded-lg text-sm px-4 py-1.5 mr-2 focus:outline-none flex items-center space-x-2">
                     <i class="fa-solid fa-cart-shopping text-black text-lg"></i>
                     <span>Carrito</span>
