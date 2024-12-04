@@ -1,0 +1,29 @@
+<div class="container mx-auto mt-10">
+    <h1 class="text-3xl font-bold text-center mb-8">Aplicar Descuento</h1>
+
+    <form th:action="@{/admin/descuentos/aplicar}" th:method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="item">
+                Seleccione un Producto o Paquete
+            </label>
+            <select id="item" name="productoId" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                <option th:each="productoItem : ${productoItems}" th:value="${productoItem.id}" th:text="${productoItem.tipo == 'Paquete' ? 'Paquete: ' + productoItem.id : 'Producto: ' + productoItem.nombre}"></option>
+            </select>
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="descuento">
+                Seleccione un Descuento
+            </label>
+            <select id="descuento" name="descuentoId" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                <option th:each="descuento : ${descuentos}" th:value="${descuento.id}" th:text="${descuento.tipo + ': ' + descuento.valor}"></option>
+            </select>
+        </div>
+
+        <div class="flex items-center justify-between">
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                Aplicar Descuento
+            </button>
+        </div>
+    </form>
+</div>

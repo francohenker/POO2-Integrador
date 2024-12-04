@@ -1,5 +1,6 @@
 package unam.edu.ecomarket.modelo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,7 @@ public class Imagen {
 
     @ManyToOne
     @JoinColumn(name = "producto_id")
+    @JsonIgnore
     private Producto producto;
 
     public Imagen(String ruta) {

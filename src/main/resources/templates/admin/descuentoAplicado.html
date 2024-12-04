@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Descuento Aplicado</title>
+</head>
+<body>
+<div class="container mx-auto mt-10">
+    <h1 class="text-3xl font-bold text-center mb-8">Descuento Aplicado</h1>
+    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <p class="text-gray-700 text-sm font-bold mb-2">Producto: <span th:text="${productoItem.nombre}"></span></p>
+        <p class="text-gray-700 text-sm font-bold mb-2">Precio con Descuento: <span th:text="${precioConDescuento}"></span></p>
+    </div>
+    <div class="flex items-center justify-between">
+        <a href="/admin/descuentos" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Volver</a>
+    </div>
+</div>
+</body>
+</html>

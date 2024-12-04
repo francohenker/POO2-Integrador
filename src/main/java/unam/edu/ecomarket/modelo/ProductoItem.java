@@ -14,5 +14,12 @@ public abstract class ProductoItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(nullable = true)
+    private Double precioConDescuento;
+
+    public abstract String getTipo();
+
+    public abstract double getPrecio();
+
     public abstract double calcularPrecio();
 }
