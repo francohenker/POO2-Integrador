@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import unam.edu.ecomarket.modelo.Categoria;
 import unam.edu.ecomarket.modelo.Imagen;
 import unam.edu.ecomarket.modelo.Producto;
+import unam.edu.ecomarket.modelo.ProductoItem;
 import unam.edu.ecomarket.servicios.CategoriaServicio;
 import unam.edu.ecomarket.servicios.ProductoServicio;
 
@@ -32,6 +33,7 @@ public class ProductoControlador {
     @GetMapping({"", "/"})
     public String productos(Model modelo) {
         List<Producto> productos = productoServicio.obtenerTodosLosProductos();
+        System.out.println("Productos: " + productos);
         modelo.addAttribute("productos", productos);
         modelo.addAttribute("contenidoAdmin", "/admin/viewProducts");
         return "/admin/adminPage";

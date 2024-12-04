@@ -3,6 +3,7 @@ package unam.edu.ecomarket.modelo;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import unam.edu.ecomarket.modelo.descuento.TipoDescuento;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -16,6 +17,13 @@ public abstract class ProductoItem {
 
     @Column(nullable = true)
     private Double precioConDescuento;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = true)
+    private TipoDescuento tipoDescuentoAplicado;
+
+    @Column(nullable = true)
+    private Double valorDescuentoAplicado;
 
     public abstract String getTipo();
 

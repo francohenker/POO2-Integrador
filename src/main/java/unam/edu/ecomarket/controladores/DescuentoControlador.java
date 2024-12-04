@@ -6,6 +6,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import unam.edu.ecomarket.modelo.ProductoItem;
 import unam.edu.ecomarket.modelo.descuento.Descuento;
+import unam.edu.ecomarket.modelo.descuento.TipoDescuento;
+import unam.edu.ecomarket.modelo.descuento.DescuentoFijo;
+import unam.edu.ecomarket.modelo.descuento.DescuentoPorcentual;
+import unam.edu.ecomarket.modelo.descuento.DescuentoStrategy;
 import unam.edu.ecomarket.repositorios.DescuentoRepositorio;
 import unam.edu.ecomarket.servicios.DescuentoServicio;
 import unam.edu.ecomarket.servicios.ProductoServicio;
@@ -44,7 +48,15 @@ public class DescuentoControlador {
         if (itemOpt.isPresent() && descuentoOpt.isPresent()) {
             ProductoItem item = itemOpt.get();
             Descuento descuento = descuentoOpt.get();
-            double precioConDescuento = descuentoServicio.calcularConDescuento(item, descuento);
+            DescuentoStrategy descuentoStrategy;
+
+            if (descuento.getTipo() == TipoDescuento.PORCENTUAL) {
+                descuentoStrategy = new DescuentoPorcentual(descuento.getValor());
+            } else {
+                descuentoStrategy = new DescuentoFijo(descuento.getValor());
+            }
+
+            double precioConDescuento = descuentoServicio.calcularConDescuento(item, descuentoStrategy, descuento.getTipo(), descuento.getValor());
             model.addAttribute("precioConDescuento", precioConDescuento);
             model.addAttribute("productoItem", item);
         }
