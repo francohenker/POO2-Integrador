@@ -54,12 +54,15 @@ public class ProductoControlador {
             @RequestParam(name = "nombre") String nombre,
             @RequestParam(name = "descripcion") String descripcion,
             @RequestParam(name = "precio") double precio,
-            @RequestParam(name = "categoria") Long categoria,
+            @RequestParam(name = "categoria", required = false) Long categoria,
             @RequestParam(name = "imagen", required = false) MultipartFile imagen,
             @RequestParam(name = "stock", required = false) Integer stock
             )
     {
         try {
+            if(categoria == null) {
+                return "redirect:/admin/producto/crear";
+            }
             Categoria categoriaObj = categoriaServicio.obtenerCategoriaPorId(categoria);
             Producto producto = new Producto(nombre, descripcion, categoriaObj, precio, stock, new ArrayList<>());
 

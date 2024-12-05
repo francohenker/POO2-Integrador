@@ -9,9 +9,10 @@ import java.util.List;
 @Service
 public class CarritoServicio {
 
-    private List<Producto> productosEnCarrito = new ArrayList<>();
+    private ArrayList<Producto> productosEnCarrito = new ArrayList<>();
 
-    public void agregarProducto(Producto producto) {
+    public void agregarProducto(Producto producto, Integer cantidad) {
+        producto.setCantidad(cantidad);
         productosEnCarrito.add(producto);
     }
 
@@ -19,21 +20,10 @@ public class CarritoServicio {
         return productosEnCarrito;
     }
 
-//    public void agregarProducto(Producto producto) {
-//        for (Producto p : productosEnCarrito) {
-//            if (p.getId().equals(producto.getId())) {
-//                p.setStock(p.getStock() + 1);
-//                return;
-//            }
-//        }
-//        producto.setStock(1);
-//        productosEnCarrito.add(producto);
-//    }
-
     public void incrementarCantidad(Integer id) {
         for (Producto p : productosEnCarrito) {
-            if (p.getId().equals(id)) {
-                p.setStock(p.getStock() + 1);
+            if (p.getId().equals(id) && p.getStock() < p.getCantidad()) {
+                p.setCantidad(p.getCantidad() + 1);
                 return;
             }
         }
@@ -42,7 +32,7 @@ public class CarritoServicio {
     public void decrementarCantidad(Integer id) {
         for (Producto p : productosEnCarrito) {
             if (p.getId().equals(id) && p.getStock() > 1) {
-                p.setStock(p.getStock() - 1);
+                p.setCantidad(p.getCantidad() - 1);
                 return;
             }
         }

@@ -25,17 +25,11 @@
                 <td class="py-2" th:text="${producto.nombre}">Nombre del producto</td>
                 <td class="py-2">
                     <div class="flex items-center justify-center">
-                        <button type="button" class="bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-2 h-8 focus:ring-gray-100 focus:ring-2 focus:outline-none" th:attr="onclick='decrementarCantidad(' + ${producto.id} + ')'">
-                            <svg class="w-3 h-3 text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16"/>
-                            </svg>
-                        </button>
-                        <input type="number" class="bg-gray-50 border-x-0 border-gray-300 h-8 text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-12 mx-2" th:value="${producto.cantidad}" readonly/>
-                        <button type="button" class="bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-2 h-8 focus:ring-gray-100 focus:ring-2 focus:outline-none" th:attr="onclick='incrementarCantidad(' + ${producto.id} + ')'">
-                            <svg class="w-3 h-3 text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-                            </svg>
-                        </button>
+                        <input type="number"
+                               inputmode="number"
+                               name="quantity-input"
+                               class="bg-gray-50 border-x-0 border-gray-300 h-8 text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-12 mx-2"0
+                               th:value="${producto.cantidad}" />
                     </div>
                 </td>
                 <td class="py-2" th:text="${'$' + producto.precio}">Precio</td>
@@ -45,11 +39,10 @@
         </table>
     </div>
 </div>
-<!--<div th:button="~{fragments/comprar :: comprar}"></div>-->
 <!-- Botón para abrir el modal -->
 <div th:fragment="comprar" class="flex justify-center mt-10">
-    <button id="openModal" class="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-700">
-        Abrir Formulario
+    <button id="openModal" class="px-4 py-2 text-white bg-green-500 rounded hover:bg-blue-700">
+        Comprar
     </button>
 </div>
 
@@ -214,6 +207,8 @@
         const closeModal = document.getElementById('closeModal');
         const closeModalFooter = document.getElementById('closeModalFooter');
         const modal = document.getElementById('modal');
+        const increment = document.getElementById('increment-button');
+
 
         // Abrir el modal
         openModal.addEventListener('click', () => {
@@ -228,46 +223,5 @@
         closeModal.addEventListener('click', closeModalFunc);
         closeModalFooter.addEventListener('click', closeModalFunc);
     </script>
-
-
-
-
-<script>
-    function incrementarCantidad(productId) {
-        fetch('/carrito/incrementar', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: new URLSearchParams({
-                'id': productId
-            })
-        }).then(response => {
-            if (response.ok) {
-                location.reload();
-            } else {
-                alert('Error al incrementar la cantidad');
-            }
-        });
-    }
-
-    function decrementarCantidad(productId) {
-        fetch('/carrito/decrementar', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: new URLSearchParams({
-                'id': productId
-            })
-        }).then(response => {
-            if (response.ok) {
-                location.reload();
-            } else {
-                alert('Error al decrementar la cantidad');
-            }
-        });
-    }
-</script>
 </body>
 </html>

@@ -1,4 +1,3 @@
-<!-- src/main/resources/templates/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,12 +10,32 @@
     <!-- Incluir el fragmento header -->
     <div th:insert="~{fragments/header :: header}"></div>
 
-    <h1>Bienvenido a EcoMarket</h1>
-    <div th:insert="~{fragments/carousel :: carousel}"></div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 p-1">
+        <div th:each="producto : ${productos}">
+            <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
+                <a th:href="@{'/producto/' + ${producto.id}}">
+                    <img     class="rounded-t-lg max-w-full h-60 object-cover"
+                             th:src="@{${producto.imagenes[0].getRuta()}}"
+                             alt="product image">
+                </a>
+                <div class="p-5">
+                    <a th:href="@{'/producto/' + ${producto.id}}">
+                        <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white" th:text="${producto.nombre}">Product Name</h5>
+                    </a>
+                    <div class="flex items-center mt-2.5 mb-5">
+                        <div class="flex items-center space-x-1 rtl:space-x-reverse">
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-3xl font-bold text-gray-900 dark:text-white" th:text="${'$' + producto.precio}">$599</span>
+                        <a th:href="@{'/producto/' + ${producto.id}}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Ver producto</a>
+                    </div>
+                </div>
+            </div>
 
 
-<!--    <div th:replace="~{__${contenido}__}"></div>-->
-
+        </div>
+    </div>
 
     <!-- Incluir el fragmento footer -->
     <div th:insert="~{fragments/footer :: footer}"></div>

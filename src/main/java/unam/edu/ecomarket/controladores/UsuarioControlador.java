@@ -26,7 +26,6 @@ public class UsuarioControlador {
     public String register(@Valid @ModelAttribute Usuario usuario) {
         try {
             Usuario nuevoUsuario = usuarioServicio.registrarUsuario(new Usuario(usuario.getNombre(), usuario.getApellido(), usuario.getCorreo(), usuario.getPassword()));
-            System.out.println(usuario.getIdUsuario());
             if (nuevoUsuario.getIdUsuario() == null) {
                 return "register";
             }

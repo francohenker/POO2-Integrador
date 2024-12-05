@@ -40,6 +40,14 @@ public class Producto extends ProductoItem {
     @Column(nullable = false)
     private Integer stock = 0;
 
+    @NotBlank
+    private Integer cantidad = 1;
+
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto", orphanRemoval = true)
+    @Size(max = 10, message = "No se pueden agregar más de 10 imágenes a un producto")
+    private List<Imagen> imagenes = new ArrayList<>();
+
     public Producto(String nombre, String descripcion, Categoria categoria, double precio, Integer stock, List<Imagen> imagenes) {
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -48,11 +56,6 @@ public class Producto extends ProductoItem {
         this.imagenes = (imagenes != null) ? new ArrayList<>(imagenes) : new ArrayList<>();
         this.stock = (stock != null) ? stock : 0;
     }
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto", orphanRemoval = true)
-    @Size(max = 10, message = "No se pueden agregar más de 10 imágenes a un producto")
-    private List<Imagen> imagenes = new ArrayList<>();
-
     @Override
     public double calcularPrecio() {
         return this.precio;

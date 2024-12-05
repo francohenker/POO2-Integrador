@@ -20,7 +20,7 @@
         <p class="text-sm text-gray-600 mb-2" th:text="${producto.descripcion}">Descripción del producto</p>
         <p class="text-lg font-semibold text-blue-600 mb-4" th:text="${'$' + producto.precio}">Precio</p>
         <p class="text-sm text-green-600 mb-4" th:text="${producto.stock > 0 ? producto.stock + ' En stock - Disponible para envío inmediato' : 'Agotado'}">Estado</p>
-        <form action="/cart" method="post" class="space-y-4">
+        <form action="/cart/agregarAlCarrito" method="post" class="space-y-4">
             <!-- Cantidad -->
             <div>
                 <label for="quantity-input" class="block mb-2 text-sm font-medium text-gray-900">Cantidad</label>
@@ -32,9 +32,10 @@
                     </button>
                     <input
                             type="hidden"
-                            name="id_producto" value="1">
+                            name="id" value="1">
                     <input
                             type="number"
+                            name="cantidad"
                             id="quantity-input"
                             inputmode="number"
                             class="bg-gray-50 border-x-0 border-gray-300 h-11 text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5"
@@ -52,33 +53,13 @@
                 </div>
             </div>
             <!-- Botones -->
-            <button type="submit" class="w-full bg-green-600 hover:bg-green-500 text-white py-2 rounded-lg font-medium" onclick="" > Comprar ahora</button>
-<!--            <button th:button="~{comprar :: comprar}"></button>-->
-            <button type="button" class="w-full bg-gray-400 hover:bg-gray-100 text-gray-700 py-2 rounded-lg font-medium"
-                    onclick="agregarAlCarrito([[${producto.id}]])">Agregar al carrito</button>
+            <button type="button" class="w-full bg-green-600 hover:bg-green-500 text-white py-2 rounded-lg font-medium" onclick="" >Comprar ahora</button>
+            <button type="submit" class="w-full bg-gray-400 hover:bg-gray-100 text-gray-700 py-2 rounded-lg font-medium">Agregar al carrito</button>
         </form>
     </div>
 </div>
 
 <script>
-    //agregar al carrito
-    function agregarAlCarrito(productId) {
-        fetch('/producto/agregarAlCarrito', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: new URLSearchParams({
-                'id': productId
-            })
-        }).then(response => {
-            if (response.ok) {
-                alert('Producto agregado al carrito');
-            } else {
-                alert('Error al agregar el producto al carrito');
-            }
-        });
-    }
 
     // Script para incrementar y decrementar cantidad
     const incrementButton = document.getElementById("increment-button");
