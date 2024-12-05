@@ -100,7 +100,12 @@ public class DescuentoControlador {
     @GetMapping("/productosConDescuentos")
     public String mostrarProductosConDescuentos(Model model) {
         List<Producto> productosConDescuento = productoServicio.obtenerProductosConDescuento();
+
         List<Paquete> paquetesConDescuento = paqueteServicio.obtenerPaquetesConDescuento();
+
+        System.out.println("Productos con descuento: " + productosConDescuento);
+        System.out.println("Paquetes con descuento: " + paquetesConDescuento);
+
         model.addAttribute("productosConDescuento", productosConDescuento);
         model.addAttribute("paquetesConDescuento", paquetesConDescuento);
         return "admin/productosConDescuentos";

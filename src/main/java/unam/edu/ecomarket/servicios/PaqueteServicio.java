@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import unam.edu.ecomarket.modelo.Paquete;
 import unam.edu.ecomarket.modelo.ProductoItem;
+import unam.edu.ecomarket.modelo.descuento.DescuentoFijo;
+import unam.edu.ecomarket.modelo.descuento.DescuentoPorcentual;
+import unam.edu.ecomarket.modelo.descuento.DescuentoStrategy;
 import unam.edu.ecomarket.repositorios.PaqueteRepositorio;
 
 import java.util.List;
@@ -18,6 +21,18 @@ public class PaqueteServicio {
 
     public List<Paquete> obtenerTodosLosPaquetes() {
         return paqueteRepositorio.findAll();
+    }
+
+    public List<Paquete> obtenerPaquetesConDescuento() {
+        return paqueteRepositorio.findAll().stream()
+                .filter(paquete -> paquete.getPrecioConDescuento() != null)
+                .toList();
+    }
+
+    public double calcularPrecioOriginal(Paquete paquete) {
+        return paquete.getItems().stream()
+                .mapToDouble(ProductoItem::getPrecio)
+                .sum();
     }
 
     public Paquete agregarPaquete(Paquete paquete) {
@@ -42,5 +57,21 @@ public class PaqueteServicio {
 
     public Paquete actualizarPaquete(Paquete paquete) {
         return paqueteRepositorio.save(paquete);
+    }
+
+    public void aplicarDescuento(Integer id, String tipo, double valor) {
+        Optional<Paquete> paqueteOpt = paqueteRepositorio.findById(id);
+        if (paqueteOpt.isPresent()) {
+            Paquete paquete = paqueteOpt.get();
+            DescuentoStrategy descuento;
+            if ("PORCENTUAL".equals(tipo)) {
+                descuento = new DescuentoPorcentual(valor);
+            } else {
+                descuento = new DescuentoFijo(valor);
+            }
+            double precioOriginal = calcularPrecioOriginal(paquete);
+            paquete.setPrecioConDescuento(descuento.aplicarDescuento(precioOriginal));
+            paqueteRepositorio.save(paquete);
+        }
     }
 }

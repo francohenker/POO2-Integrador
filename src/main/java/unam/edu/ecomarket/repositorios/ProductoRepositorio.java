@@ -10,6 +10,8 @@ import java.util.List;
 @Repository
 public interface ProductoRepositorio extends JpaRepository<Producto, Integer> {
 
+    List<Producto> findByPrecioConDescuentoGreaterThan(double precioConDescuento);
+
     List<Producto> findAllByCategoria(Categoria categoria);
 
     Producto deleteProductoById(Integer id);

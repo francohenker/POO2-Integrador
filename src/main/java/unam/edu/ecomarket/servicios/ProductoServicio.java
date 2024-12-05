@@ -46,10 +46,11 @@ public class ProductoServicio {
         return productoRepositorio.findAll();
     }
 
-    public List<ProductoItem> obtenerTodosItemProductos() {
+    public List<Producto> obtenerProductosConDescuento() {
+        System.out.println("Obteniendo productos con descuento");
         return productoRepositorio.findAll().stream()
-                .map(producto -> (ProductoItem) producto)
-                .collect(Collectors.toList());
+                .filter(producto -> producto.getPrecioConDescuento() != null)
+                .toList();
     }
 
     public List<ProductoItem> obtenerTodosItem() {
