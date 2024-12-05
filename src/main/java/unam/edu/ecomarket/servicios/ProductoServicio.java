@@ -12,6 +12,7 @@ import unam.edu.ecomarket.modelo.ProductoItem;
 import unam.edu.ecomarket.modelo.descuento.DescuentoStrategy;
 import unam.edu.ecomarket.modelo.descuento.DescuentoFijo;
 import unam.edu.ecomarket.modelo.descuento.DescuentoPorcentual;
+import unam.edu.ecomarket.repositorios.ProductoItemRepositorio;
 import unam.edu.ecomarket.repositorios.ProductoRepositorio;
 import unam.edu.ecomarket.repositorios.CategoriaRepositorio;
 
@@ -34,6 +35,9 @@ public class ProductoServicio {
     @Autowired
     private CategoriaRepositorio categoriaRepositorio;
 
+    @Autowired
+    private ProductoItemRepositorio productoItemRepositorio;
+
     public ProductoServicio(ProductoRepositorio productoRepositorio) {
         this.productoRepositorio = productoRepositorio;
     }
@@ -42,10 +46,15 @@ public class ProductoServicio {
         return productoRepositorio.findAll();
     }
 
-    public List<ProductoItem> obtenerTodosItemProductos() {
+    public List<Producto> obtenerProductosConDescuento() {
+        System.out.println("Obteniendo productos con descuento");
         return productoRepositorio.findAll().stream()
-                .map(producto -> (ProductoItem) producto)
-                .collect(Collectors.toList());
+                .filter(producto -> producto.getPrecioConDescuento() != null)
+                .toList();
+    }
+
+    public List<ProductoItem> obtenerTodosItem() {
+        return productoItemRepositorio.findAll();
     }
 
     public Optional<ProductoItem> obtenerProductoItemPorId(Integer id) {

@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import unam.edu.ecomarket.modelo.Producto;
+import unam.edu.ecomarket.modelo.Paquete;
 import unam.edu.ecomarket.modelo.ProductoItem;
 import unam.edu.ecomarket.modelo.descuento.Descuento;
 import unam.edu.ecomarket.modelo.descuento.TipoDescuento;
@@ -12,8 +14,8 @@ import unam.edu.ecomarket.modelo.descuento.DescuentoPorcentual;
 import unam.edu.ecomarket.modelo.descuento.DescuentoStrategy;
 import unam.edu.ecomarket.repositorios.DescuentoRepositorio;
 import unam.edu.ecomarket.servicios.DescuentoServicio;
-import unam.edu.ecomarket.servicios.ProductoServicio;
 import unam.edu.ecomarket.servicios.PaqueteServicio;
+import unam.edu.ecomarket.servicios.ProductoServicio;
 
 import java.util.List;
 import java.util.Optional;
@@ -34,33 +36,38 @@ public class DescuentoControlador {
     @Autowired
     private DescuentoServicio descuentoServicio;
 
+    @GetMapping
+    public String mostrarProductosConDescuentos(Model model) {
+        List<Producto> productosConDescuento = productoServicio.obtenerProductosConDescuento();
+        List<Paquete> paquetesConDescuento = paqueteServicio.obtenerPaquetesConDescuento();
+
+        model.addAttribute("productosConDescuento", productosConDescuento);
+        model.addAttribute("paquetesConDescuento", paquetesConDescuento);
+
+        model.addAttribute("contenidoAdmin", "/admin/viewDiscount");
+        return "admin/adminPage";
+    }
 
     @GetMapping("/crear")
     public String mostrarFormularioDescuentos(Model model) {
-        model.addAttribute("descuento", new Descuento());
+        List<ProductoItem> productoItems = productoServicio.obtenerTodosItem();
+        List<Descuento> descuentos = descuentoRepositorio.findAll();
+        model.addAttribute("productoItems", productoItems);
+        model.addAttribute("descuentos", descuentos);
         model.addAttribute("contenidoAdmin", "/admin/addDiscount");
         return "/admin/adminPage";
     }
-
-
-    @ModelAttribute("items")
-    public List<ProductoItem> populateItems(@RequestParam(value = "tipoProducto", required = false) String tipoProducto) {
-        System.out.println("Tipo de producto: " + tipoProducto);
-        if ("paquete".equals(tipoProducto)) {
-            System.out.println("Obteniendo todos los items de paquetes");
-            return paqueteServicio.obtenerTodosLosItemsPaquetes();
-        } else {
-            System.out.println("Obteniendo todos los items de productos");
-            return productoServicio.obtenerTodosItemProductos();
-        }
-    }
-
-
 
     @PostMapping("/aplicar")
     public String aplicarDescuento(@RequestParam Integer productoId, @RequestParam Integer descuentoId, Model model) {
         Optional<ProductoItem> itemOpt = productoServicio.obtenerProductoItemPorId(productoId);
         Optional<Descuento> descuentoOpt = descuentoRepositorio.findById(descuentoId);
+        String tipoProducto = "Producto";
+
+        if (itemOpt.isEmpty()){
+            itemOpt = paqueteServicio.obtenerPaqueteItemPorId(productoId);
+            tipoProducto = "Paquete";
+        }
 
         if (itemOpt.isPresent() && descuentoOpt.isPresent()) {
             ProductoItem item = itemOpt.get();
@@ -73,20 +80,35 @@ public class DescuentoControlador {
                 descuentoStrategy = new DescuentoFijo(descuento.getValor());
             }
 
-            double precioConDescuento = descuentoServicio.calcularConDescuento(item, descuentoStrategy, descuento.getTipo(), descuento.getValor());
+            double precioConDescuento = descuentoServicio.calcularConDescuento(item, descuentoStrategy, descuento.getTipo(), descuento.getValor(), tipoProducto);
 
             model.addAttribute("precioConDescuento", precioConDescuento);
             model.addAttribute("productoItem", item);
         }
 
-        return "redirect:/admin/descuentos/productosConDescuentos";
+        return "redirect:/admin/descuentos";
     }
 
-    @GetMapping("/productosConDescuentos")
-    public String mostrarProductosConDescuentos(Model model) {
-        List<ProductoItem> productoItems = productoServicio.obtenerTodosItemProductos();
-        model.addAttribute("productoItems", productoItems);
-        model.addAttribute("contenidoAdmin", "/admin/productosConDescuentos");
-        return "admin/adminPage";
+
+    @DeleteMapping("/eliminar")
+    public String eliminarDescuento(@RequestParam Integer productoId, Model model) {
+        Optional<ProductoItem> itemOpt = productoServicio.obtenerProductoItemPorId(productoId);
+        String tipoProducto = "Producto";
+
+        if (itemOpt.isEmpty()) {
+            itemOpt = paqueteServicio.obtenerPaqueteItemPorId(productoId);
+            tipoProducto = "Paquete";
+        }
+
+        if (itemOpt.isPresent()) {
+            ProductoItem item = itemOpt.get();
+            descuentoServicio.eliminarDescuento(item, tipoProducto);
+        }
+
+        return "redirect:/admin/descuentos";
     }
+
+
+
+
 }

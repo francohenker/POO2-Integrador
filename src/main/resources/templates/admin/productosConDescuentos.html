@@ -4,27 +4,46 @@
     <title>Productos con Descuentos</title>
 </head>
 <body>
-<div class="container mx-auto mt-10">
-    <h1 class="text-3xl font-bold text-center mb-8">Productos con Descuentos Aplicados</h1>
-    <table class="table-auto w-full">
-        <thead>
-        <tr>
-            <th class="px-4 py-2">Producto</th>
-            <th class="px-4 py-2">Precio Original</th>
-            <th class="px-4 py-2">Precio con Descuento</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="productoItem : ${productoItems}">
-            <td class="border px-4 py-2" th:text="${productoItem.nombre}"></td>
-            <td class="border px-4 py-2" th:text="${productoItem.precio}"></td>
-            <td class="border px-4 py-2" th:text="${productoItem.precioConDescuento}"></td>
-        </tr>
-        </tbody>
-    </table>
-    <div class="flex items-center justify-between mt-4">
-        <a href="/admin/descuentos" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Volver</a>
-    </div>
-</div>
+<h1>Productos con Descuentos</h1>
+
+<h2>Productos</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Precio Original</th>
+        <th>Precio con Descuento</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="producto : ${productosConDescuento}">
+        <td th:text="${producto.nombre}"></td>
+        <td th:text="${producto.descripcion}"></td>
+        <td th:text="${producto.precio}"></td>
+        <td th:text="'$' + ${producto.precioConDescuento}">Precio con Descuento</td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>Paquetes</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Precio Original</th>
+        <th>Precio con Descuento</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="paquete : ${paquetesConDescuento}">
+        <td th:text="${paquete.nombre}"></td>
+        <td th:text="${paquete.descripcion}"></td>
+        <td th:text="${paquete.precio}"></td>
+        <td th:text="'$' + ${paquete.precioConDescuento}"></td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>

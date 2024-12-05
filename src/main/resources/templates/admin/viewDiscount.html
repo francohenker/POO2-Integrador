@@ -1,0 +1,130 @@
+<script src="https://cdn.tailwindcss.com"></script>
+<section class="bg-gray-50 p-3 sm:p-5">
+    <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
+        <!-- Start coding here -->
+        <div class="bg-white relative shadow-md sm:rounded-lg overflow-hidden">
+            <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
+                <h2>Descuentos en Productos</h2>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left text-gray-500">
+                    <thead class="text-xs text-gray-700 uppercase bg-green-800/50">
+                    <tr>
+                        <th class="px-4 py-2">Nombre del Producto</th>
+                        <th class="px-4 py-2">Categoría</th>
+                        <th class="px-4 py-2">Precio</th>
+                        <th class="px-4 py-2">Tipo Aplicado</th>
+                        <th class="px-4 py-2">Descuento</th>
+                        <th class="px-4 py-2">Precio con Descuento</th>
+                        <th class="px-4 py-2"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="border-b" th:each="producto : ${productosConDescuento}">
+                        <td th:text="${producto.nombre}">Nombre</td>
+                        <td th:text="${producto.categoria.nombre}">Categoria</td>
+                        <td th:text="${'$' + producto.precio}">Precio</td>
+                        <td th:text="${producto.tipoDescuentoAplicado}">Tipo</td>
+                        <td th:text="${producto.valorDescuentoAplicado}">Descuento</td>
+                        <td th:text="'$' + ${producto.precioConDescuento}">Precio con Descuento</td>
+
+                        <td class="px-4 py-2">
+                            <form th:action="@{'/admin/descuentos/eliminar'}" th:method="post" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este descuento?');">
+                                <input type="hidden" name="_method" value="delete"/>
+                                <input type="hidden" name="productoId" th:value="${producto.id}"/>
+                                <button type="submit" class="block py-2 px-4 text-sm hover:bg-red-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-300">
+                                    Eliminar
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
+                <h2>Descuentos en Paquetes</h2>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left text-gray-500">
+                    <thead class="text-xs text-gray-700 uppercase bg-green-800/50">
+                    <tr>
+                        <th class="px-4 py-2">Nombre</th>
+                        <th class="px-4 py-2">Items</th>
+                        <th class="px-4 py-2">Precio Original</th>
+                        <th class="px-4 py-2">Tipo Aplicado</th>
+                        <th class="px-4 py-2">Descuento</th>
+                        <th class="px-4 py-2">Precio con Descuento</th>
+                        <th class="px-4 py-2"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="border-b" th:each="paquete : ${paquetesConDescuento}">
+                        <td th:text="${paquete.nombre}">Nombre</td>
+                        <td>
+                            <ul>
+                                <li th:each="item : ${paquete.items}" th:text="${item.nombre}">Item</li>
+                            </ul>
+                        </td>
+                        <td th:text="${'$' + paquete.precio}">Precio</td>
+                        <td th:text="${paquete.tipoDescuentoAplicado}">Tipo</td>
+                        <td th:text="${paquete.valorDescuentoAplicado}">Descuento</td>
+                        <td th:text="'$' + ${paquete.precioConDescuento}">Precio con Descuento</td>
+
+
+                        <td class="px-4 py-2">
+                            <form th:action="@{'/admin/descuentos/eliminar'}" th:method="post" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este descuento?');">
+                                <input type="hidden" name="_method" value="delete"/>
+                                <input type="hidden" name="productoId" th:value="${paquete.id}"/>
+                                <button type="submit" class="block py-2 px-4 text-sm hover:bg-red-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-300">
+                                    Eliminar
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Seleccionar todos los botones y menús desplegables
+        const dropdownButtons = document.querySelectorAll('.dropdown-button');
+        const dropdownMenus = document.querySelectorAll('.dropdown-menu');
+
+        let activeMenu = null; // Variable para rastrear el menú actualmente abierto
+
+        dropdownButtons.forEach((button, index) => {
+            const menu = dropdownMenus[index];
+
+            button.addEventListener('click', (event) => {
+                event.stopPropagation(); // Evitar que el clic se propague
+
+                // Cerrar el menú actualmente abierto, si existe y no es el actual
+                if (activeMenu && activeMenu !== menu) {
+                    activeMenu.classList.add('hidden');
+                }
+
+                // Alternar el menú actual
+                const isMenuHidden = menu.classList.contains('hidden');
+                menu.classList.toggle('hidden', !isMenuHidden);
+
+                // Actualizar el menú activo
+                activeMenu = isMenuHidden ? menu : null;
+            });
+        });
+
+        // Cerrar todos los menús si se hace clic fuera
+        document.addEventListener('click', () => {
+            dropdownMenus.forEach((menu) => {
+                menu.classList.add('hidden');
+            });
+            activeMenu = null; // Reiniciar el menú activo
+        });
+    });
+</script>
+
+
