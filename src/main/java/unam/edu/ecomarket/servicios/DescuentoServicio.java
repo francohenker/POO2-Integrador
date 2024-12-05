@@ -36,4 +36,16 @@ public class DescuentoServicio {
         }
         return precioConDescuento;
     }
+
+    public void eliminarDescuento(ProductoItem item, String tipoProducto) {
+        item.setPrecioConDescuento(null);
+        item.setTipoDescuentoAplicado(null);
+        item.setValorDescuentoAplicado(null);
+
+        if (item instanceof Producto) {
+            productoRepositorio.save((Producto) item);
+        } else if (item instanceof Paquete) {
+            paqueteRepositorio.save((Paquete) item);
+        }
+    }
 }

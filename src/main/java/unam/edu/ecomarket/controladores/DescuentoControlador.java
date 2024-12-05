@@ -86,8 +86,29 @@ public class DescuentoControlador {
             model.addAttribute("productoItem", item);
         }
 
-        return "redirect:/admin/descuentos/productosConDescuentos";
+        return "redirect:/admin/descuentos";
     }
+
+
+    @DeleteMapping("/eliminar")
+    public String eliminarDescuento(@RequestParam Integer productoId, Model model) {
+        Optional<ProductoItem> itemOpt = productoServicio.obtenerProductoItemPorId(productoId);
+        String tipoProducto = "Producto";
+
+        if (itemOpt.isEmpty()) {
+            itemOpt = paqueteServicio.obtenerPaqueteItemPorId(productoId);
+            tipoProducto = "Paquete";
+        }
+
+        if (itemOpt.isPresent()) {
+            ProductoItem item = itemOpt.get();
+            descuentoServicio.eliminarDescuento(item, tipoProducto);
+        }
+
+        return "redirect:/admin/descuentos";
+    }
+
+
 
 
 }

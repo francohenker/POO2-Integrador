@@ -46,7 +46,9 @@
                                     </li>
                                 </ul>
                                 <div class="py-1">
-                                    <form th:action="@{'/admin/producto/' + ${producto.id}}" th:method="delete" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este producto?');">
+                                    <form th:action="@{'/admin/descuentos/eliminar'}" th:method="post" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este descuento?');">
+                                        <input type="hidden" name="_method" value="delete"/>
+                                        <input type="hidden" name="productoId" th:value="${producto.id}"/>
                                         <button type="submit" class="block py-2 px-4 text-sm text-gray-700 hover:bg-red-200">Eliminar</button>
                                     </form>
                                 </div>
@@ -103,7 +105,9 @@
                                     </li>
                                 </ul>
                                 <div class="py-1">
-                                    <form th:action="@{'/admin/paquete/' + ${paquete.id}}" th:method="delete" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este paquete?');">
+                                    <form th:action="@{'/admin/descuentos/eliminar'}" th:method="post" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este descuento?');">
+                                        <input type="hidden" name="_method" value="delete"/>
+                                        <input type="hidden" name="productoId" th:value="${paquete.id}"/>
                                         <button type="submit" class="block py-2 px-4 text-sm text-gray-700 hover:bg-red-200">Eliminar</button>
                                     </form>
                                 </div>
