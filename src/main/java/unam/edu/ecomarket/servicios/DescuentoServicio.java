@@ -19,7 +19,7 @@ public class DescuentoServicio {
     @Autowired
     private PaqueteRepositorio paqueteRepositorio;
 
-    public double calcularConDescuento(ProductoItem item, DescuentoStrategy descuentoStrategy, TipoDescuento tipoDescuento, double valorDescuento, String tipoProducto) {
+    public double calcularConDescuento(ProductoItem item, DescuentoStrategy descuentoStrategy, TipoDescuento tipoDescuento, double valorDescuento) {
         double precioConDescuento = descuentoStrategy.aplicarDescuento(item.getPrecio());
         item.setPrecioConDescuento(precioConDescuento);
         item.setTipoDescuentoAplicado(tipoDescuento);
@@ -37,7 +37,7 @@ public class DescuentoServicio {
         return precioConDescuento;
     }
 
-    public void eliminarDescuento(ProductoItem item, String tipoProducto) {
+    public void eliminarDescuento(ProductoItem item) {
         item.setPrecioConDescuento(null);
         item.setTipoDescuentoAplicado(null);
         item.setValorDescuentoAplicado(null);
