@@ -3,7 +3,6 @@ package unam.edu.ecomarket.modelo;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import unam.edu.ecomarket.modelo.descuento.Descuento;
 import unam.edu.ecomarket.modelo.descuento.TipoDescuento;
 
 @Entity
@@ -31,4 +30,13 @@ public abstract class ProductoItem {
     public abstract double getPrecio();
 
     public abstract double calcularPrecio();
+
+    public double calcularPrecioConDescuento() {
+        if (tipoDescuentoAplicado == TipoDescuento.PORCENTUAL) {
+            return getPrecio() * (1 - valorDescuentoAplicado / 100);
+        } else if (tipoDescuentoAplicado == TipoDescuento.FIJO) {
+            return getPrecio() - valorDescuentoAplicado;
+        }
+        return getPrecio();
+    }
 }
