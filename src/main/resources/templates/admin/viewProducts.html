@@ -40,14 +40,8 @@
                         <td th:text="${producto.stock}">Cantidad</td>
                         <td th:text="${'$' + producto.precio}">Precio</td>
 
-                        <script th:inline="javascript">
-                            console.log([[${producto.tipoDescuentoAplicado}]]);
-                        </script>
-
-                        <td th:text="${producto.tipoDescuentoAplicado == 'PORCENTUAL' ? producto.valorDescuentoAplicado + '%' : (producto.tipoDescuentoAplicado == 'FIJO' ? '$' + producto.valorDescuentoAplicado : '-')}">Descuento</td>
-
-                        <td th:if="${producto.tipoDescuentoAplicado != null}" th:text="${'$' + producto.valorDescuentoAplicado}">Holaaa</td>
-
+                        <td th:if="${producto.tipoDescuentoAplicado != null}" th:text="${'$' + producto.valorDescuentoAplicado}">Descuento</td>
+                        <td th:unless="${producto.tipoDescuentoAplicado != null}">-</td>
 
                         <td th:if="${producto.precioConDescuento != null}" th:text="'$' + ${producto.precioConDescuento}">Precio con Descuento</td>
                         <td th:unless="${producto.precioConDescuento != null}">-</td>
@@ -62,7 +56,7 @@
                                 <ul class="py-1 text-sm text-gray-700">
                                     <li><a href="#" class="block py-2 px-4 hover:bg-green-200">Mostrar</a></li>
                                     <li>
-                                        <form th:action="@{'/admin/producto/' + |${producto.id}| + '/editar'}" th:method="get">
+                                        <form th:action="@{'/admin/producto/' + ${producto.id} + '/editar'}" th:method="get">
                                             <button class="block py-2 px-4 hover:bg-yellow-200">Editar</button>
                                         </form>
 

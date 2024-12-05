@@ -36,6 +36,18 @@ public class DescuentoControlador {
     @Autowired
     private DescuentoServicio descuentoServicio;
 
+    @GetMapping
+    public String mostrarProductosConDescuentos(Model model) {
+        List<Producto> productosConDescuento = productoServicio.obtenerProductosConDescuento();
+        List<Paquete> paquetesConDescuento = paqueteServicio.obtenerPaquetesConDescuento();
+
+        model.addAttribute("productosConDescuento", productosConDescuento);
+        model.addAttribute("paquetesConDescuento", paquetesConDescuento);
+
+        model.addAttribute("contenidoAdmin", "/admin/viewDiscount");
+        return "admin/adminPage";
+    }
+
     @GetMapping("/crear")
     public String mostrarFormularioDescuentos(Model model) {
         List<ProductoItem> productoItems = productoServicio.obtenerTodosItem();
@@ -52,62 +64,30 @@ public class DescuentoControlador {
         Optional<Descuento> descuentoOpt = descuentoRepositorio.findById(descuentoId);
         String tipoProducto = "Producto";
 
-        System.out.println("Producto ID: " + productoId);
-        System.out.println("Descuento ID: " + descuentoId);
-        System.out.println("Item: " + itemOpt);
-
         if (itemOpt.isEmpty()){
             itemOpt = paqueteServicio.obtenerPaqueteItemPorId(productoId);
             tipoProducto = "Paquete";
-            System.out.println("Item: " + itemOpt);
         }
 
         if (itemOpt.isPresent() && descuentoOpt.isPresent()) {
-            System.out.println("Linea 1");
             ProductoItem item = itemOpt.get();
-            System.out.println("Linea 2");
             Descuento descuento = descuentoOpt.get();
-            System.out.println("Linea 3");
             DescuentoStrategy descuentoStrategy;
 
-            System.out.println("Linea 4");
             if (descuento.getTipo() == TipoDescuento.PORCENTUAL) {
-                System.out.println("Linea 5");
                 descuentoStrategy = new DescuentoPorcentual(descuento.getValor());
             } else {
-                System.out.println("Linea 6");
                 descuentoStrategy = new DescuentoFijo(descuento.getValor());
             }
 
-            System.out.println("Linea 7");
-            System.out.println("Producto Item: " + item);
-            System.out.println("Descuento: " + descuentoStrategy);
-            System.out.println("Tipo de descuento: " + descuento.getTipo());
-            System.out.println("Valor de descuento: " + descuento.getValor());
-
             double precioConDescuento = descuentoServicio.calcularConDescuento(item, descuentoStrategy, descuento.getTipo(), descuento.getValor(), tipoProducto);
-            System.out.println("Linea 8");
-            System.out.println("Precio con descuento: " + precioConDescuento);
 
             model.addAttribute("precioConDescuento", precioConDescuento);
-            System.out.println("Linea 9");
             model.addAttribute("productoItem", item);
         }
 
         return "redirect:/admin/descuentos/productosConDescuentos";
     }
 
-    @GetMapping("/productosConDescuentos")
-    public String mostrarProductosConDescuentos(Model model) {
-        List<Producto> productosConDescuento = productoServicio.obtenerProductosConDescuento();
 
-        List<Paquete> paquetesConDescuento = paqueteServicio.obtenerPaquetesConDescuento();
-
-        System.out.println("Productos con descuento: " + productosConDescuento);
-        System.out.println("Paquetes con descuento: " + paquetesConDescuento);
-
-        model.addAttribute("productosConDescuento", productosConDescuento);
-        model.addAttribute("paquetesConDescuento", paquetesConDescuento);
-        return "admin/productosConDescuentos";
-    }
 }
