@@ -28,12 +28,11 @@ public class DescuentoServicio {
         if (item instanceof Producto) {
             productoRepositorio.save((Producto) item);
         } else if (item instanceof Paquete) {
-            /*
             Paquete paquete = (Paquete) item;
-            paquete.setPrecio(paquete.calcularPrecio());
+            paquete.setPrecioConDescuento(precioConDescuento);
+            paquete.setTipoDescuentoAplicado(tipoDescuento);
+            paquete.setValorDescuentoAplicado(valorDescuento);
             paqueteRepositorio.save(paquete);
-
-             */
         }
         return precioConDescuento;
     }

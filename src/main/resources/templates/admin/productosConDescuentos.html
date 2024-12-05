@@ -21,8 +21,7 @@
         <td th:text="${producto.nombre}"></td>
         <td th:text="${producto.descripcion}"></td>
         <td th:text="${producto.precio}"></td>
-        <td th:if="${producto.precioConDescuento != null}" th:text="'$' + ${producto.precioConDescuento}">Precio con Descuento</td>
-        <td th:unless="${producto.precioConDescuento != null}">-</td>
+        <td th:text="'$' + ${producto.precioConDescuento}">Precio con Descuento</td>
     </tr>
     </tbody>
 </table>
@@ -42,7 +41,7 @@
         <td th:text="${paquete.nombre}"></td>
         <td th:text="${paquete.descripcion}"></td>
         <td th:text="${paquete.precio}"></td>
-        <td th:text="${paquete.calcularPrecioConDescuento()}"></td>
+        <td th:text="'$' + ${paquete.precioConDescuento}"></td>
     </tr>
     </tbody>
 </table>

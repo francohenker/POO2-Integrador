@@ -36,6 +36,7 @@ public class PaqueteServicio {
     }
 
     public Paquete agregarPaquete(Paquete paquete) {
+        paquete.setPrecio(calcularPrecioOriginal(paquete));
         return paqueteRepositorio.save(paquete);
     }
 
@@ -56,22 +57,7 @@ public class PaqueteServicio {
     }
 
     public Paquete actualizarPaquete(Paquete paquete) {
+        paquete.setPrecio(calcularPrecioOriginal(paquete));
         return paqueteRepositorio.save(paquete);
-    }
-
-    public void aplicarDescuento(Integer id, String tipo, double valor) {
-        Optional<Paquete> paqueteOpt = paqueteRepositorio.findById(id);
-        if (paqueteOpt.isPresent()) {
-            Paquete paquete = paqueteOpt.get();
-            DescuentoStrategy descuento;
-            if ("PORCENTUAL".equals(tipo)) {
-                descuento = new DescuentoPorcentual(valor);
-            } else {
-                descuento = new DescuentoFijo(valor);
-            }
-            double precioOriginal = calcularPrecioOriginal(paquete);
-            paquete.setPrecioConDescuento(descuento.aplicarDescuento(precioOriginal));
-            paqueteRepositorio.save(paquete);
-        }
     }
 }
