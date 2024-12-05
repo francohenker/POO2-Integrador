@@ -27,4 +27,6 @@ public class HomeControlador {
         model.addAttribute("contenidoAdmin", "/admin/home");
         return "admin/adminPage";
     }
+
+
 }

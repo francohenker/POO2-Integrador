@@ -13,6 +13,7 @@ import unam.edu.ecomarket.modelo.descuento.DescuentoStrategy;
 import unam.edu.ecomarket.repositorios.DescuentoRepositorio;
 import unam.edu.ecomarket.servicios.DescuentoServicio;
 import unam.edu.ecomarket.servicios.ProductoServicio;
+import unam.edu.ecomarket.servicios.PaqueteServicio;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,20 +26,36 @@ public class DescuentoControlador {
     private ProductoServicio productoServicio;
 
     @Autowired
+    private PaqueteServicio paqueteServicio;
+
+    @Autowired
     private DescuentoRepositorio descuentoRepositorio;
 
     @Autowired
     private DescuentoServicio descuentoServicio;
 
-    @GetMapping
+
+    @GetMapping("/crear")
     public String mostrarFormularioDescuentos(Model model) {
-        List<ProductoItem> productoItems = productoServicio.obtenerTodosItemProductos();
-        List<Descuento> descuentos = descuentoRepositorio.findAll();
-        model.addAttribute("productoItems", productoItems);
-        model.addAttribute("descuentos", descuentos);
-        model.addAttribute("contenidoAdmin", "/admin/descuentos");
+        model.addAttribute("descuento", new Descuento());
+        model.addAttribute("contenidoAdmin", "/admin/addDiscount");
         return "/admin/adminPage";
     }
+
+
+    @ModelAttribute("items")
+    public List<ProductoItem> populateItems(@RequestParam(value = "tipoProducto", required = false) String tipoProducto) {
+        System.out.println("Tipo de producto: " + tipoProducto);
+        if ("paquete".equals(tipoProducto)) {
+            System.out.println("Obteniendo todos los items de paquetes");
+            return paqueteServicio.obtenerTodosLosItemsPaquetes();
+        } else {
+            System.out.println("Obteniendo todos los items de productos");
+            return productoServicio.obtenerTodosItemProductos();
+        }
+    }
+
+
 
     @PostMapping("/aplicar")
     public String aplicarDescuento(@RequestParam Integer productoId, @RequestParam Integer descuentoId, Model model) {
@@ -57,6 +74,7 @@ public class DescuentoControlador {
             }
 
             double precioConDescuento = descuentoServicio.calcularConDescuento(item, descuentoStrategy, descuento.getTipo(), descuento.getValor());
+
             model.addAttribute("precioConDescuento", precioConDescuento);
             model.addAttribute("productoItem", item);
         }
@@ -68,6 +86,7 @@ public class DescuentoControlador {
     public String mostrarProductosConDescuentos(Model model) {
         List<ProductoItem> productoItems = productoServicio.obtenerTodosItemProductos();
         model.addAttribute("productoItems", productoItems);
-        return "admin/productosConDescuentos";
+        model.addAttribute("contenidoAdmin", "/admin/productosConDescuentos");
+        return "admin/adminPage";
     }
 }
