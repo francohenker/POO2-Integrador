@@ -1,121 +1,273 @@
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-
-<section>
-    <div class="mx-auto max-w-screen-xl border-green-900 px-4 py-8 sm:px-6 sm:py-12 lg:px-8" id="cart-section" name="cart-section">
-        <div class="mx-auto max-w-3xl" id="cart-container" name="cart-container">
-            <header class="text-center" id="cart-header" name="cart-header">
-                <h1 class="text-xl font-bold text-gray-900 sm:text-3xl" id="cart-title" name="cart-title">Carrito de Compras</h1>
-            </header>
-
-            <div class="mt-8 border-t border-green-900" id="cart-items-container" name="cart-items-container">
-                <ul class="space-y-4" id="cart-items-list" name="cart-items-list">
-                    <li class="flex items-center gap-4" id="cart-item-1" name="cart-item-1">
-                        <img
-                                src="https://images.unsplash.com/photo-1618354691373-d851c5c3a990?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=830&q=80"
-                                alt="Producto 1"
-                                class="size-16 rounded object-cover"
-                                id="cart-item-image-1"
-                                name="cart-item-image-1"
-                        />
-
-                        <div id="cart-item-details-1" name="cart-item-details-1">
-                            <h3 class="text-sm text-gray-900" id="cart-item-title-1" name="cart-item-title-1">Basic Tee 6-Pack</h3>
-                            <dl class="mt-0.5 space-y-px text-[10px] text-gray-600" id="cart-item-attributes-1" name="cart-item-attributes-1">
-                                <div>
-                                    <dt class="inline" id="cart-item-size-label-1" name="cart-item-size-label-1">Size:</dt>
-                                    <dd class="inline" id="cart-item-size-1" name="cart-item-size-1">XXS</dd>
-                                </div>
-                                <div>
-                                    <dt class="inline" id="cart-item-color-label-1" name="cart-item-color-label-1">Color:</dt>
-                                    <dd class="inline" id="cart-item-color-1" name="cart-item-color-1">White</dd>
-                                </div>
-                            </dl>
-                        </div>
-
-                        <div class="flex flex-1 items-center justify-end gap-2" id="cart-item-actions-1" name="cart-item-actions-1">
-                            <div>
-                                <label for="cantidad-1" class="sr-only" name="cart-item-quantity-label-1">Cantidad</label>
-                                <div class="flex items-center gap-1">
-                                    <!-- Botón para disminuir la cantidad -->
-                                    <button
-                                            type="button"
-                                            id="decrease-1"
-                                            name="decrease-1"
-                                            class="size-10 leading-10 text-gray-600 transition hover:opacity-75"
-                                    >
-                                        &minus;
-                                    </button>
-
-                                    <!-- Campo de entrada con validaciones -->
-                                    <input
-                                            type="number"
-                                            id="cantidad-1"
-                                            name="cantidad-1"
-                                            value="1"
-                                            min="1"
-                                            step="1"
-                                            class="h-10 w-16 rounded border-gray-200 text-center focus:ring-2 focus:ring-green-500 focus:border-green-500 [-moz-appearance:_textfield] sm:text-sm [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none"
-                                    />
-
-                                    <!-- Botón para aumentar la cantidad -->
-                                    <button
-                                            type="button"
-                                            id="increase-1"
-                                            name="increase-1"
-                                            class="size-10 leading-10 text-gray-600 transition hover:opacity-75"
-                                    >
-                                        &plus;
-                                    </button>
-                                </div>
-                            </div>
-
-                            <button
-                                    class="text-red-600 hover:text-red-700 transition p-1"
-                                    id="delete-item-1"
-                                    name="delete-item-1"
-                            >
-                                <span class="sr-only" name="delete-item-label-1">Eliminar</span>
-                                <i class="fas fa-trash" name="delete-item-icon-1"></i>
-                            </button>
-                        </div>
-                    </li>
-                </ul>
-
-                <div class="mt-8 flex justify-end pt-8 background" id="cart-summary-container" name="cart-summary-container">
-                    <div class="w-screen max-w-lg space-y-4 bg-gray-50 border-t border-green-900 rounded-lg px-2 py-2" id="cart-summary" name="cart-summary">
-                        <dl class="space-y-1 text-sm text-gray-700" id="cart-summary-details" name="cart-summary-details">
-                            <div class="flex justify-between font-medium" id="summary-subtotal" name="summary-subtotal">
-                                <dt id="subtotal-label" name="subtotal-label">Subtotal</dt>
-                                <dd id="subtotal-amount" name="subtotal-amount">$666</dd>
-                            </div>
-                            <div class="flex justify-between" id="summary-shipping" name="summary-shipping">
-                                <dt id="shipping-label" name="shipping-label">Envio</dt>
-                                <dd id="shipping-amount" name="shipping-amount">$666</dd>
-                            </div>
-                            <div class="flex justify-between" id="summary-discount" name="summary-discount">
-                                <dt id="discount-label" name="discount-label">Descuento</dt>
-                                <dd id="discount-amount" name="discount-amount">$666</dd>
-                            </div>
-                            <div class="flex justify-between !text-base font-medium" id="summary-total" name="summary-total">
-                                <dt id="total-label" name="total-label">Total</dt>
-                                <dd id="total-amount" name="total-amount">$1998</dd>
-                            </div>
-                        </dl>
-
-                        <div class="flex justify-end">
-                            <a
-                                    href="#"
-                                    class="block rounded bg-green-700 px-5 py-2 text-sm text-gray-100 transition hover:bg-green-500"
-                                    id="checkout-button"
-                                    name="checkout-button"
-                            >
-                                Comprar
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Carrito de Compras</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+<div class="container mx-auto p-4">
+    <h1 class="text-2xl font-bold mb-4">Carrito de Compras</h1>
+    <div th:if="${productos.isEmpty()}">
+        <p>No hay productos en el carrito.</p>
     </div>
-</section>
+    <div th:unless="${productos.isEmpty()}">
+        <table class="min-w-full bg-white">
+            <thead>
+            <tr>
+                <th class="py-2">Producto</th>
+                <th class="py-2">Cantidad</th>
+                <th class="py-2">Precio</th>
+                <th class="py-2">Total</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="producto : ${productos}">
+                <td class="py-2" th:text="${producto.nombre}">Nombre del producto</td>
+                <td class="py-2">
+                    <div class="flex items-center justify-center">
+                        <button type="button" class="bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-2 h-8 focus:ring-gray-100 focus:ring-2 focus:outline-none" th:attr="onclick='decrementarCantidad(' + ${producto.id} + ')'">
+                            <svg class="w-3 h-3 text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16"/>
+                            </svg>
+                        </button>
+                        <input type="number" class="bg-gray-50 border-x-0 border-gray-300 h-8 text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-12 mx-2" th:value="${producto.cantidad}" readonly/>
+                        <button type="button" class="bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-2 h-8 focus:ring-gray-100 focus:ring-2 focus:outline-none" th:attr="onclick='incrementarCantidad(' + ${producto.id} + ')'">
+                            <svg class="w-3 h-3 text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+                            </svg>
+                        </button>
+                    </div>
+                </td>
+                <td class="py-2" th:text="${'$' + producto.precio}">Precio</td>
+                <td class="py-2" th:text="${'$' + (producto.precio * producto.cantidad)}">Total</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--<div th:button="~{fragments/comprar :: comprar}"></div>-->
+<!-- Botón para abrir el modal -->
+<div th:fragment="comprar" class="flex justify-center mt-10">
+    <button id="openModal" class="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-700">
+        Abrir Formulario
+    </button>
+</div>
+
+<!-- Modal -->
+<div id="modal" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-black bg-opacity-50">
+    <div class="bg-white rounded-lg shadow-lg w-11/12 max-w-3xl p-6">
+        <!-- Encabezado del modal -->
+        <div class="flex justify-between items-center border-b pb-2 mb-4">
+            <h3 class="text-lg font-semibold">Formulario de Compra</h3>
+            <button id="closeModal" class="text-gray-500 hover:text-gray-700">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <!-- Contenido del modal (formulario) -->
+        <section class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+            <div class="bg-white rounded-lg shadow-md w-full max-w-3xl mx-4 sm:mx-auto max-h-[90vh] overflow-y-auto">
+                <form action="#" class="p-6">
+                    <!-- Encabezado del Modal -->
+                    <header class="flex justify-between items-center mb-4 border-b pb-2">
+                        <h2 class="text-xl font-semibold text-gray-900">Formulario de Envío y Pago</h2>
+                        <button type="button" class="text-gray-600 hover:text-gray-800 focus:outline-none">
+                            &#x2715;
+                        </button>
+                    </header>
+
+                    <!-- Datos de Envío -->
+                    <fieldset class="mb-8">
+                        <legend class="text-lg font-semibold text-gray-900 border-b pb-2 mb-4">Datos de Envío</legend>
+                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                            <!-- Campo Teléfono -->
+                            <div>
+                                <label for="phone-input" class="block text-sm font-medium text-gray-900">Número de Teléfono</label>
+                                <input type="text" id="phone-input" name="telefono" placeholder="3758 540829" required
+                                       class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500" />
+                            </div>
+
+                            <!-- Campo Provincia -->
+                            <div>
+                                <label for="select-province" class="block text-sm font-medium text-gray-900">Provincia*</label>
+                                <select id="select-province" name="provincia"
+                                        class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500">
+                                    <option selected value="Misiones">Misiones</option>
+                                    <option value="Corrientes">Corrientes</option>
+                                </select>
+                            </div>
+
+                            <!-- Campo Ciudad -->
+                            <div>
+                                <label for="select-city" class="block text-sm font-medium text-gray-900">Ciudad*</label>
+                                <select id="select-city" name="ciudad"
+                                        class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500">
+                                    <option selected value="Apostoles">Apostoles</option>
+                                    <option value="Posadas">Posadas</option>
+                                    <option value="San Vicente">San Vicente</option>
+                                    <option value="Leandro N Alem">Leandro N Alem</option>
+                                    <option value="2 de Mayo">2 de Mayo</option>
+                                </select>
+                            </div>
+
+                            <!-- Campo Dirección -->
+                            <div>
+                                <label for="street" class="block text-sm font-medium text-gray-900">Dirección</label>
+                                <input type="text" id="street" name="direccion" placeholder="Calle Falsa 123" required
+                                       class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500" />
+                            </div>
+
+                            <!-- Campo Código Postal -->
+                            <div>
+                                <label for="codPostal" class="block text-sm font-medium text-gray-900">Código Postal</label>
+                                <input type="number" id="codPostal" name="codigo_postal" placeholder="3350" required min="1000" max="99999"
+                                       class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500" />
+                            </div>
+                        </div>
+                        <!-- Campo Referencia de Entrega -->
+                        <div class="mt-6">
+                            <label for="delivery-reference" class="block text-sm font-medium text-gray-900">Referencia de Entrega</label>
+                            <textarea id="delivery-reference" name="referencia_entrega" rows="3" placeholder="Ej: Casa blanca, portón verde"
+                                      class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"></textarea>
+                        </div>
+                    </fieldset>
+
+                    <!-- Datos de Pago -->
+                    <fieldset>
+                        <legend class="text-lg font-semibold text-gray-900 border-b pb-2 mb-4">Datos de Pago</legend>
+                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                            <!-- Método de Pago -->
+                            <div>
+                                <label for="payment-method" class="block text-sm font-medium text-gray-900">Método de Pago</label>
+                                <select id="payment-method" name="metodo_pago" onchange="toggleCardFields()"
+                                        class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500">
+                                    <option selected value="Efectivo">Efectivo</option>
+                                    <option value="Tarjeta">Tarjeta</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Datos de la Tarjeta -->
+                        <div id="card-fields" class="grid grid-cols-1 gap-6 sm:grid-cols-2 mt-6 hidden">
+                            <!-- Campo Titular de la Tarjeta -->
+                            <div>
+                                <label for="card-holder" class="block text-sm font-medium text-gray-900">Titular de la Tarjeta</label>
+                                <input type="text" id="card-holder" name="titular_tarjeta" placeholder="Nombre como aparece en la tarjeta"
+                                       class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500" />
+                            </div>
+
+                            <!-- Campo Número de Tarjeta -->
+                            <div>
+                                <label for="card-number" class="block text-sm font-medium text-gray-900">Número de Tarjeta</label>
+                                <input type="text" id="card-number" name="numero_tarjeta" placeholder="1234 5678 9012 3456"
+                                       class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500" />
+                            </div>
+
+                            <!-- Campo Fecha de Expiración -->
+                            <div>
+                                <label for="card-expiry" class="block text-sm font-medium text-gray-900">Fecha de Expiración</label>
+                                <input type="text" id="card-expiry" name="fecha_expiracion" placeholder="MM/AA"
+                                       class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500" />
+                            </div>
+
+                            <!-- Campo CVC -->
+                            <div>
+                                <label for="card-cvc" class="block text-sm font-medium text-gray-900">CVC</label>
+                                <input type="text" id="card-cvc" name="cvc_tarjeta" placeholder="123"
+                                       class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500" />
+                            </div>
+                        </div>
+
+                    </fieldset>
+
+                    <!-- Botones de acción -->
+                    <div class="mt-8 flex justify-end">
+                        <button type="reset" class="px-4 py-2 text-sm text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="ml-4 px-4 py-2 text-sm text-white bg-blue-500 rounded-lg hover:bg-blue-600">
+                            Enviar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <script>
+            function toggleCardFields() {
+                const paymentMethod = document.getElementById('payment-method').value;
+                const cardFields = document.getElementById('card-fields');
+                if (paymentMethod === 'Tarjeta') {
+                    cardFields.classList.remove('hidden');
+                } else {
+                    cardFields.classList.add('hidden');
+                }
+            }
+        </script>
+
+
+    </div>
+
+    <script>
+        // Obtener elementos del DOM
+        const openModal = document.getElementById('openModal');
+        const closeModal = document.getElementById('closeModal');
+        const closeModalFooter = document.getElementById('closeModalFooter');
+        const modal = document.getElementById('modal');
+
+        // Abrir el modal
+        openModal.addEventListener('click', () => {
+            modal.classList.remove('hidden');
+        });
+
+        // Cerrar el modal
+        const closeModalFunc = () => {
+            modal.classList.add('hidden');
+        };
+
+        closeModal.addEventListener('click', closeModalFunc);
+        closeModalFooter.addEventListener('click', closeModalFunc);
+    </script>
+
+
+
+
+<script>
+    function incrementarCantidad(productId) {
+        fetch('/carrito/incrementar', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+                'id': productId
+            })
+        }).then(response => {
+            if (response.ok) {
+                location.reload();
+            } else {
+                alert('Error al incrementar la cantidad');
+            }
+        });
+    }
+
+    function decrementarCantidad(productId) {
+        fetch('/carrito/decrementar', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+                'id': productId
+            })
+        }).then(response => {
+            if (response.ok) {
+                location.reload();
+            } else {
+                alert('Error al decrementar la cantidad');
+            }
+        });
+    }
+</script>
+</body>
+</html>
