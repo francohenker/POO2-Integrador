@@ -30,6 +30,9 @@
                         <th class="px-4 py-2">Nombre</th>
                         <th class="px-4 py-2">Items</th>
                         <th class="px-4 py-2">Precio Total</th>
+                        <th class="px-4 py-2">Tipo Aplicado</th>
+                        <th class="px-4 py-2">Descuento</th>
+                        <th class="px-4 py-2">Precio con Descuento</th>
                         <th class="px-4 py-2">Acciones</th>
                     </tr>
                     </thead>
@@ -41,7 +44,16 @@
                                 <li th:each="item : ${paquete.items}" th:text="${item.nombre}">Item</li>
                             </ul>
                         </td>
-                        <td th:text="${'$' + paquete.calcularPrecio()}">Precio</td>
+                        <td th:text="${'$' + paquete.precio}">Precio</td>
+                        <td th:if="${paquete.tipoDescuentoAplicado != null}" th:text="${paquete.tipoDescuentoAplicado}">Tipo</td>
+                        <td th:unless="${paquete.tipoDescuentoAplicado != null}">-</td>
+
+                        <td th:if="${paquete.tipoDescuentoAplicado != null}" th:text="${paquete.valorDescuentoAplicado}">Descuento</td>
+                        <td th:unless="${paquete.tipoDescuentoAplicado != null}">-</td>
+
+                        <td th:if="${paquete.tipoDescuentoAplicado != null}" th:text="'$' + ${paquete.precioConDescuento}">Precio con Descuento</td>
+                        <td th:unless="${paquete.tipoDescuentoAplicado != null}">-</td>
+
                         <td class="px-4 py-3 relative">
                             <button class="dropdown-button inline-flex items-center p-1 text-sm font-medium text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none" type="button">
                                 <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
