@@ -60,7 +60,7 @@ public class Producto extends ProductoItem {
 
     @Override
     public String getTipo() {
-        return "Producto";
+        return "producto";
     }
 
     @Override

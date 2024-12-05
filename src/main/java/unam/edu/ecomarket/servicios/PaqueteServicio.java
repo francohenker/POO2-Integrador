@@ -3,9 +3,11 @@ package unam.edu.ecomarket.servicios;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import unam.edu.ecomarket.modelo.Paquete;
+import unam.edu.ecomarket.modelo.ProductoItem;
 import unam.edu.ecomarket.repositorios.PaqueteRepositorio;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PaqueteServicio {
@@ -36,5 +38,11 @@ public class PaqueteServicio {
 
     public Paquete actualizarPaquete(Paquete paquete) {
         return paqueteRepositorio.save(paquete);
+    }
+
+   public List<ProductoItem> obtenerTodosLosItemsPaquetes() {
+        return paqueteRepositorio.findAll().stream()
+                .map(paquete -> (ProductoItem) paquete)
+                .collect(Collectors.toList());
     }
 }
