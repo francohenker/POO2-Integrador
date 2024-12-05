@@ -7,12 +7,10 @@ import org.springframework.web.bind.annotation.*;
 import unam.edu.ecomarket.modelo.Producto;
 import unam.edu.ecomarket.modelo.Paquete;
 import unam.edu.ecomarket.modelo.ProductoItem;
-import unam.edu.ecomarket.modelo.descuento.Descuento;
 import unam.edu.ecomarket.modelo.descuento.TipoDescuento;
 import unam.edu.ecomarket.modelo.descuento.DescuentoFijo;
 import unam.edu.ecomarket.modelo.descuento.DescuentoPorcentual;
 import unam.edu.ecomarket.modelo.descuento.DescuentoStrategy;
-import unam.edu.ecomarket.repositorios.DescuentoRepositorio;
 import unam.edu.ecomarket.servicios.DescuentoServicio;
 import unam.edu.ecomarket.servicios.PaqueteServicio;
 import unam.edu.ecomarket.servicios.ProductoServicio;
@@ -29,9 +27,6 @@ public class DescuentoControlador {
 
     @Autowired
     private PaqueteServicio paqueteServicio;
-
-    @Autowired
-    private DescuentoRepositorio descuentoRepositorio;
 
     @Autowired
     private DescuentoServicio descuentoServicio;
@@ -51,58 +46,55 @@ public class DescuentoControlador {
     @GetMapping("/crear")
     public String mostrarFormularioDescuentos(Model model) {
         List<ProductoItem> productoItems = productoServicio.obtenerTodosItem();
-        List<Descuento> descuentos = descuentoRepositorio.findAll();
         model.addAttribute("productoItems", productoItems);
-        model.addAttribute("descuentos", descuentos);
         model.addAttribute("contenidoAdmin", "/admin/addDiscount");
         return "/admin/adminPage";
     }
 
     @PostMapping("/aplicar")
-    public String aplicarDescuento(@RequestParam Integer productoId, @RequestParam Integer descuentoId, Model model) {
+    public String aplicarDescuento(@RequestParam Integer productoId,
+                                   @RequestParam TipoDescuento tipoDescuento,
+                                   @RequestParam Double valorDescuento,
+                                   Model model) {
         Optional<ProductoItem> itemOpt = productoServicio.obtenerProductoItemPorId(productoId);
-        Optional<Descuento> descuentoOpt = descuentoRepositorio.findById(descuentoId);
-        String tipoProducto = "Producto";
 
         if (itemOpt.isEmpty()){
             itemOpt = paqueteServicio.obtenerPaqueteItemPorId(productoId);
-            tipoProducto = "Paquete";
         }
 
-        if (itemOpt.isPresent() && descuentoOpt.isPresent()) {
+        if (itemOpt.isPresent()) {
             ProductoItem item = itemOpt.get();
-            Descuento descuento = descuentoOpt.get();
             DescuentoStrategy descuentoStrategy;
 
-            if (descuento.getTipo() == TipoDescuento.PORCENTUAL) {
-                descuentoStrategy = new DescuentoPorcentual(descuento.getValor());
+            if (tipoDescuento == TipoDescuento.PORCENTUAL) {
+                descuentoStrategy = new DescuentoPorcentual(valorDescuento);
             } else {
-                descuentoStrategy = new DescuentoFijo(descuento.getValor());
+                descuentoStrategy = new DescuentoFijo(valorDescuento);
             }
 
-            double precioConDescuento = descuentoServicio.calcularConDescuento(item, descuentoStrategy, descuento.getTipo(), descuento.getValor(), tipoProducto);
+            double precioConDescuento = descuentoServicio.calcularConDescuento(item, descuentoStrategy, tipoDescuento, valorDescuento);
 
             model.addAttribute("precioConDescuento", precioConDescuento);
             model.addAttribute("productoItem", item);
         }
-
         return "redirect:/admin/descuentos";
     }
 
 
     @DeleteMapping("/eliminar")
-    public String eliminarDescuento(@RequestParam Integer productoId, Model model) {
+    public String eliminarDescuento(@RequestParam Integer productoId,
+                                    Model model) {
         Optional<ProductoItem> itemOpt = productoServicio.obtenerProductoItemPorId(productoId);
-        String tipoProducto = "Producto";
 
+        //Para paquetes
         if (itemOpt.isEmpty()) {
             itemOpt = paqueteServicio.obtenerPaqueteItemPorId(productoId);
-            tipoProducto = "Paquete";
         }
 
+        //Para productos
         if (itemOpt.isPresent()) {
             ProductoItem item = itemOpt.get();
-            descuentoServicio.eliminarDescuento(item, tipoProducto);
+            descuentoServicio.eliminarDescuento(item);
         }
 
         return "redirect:/admin/descuentos";

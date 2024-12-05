@@ -47,13 +47,11 @@
 
                 <!-- Valor del descuento -->
                 <div class="w-full">
-                    <label for="descuento" class="block mb-2 text-sm font-medium text-gray-900">
+                    <label for="valorDescuento" class="block mb-2 text-sm font-medium text-gray-900">
                         Valor del descuento
                     </label>
-                    <select id="descuento" name="descuentoId" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                        <option value="">Seleccione un Descuento</option>
-                        <option th:each="descuento : ${descuentos}" th:value="${descuento.id}" th:text="${descuento.tipo == descuento.tipo.PORCENTUAL ? descuento.valor + '%' : '$' + descuento.valor}" th:data-tipo="${descuento.tipo}"></option>
-                    </select>
+                    <input type="number" id="valorDescuento" name="valorDescuento" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                    <small>En caso de porcentaje, debe ser entre 0 y 100</small>
                 </div>
 
             </div>
