@@ -7,10 +7,12 @@ import unam.edu.ecomarket.modelo.ProductoItem;
 import unam.edu.ecomarket.modelo.descuento.DescuentoFijo;
 import unam.edu.ecomarket.modelo.descuento.DescuentoPorcentual;
 import unam.edu.ecomarket.modelo.descuento.DescuentoStrategy;
+import unam.edu.ecomarket.modelo.ProductoItem;
 import unam.edu.ecomarket.repositorios.PaqueteRepositorio;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PaqueteServicio {
@@ -59,5 +61,11 @@ public class PaqueteServicio {
     public Paquete actualizarPaquete(Paquete paquete) {
         paquete.setPrecio(calcularPrecioOriginal(paquete));
         return paqueteRepositorio.save(paquete);
+    }
+
+   public List<ProductoItem> obtenerTodosLosItemsPaquetes() {
+        return paqueteRepositorio.findAll().stream()
+                .map(paquete -> (ProductoItem) paquete)
+                .collect(Collectors.toList());
     }
 }

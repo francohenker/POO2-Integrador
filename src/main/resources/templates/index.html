@@ -12,9 +12,11 @@
     <div th:insert="~{fragments/header :: header}"></div>
 
     <h1>Bienvenido a EcoMarket</h1>
-    <!--
-    <div th:replace="~{__${contenido}__}"></div>
-    -->
+    <div th:insert="~{fragments/carousel :: carousel}"></div>
+
+
+<!--    <div th:replace="~{__${contenido}__}"></div>-->
+
 
     <!-- Incluir el fragmento footer -->
     <div th:insert="~{fragments/footer :: footer}"></div>
