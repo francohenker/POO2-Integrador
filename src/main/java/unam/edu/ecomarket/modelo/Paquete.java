@@ -15,7 +15,7 @@ public class Paquete extends ProductoItem {
     private String nombre;
 
     private String descripcion = "";
-    private double precio = 0.0;
+    private double precio;
     private Integer stock = 0;
 
     @ManyToMany
@@ -29,7 +29,7 @@ public class Paquete extends ProductoItem {
     public Paquete(String nombre, List<Producto> items) {
         this.nombre = nombre;
         this.descripcion = "";
-        this.precio = 0.0;
+        this.precio = calcularPrecio();
         this.stock = 0;
         this.items = items;
     }
@@ -44,7 +44,11 @@ public class Paquete extends ProductoItem {
 
     @Override
     public double calcularPrecio() {
-        return items.stream().mapToDouble(Producto::calcularPrecio).sum();
+        return items.stream().mapToDouble(Producto::getPrecio).sum();
+    }
+
+    public double calcularPrecioConDescuento() {
+        return items.stream().mapToDouble(Producto::getPrecioConDescuento).sum();
     }
 
     @Override

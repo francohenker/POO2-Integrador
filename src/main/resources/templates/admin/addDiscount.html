@@ -1,0 +1,97 @@
+<section class="bg-white">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
+        <h2 class="mb-4 text-xl font-bold text-gray-900">Agregar un nuevo Descuento</h2>
+        <form th:action="@{/admin/descuentos/aplicar}" th:method="post" id="discountForm">
+            <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
+                <!-- Tipo de descuento -->
+                <div class="w-full">
+                    <label class="block mb-2 text-sm font-medium text-gray-900">Producto o Paquete?</label>
+                    <div class="flex items-center gap-4">
+                        <div>
+                            <input type="radio" name="tipo" id="producto" value="Producto" class="peer hidden" onclick="filterItems()" checked>
+                            <label for="producto" class="cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg px-4 py-2 peer-checked:bg-blue-600 peer-checked:text-white">Producto</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="tipo" id="paquete" value="Paquete" class="peer hidden" onclick="filterItems()">
+                            <label for="paquete" class="cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg px-4 py-2 peer-checked:bg-blue-600 peer-checked:text-white">Paquete</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto asociado -->
+                <div class="sm:col-span-2">
+                    <label for="item" class="block mb-2 text-sm font-medium text-gray-900">
+                        Seleccione un Producto o Paquete
+                    </label>
+                    <select id="item" name="productoId" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <option value="">Seleccione un Producto o Paquete</option>
+                        <option th:each="productoItem : ${productoItems}" th:value="${productoItem.id}" th:text="${productoItem.tipo == 'Paquete' ? 'Paquete: ' + productoItem.nombre : 'Producto: ' + productoItem.nombre}" th:data-tipo="${productoItem.tipo}"></option>
+                    </select>
+                </div>
+
+                <!-- Tipo de descuento -->
+                <div class="w-full">
+                    <label class="block mb-2 text-sm font-medium text-gray-900">Tipo de descuento</label>
+                    <div class="flex items-center gap-4">
+                        <div>
+                            <input type="radio" name="tipoDescuento" id="fijo" value="FIJO" class="peer hidden" onclick="filterDiscounts()" checked>
+                            <label for="fijo" class="cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg px-4 py-2 peer-checked:bg-blue-600 peer-checked:text-white">Fijo</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="tipoDescuento" id="porcentual" value="PORCENTUAL" class="peer hidden" onclick="filterDiscounts()">
+                            <label for="porcentual" class="cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg px-4 py-2 peer-checked:bg-blue-600 peer-checked:text-white">Porcentaje</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Valor del descuento -->
+                <div class="w-full">
+                    <label for="descuento" class="block mb-2 text-sm font-medium text-gray-900">
+                        Valor del descuento
+                    </label>
+                    <select id="descuento" name="descuentoId" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <option value="">Seleccione un Descuento</option>
+                        <option th:each="descuento : ${descuentos}" th:value="${descuento.id}" th:text="${descuento.tipo == descuento.tipo.PORCENTUAL ? descuento.valor + '%' : '$' + descuento.valor}" th:data-tipo="${descuento.tipo}"></option>
+                    </select>
+                </div>
+
+            </div>
+            <button type="submit" class="bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2 text-center mt-4">
+                Crear Descuento
+            </button>
+        </form>
+    </div>
+</section>
+
+<script>
+    function filterItems() {
+        const selectedType = document.querySelector('input[name="tipo"]:checked').value;
+        const options = document.querySelectorAll('#item option');
+        options.forEach(option => {
+            if (option.getAttribute('data-tipo') === selectedType) {
+                option.style.display = 'block';
+            } else {
+                option.style.display = 'none';
+            }
+        });
+    }
+
+    function filterDiscounts() {
+        const selectedDiscountType = document.querySelector('input[name="tipoDescuento"]:checked').value;
+        const discountOptions = document.querySelectorAll('#descuento option');
+        discountOptions.forEach(option => {
+            if (option.getAttribute('data-tipo') === selectedDiscountType) {
+                option.style.display = 'block';
+            } else {
+                option.style.display = 'none';
+            }
+        });
+    }
+
+    // Initial filter on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        filterItems();
+        filterDiscounts();
+    });
+</script>

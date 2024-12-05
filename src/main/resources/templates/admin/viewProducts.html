@@ -44,7 +44,7 @@
                             console.log([[${producto.tipoDescuentoAplicado}]]);
                         </script>
 
-                        <td th:text="${producto.tipoDescuentoAplicado == 'FIJO' ? '$' + producto.valorDescuentoAplicado : (producto.tipoDescuentoAplicado == 'PORCENTUAL' ? producto.valorDescuentoAplicado + '%' : '-')}">Descuento</td>
+                        <td th:text="${producto.tipoDescuentoAplicado == 'PORCENTUAL' ? producto.valorDescuentoAplicado + '%' : (producto.tipoDescuentoAplicado == 'FIJO' ? '$' + producto.valorDescuentoAplicado : '-')}">Descuento</td>
 
                         <td th:if="${producto.tipoDescuentoAplicado != null}" th:text="${'$' + producto.valorDescuentoAplicado}">Holaaa</td>
 
