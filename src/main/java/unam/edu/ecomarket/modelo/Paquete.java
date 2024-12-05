@@ -53,7 +53,7 @@ public class Paquete extends ProductoItem {
 
     @Override
     public String getTipo() {
-        return "paquete";
+        return "Paquete";
     }
 
     @Override

@@ -26,10 +26,6 @@ public abstract class ProductoItem {
     @Column(nullable = true)
     private Double valorDescuentoAplicado;
 
-    @ManyToOne
-    @JoinColumn(name = "descuento_id")
-    private Descuento descuento;
-
     public abstract String getTipo();
 
     public abstract double getPrecio();
