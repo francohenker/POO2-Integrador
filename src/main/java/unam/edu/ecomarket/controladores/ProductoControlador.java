@@ -33,7 +33,6 @@ public class ProductoControlador {
     @GetMapping({"", "/"})
     public String productos(Model modelo) {
         List<Producto> productos = productoServicio.obtenerTodosLosProductos();
-        System.out.println("Productos: " + productos);
         modelo.addAttribute("productos", productos);
         modelo.addAttribute("contenidoAdmin", "/admin/viewProducts");
         return "/admin/adminPage";
