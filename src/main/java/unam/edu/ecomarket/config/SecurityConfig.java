@@ -49,7 +49,7 @@ public class SecurityConfig  {
         http
                 .csrf(csrf -> csrf.disable()) // Deshabilitar CSRF si es necesario
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "/register", "/home/**").permitAll() // Rutas públicas
+                        .requestMatchers("/login", "/register").permitAll() // Rutas públicas
                         .requestMatchers("/admin", "/admin/**").hasRole("ADMINISTRADOR") // Rutas de administrador
                         .anyRequest().authenticated() // Protege todas las demás rutas
 

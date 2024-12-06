@@ -14,16 +14,17 @@
         <table class="min-w-full bg-white">
             <thead>
             <tr>
-                <th class="py-2">Producto</th>
-                <th class="py-2">Cantidad</th>
-                <th class="py-2">Precio</th>
-                <th class="py-2">Total</th>
+                <th class="py-2 text-center">Producto</th>
+                <th class="py-2 text-center">Cantidad</th>
+                <th class="py-2 text-center">Precio</th>
+                <th class="py-2 text-center">Precio con descuento</th>
+                <th class="py-2 text-center">Total</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="producto : ${productos}">
-                <td class="py-2" th:text="${producto.nombre}">Nombre del producto</td>
-                <td class="py-2">
+                <td class="py-2 text-center" th:text="${producto.nombre}">Nombre del producto</td>
+                <td class="py-2 text-center">
                     <div class="flex items-center justify-center">
                         <input type="number"
                                inputmode="number"
@@ -32,8 +33,14 @@
                                th:value="${producto.cantidad}" />
                     </div>
                 </td>
-                <td class="py-2" th:text="${'$' + producto.precio}">Precio</td>
-                <td class="py-2" th:text="${'$' + (producto.precio * producto.cantidad)}">Total</td>
+                <td class="py-2 text-center" th:text="${'$ ' + producto.precio}">Precio</td>
+                <td class="py-2 text-center"
+                    th:text="${producto.precioConDescuento != null ? '$ ' + (producto.precioConDescuento) : '$ ' + producto.precio}">Precio con descuento</td>
+
+                <td class="py-2 text-center"
+                    th:text="${producto.precioConDescuento != null ? '$ ' + (producto.precioConDescuento * producto.cantidad) : '$ ' + (producto.precio * producto.cantidad)}">
+                    Total
+                </td>
             </tr>
             </tbody>
         </table>
