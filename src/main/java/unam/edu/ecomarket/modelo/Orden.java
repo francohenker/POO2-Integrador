@@ -36,6 +36,17 @@ public class Orden {
     @OneToMany(mappedBy = "orden", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DetalleOrden> detalleOrden;
 
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Usuario usuario;
+
+    /**
+     * El tipo de pago de la venta.
+     */
+    @Column(nullable = false)
+    private String tipoPago = "Seleccionar";
+
+
     /**
      * Agrega un detalle a la orden.
      *

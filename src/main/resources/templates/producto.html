@@ -17,8 +17,19 @@
     <!-- Formulario -->
     <div class="rounded-lg bg-gray-100 p-6">
         <h1 class="text-xl font-bold text-left mb-4" th:text="${producto.nombre}">Nombre del producto</h1>
+        <label for="quantity-input" class="block mb-2 text-sm font-medium text-gray-900">Descripción</label>
         <p class="text-sm text-gray-600 mb-2" th:text="${producto.descripcion}">Descripción del producto</p>
+        <label for="quantity-input" class="block mb-2 text-sm font-medium text-gray-900">Precio</label>
         <p class="text-lg font-semibold text-blue-600 mb-4" th:text="${'$' + producto.precio}">Precio</p>
+        <label th:if="${producto.precioConDescuento != null and producto.precioConDescuento > 0}" class="text-sm font-medium text-gray-700">
+            Precio con descuento
+        </label>
+        <p class="text-lg font-semibold text-blue-600 mb-4"
+           th:if="${producto.precioConDescuento != null and producto.precioConDescuento > 0}"
+           th:text="${'$' + producto.precioConDescuento}">
+            Precio con descuento
+        </p>
+
         <p class="text-sm text-green-600 mb-4" th:text="${producto.stock > 0 ? producto.stock + ' En stock - Disponible para envío inmediato' : 'Agotado'}">Estado</p>
         <form action="/cart/agregarAlCarrito" method="post" class="space-y-4">
             <!-- Cantidad -->
