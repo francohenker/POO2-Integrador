@@ -41,6 +41,14 @@
                     th:text="${producto.precioConDescuento != null ? '$ ' + (producto.precioConDescuento * producto.cantidad) : '$ ' + (producto.precio * producto.cantidad)}">
                     Total
                 </td>
+                <td>
+                    <form th:action="@{'/cart/eliminarDelCarrito'}" th:method="post" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este producto?');">
+                        <input type="hidden" name="id" th:value="${producto.id}" />
+                        <button type="submit" class="block py-2 px-4 text-sm hover:bg-red-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-300">
+                            Eliminar
+                        </button>
+                    </form>
+                </td>
             </tr>
             </tbody>
         </table>

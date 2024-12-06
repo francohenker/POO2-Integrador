@@ -29,6 +29,10 @@ public class DetalleOrden {
      * El precio del detalle de la orden.
      */
 
+    private double descuento;
+
+    private String tipoDescuento;
+
     @NotBlank
     private double precio;
 

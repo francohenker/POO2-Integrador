@@ -40,15 +40,11 @@ public class CarritoControlador {
         return "redirect:/producto/" + id;
     }
 
-    @PostMapping("/incrementar")
-    public String incrementarCantidad(@RequestParam Integer id) {
-        carritoServicio.incrementarCantidad(id);
-        return "redirect:/carrito";
-    }
 
-    @PostMapping("/decrementar")
-    public String decrementarCantidad(@RequestParam Integer id) {
-        carritoServicio.decrementarCantidad(id);
-        return "redirect:/carrito";
+    @PostMapping("/eliminarDelCarrito")
+    public String eliminarDelCarrito(@RequestParam Integer id) {
+        Producto producto = productoServicio.obtenerProductoPorId(id);
+        carritoServicio.eliminarProducto(producto);
+        return "redirect:/cart";
     }
 }
