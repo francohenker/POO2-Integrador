@@ -2,6 +2,8 @@ package unam.edu.ecomarket.controladores;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import unam.edu.ecomarket.modelo.Producto;
+import unam.edu.ecomarket.modelo.Usuario;
+import unam.edu.ecomarket.repositorios.UsuarioRepositorio;
 import unam.edu.ecomarket.servicios.CarritoServicio;
 import unam.edu.ecomarket.servicios.ProductoServicio;
 
@@ -24,10 +28,14 @@ public class CarritoControlador {
 
     @Autowired
     private ProductoServicio productoServicio;
+    @Autowired
+    private UsuarioRepositorio usuarioRepositorio;
 
     @GetMapping
     public String verCarrito(Model model) {
-        model.addAttribute("productos", carritoServicio.obtenerProductosEnCarrito());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        model.addAttribute("productos", carritoServicio.obtenerProductos(usuarioRepositorio.findByCorreo(username)));
         return "carritoCompras";
     }
 
@@ -37,9 +45,13 @@ public class CarritoControlador {
     }
 
     @PostMapping("/agregarAlCarrito")
-    public String agregarAlCarrito(@RequestParam Integer id, @RequestParam Integer cantidad) {
+    public String agregarAlCarrito(Model model, @RequestParam Integer id, @RequestParam Integer cantidad) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+
         Producto producto = productoServicio.obtenerProductoPorId(id);
-        carritoServicio.agregarProducto(producto, cantidad);
+        carritoServicio.agregarProducto(producto, cantidad, usuarioRepositorio.findByCorreo(username));
         return "redirect:/producto/" + id;
     }
 
@@ -47,7 +59,7 @@ public class CarritoControlador {
     @PostMapping("/eliminarDelCarrito")
     public String eliminarDelCarrito(@RequestParam Integer id) {
         Producto producto = productoServicio.obtenerProductoPorId(id);
-        carritoServicio.eliminarProducto(producto);
+//        carritoServicio.eliminarProducto(producto);
         return "redirect:/cart";
     }
 }
