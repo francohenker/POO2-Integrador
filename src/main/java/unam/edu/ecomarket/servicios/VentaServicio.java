@@ -15,8 +15,9 @@ public class VentaServicio {
     private OrdenRepositorio ordenRepositorio;
 
     public void realizarVenta (Usuario usuario, String tipoPago) {
-        // Buscar la orden con tipoPago null y el usuario logueado
-        Orden orden = ordenRepositorio.findByUsuarioAndTipoPagoIsNull(usuario);
+        // Buscar la orden con tipoPago 'seleccionar' y el usuario logueado
+        Orden orden = ordenRepositorio.findByUsuarioAndTipoPago(usuario, "seleccionar");
+
 
         if (orden != null) {
             // Actualizar la fecha y el tipo de pago
@@ -25,15 +26,15 @@ public class VentaServicio {
             ordenRepositorio.save(orden);
 
             // Actualizar los detalles de la orden
-            orden.getDetalleOrden().forEach(detalle -> {
-                detalle.setCantidad(detalle.getProducto().getCantidad());
-                System.out.println("Desde el servicio de venta, cantidad: " + detalle.getProducto().getCantidad());
-                detalle.setPrecio(detalle.getProducto().getPrecio());
-                System.out.println("Desde el servicio de venta, precio: " + detalle.getProducto().getPrecio());
-                detalle.setDescuento(detalle.getProducto().getValorDescuentoAplicado());
-                System.out.println("Desde el servicio de venta, descuento: " + detalle.getProducto().getValorDescuentoAplicado());
-                detalle.setTipoDescuento(detalle.getProducto().getTipoDescuentoAplicado().name());
-                System.out.println("Desde el servicio de venta, tipo de descuento aplicado: " + detalle.getProducto().getTipoDescuentoAplicado().name());
+            orden.getDetalleOrden().forEach(detalleOrden -> {
+                System.out.println("Producto ID: " + detalleOrden.getProducto().getId());
+                System.out.println("Valor Descuento Aplicado: " + detalleOrden.getProducto().getValorDescuentoAplicado());
+                System.out.println("Tipo Descuento Aplicado: " + detalleOrden.getProducto().getTipoDescuentoAplicado());
+
+                detalleOrden.setCantidad(detalleOrden.getCantidad());
+                detalleOrden.setPrecio(detalleOrden.getProducto().getPrecio());
+                detalleOrden.setDescuento(detalleOrden.getProducto().getValorDescuentoAplicado());
+                detalleOrden.setTipoDescuento(detalleOrden.getProducto().getTipoDescuentoAplicado().toString());
             });
 
             ordenRepositorio.save(orden);

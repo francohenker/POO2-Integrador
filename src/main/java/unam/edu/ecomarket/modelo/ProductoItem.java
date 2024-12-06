@@ -23,10 +23,10 @@ public abstract class ProductoItem {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = true)
-    private TipoDescuento tipoDescuentoAplicado;
+    private TipoDescuento tipoDescuentoAplicado = TipoDescuento.NINGUNO;
 
     @Column(nullable = true)
-    private Double valorDescuentoAplicado;
+    private Double valorDescuentoAplicado = 0.0;
 
     public abstract String getTipo();
 

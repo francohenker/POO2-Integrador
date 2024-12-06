@@ -44,7 +44,7 @@ public class Orden {
      * El tipo de pago de la venta.
      */
     @Column(nullable = true)
-    private String tipoPago;
+    private String tipoPago = "seleccionar";
 
 
     /**
