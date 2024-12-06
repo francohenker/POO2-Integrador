@@ -27,11 +27,7 @@ public class VentaServicio {
 
             // Actualizar los detalles de la orden
             orden.getDetalleOrden().forEach(detalleOrden -> {
-                System.out.println("Producto ID: " + detalleOrden.getProducto().getId());
-                System.out.println("Valor Descuento Aplicado: " + detalleOrden.getProducto().getValorDescuentoAplicado());
-                System.out.println("Tipo Descuento Aplicado: " + detalleOrden.getProducto().getTipoDescuentoAplicado());
-
-                detalleOrden.setCantidad(detalleOrden.getCantidad());
+                detalleOrden.setCantidad(detalleOrden.getProducto().getCantidad());
                 detalleOrden.setPrecio(detalleOrden.getProducto().getPrecio());
                 detalleOrden.setDescuento(detalleOrden.getProducto().getValorDescuentoAplicado());
                 detalleOrden.setTipoDescuento(detalleOrden.getProducto().getTipoDescuentoAplicado().toString());
