@@ -39,7 +39,8 @@ public class DetalleOrden {
     /**
      * El producto del detalle de la orden.
      */
-    @OneToOne
+
+    @ManyToOne
     private Producto producto;
 
     /**
