@@ -36,7 +36,7 @@ public class Orden {
     @OneToMany(mappedBy = "orden", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DetalleOrden> detalleOrden;
 
-
+    @NotBlank
     @ManyToOne(cascade = CascadeType.ALL)
     private Usuario usuario;
 
