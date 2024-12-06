@@ -14,7 +14,7 @@ public class HomeControlador {
     @Autowired
     private ProductoServicio productoServicio;
 
-    @GetMapping({"/home", "/home/"})
+    @GetMapping({"/home", "/home/", "/"})
     public String home(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
