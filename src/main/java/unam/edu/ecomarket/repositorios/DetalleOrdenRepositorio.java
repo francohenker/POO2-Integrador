@@ -14,7 +14,7 @@ import java.util.Optional;
 @Repository
 public interface DetalleOrdenRepositorio extends JpaRepository<DetalleOrden, Integer> {
 
-    Optional<DetalleOrden> findById(Integer id);
+    DetalleOrden findById(Long id);
 
     void removeById(Integer id);
 
