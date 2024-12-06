@@ -9,10 +9,10 @@
 <div class="container mx-auto p-4">
 
     <h1 class="text-2xl font-bold mb-4">Carrito de Compras</h1>
-    <div th:if="${productos.isEmpty()}">
+    <div th:if="${detalles.isEmpty()}">
         <p>No hay productos en el carrito.</p>
     </div>
-    <div th:unless="${productos.isEmpty()}">
+    <div th:unless="${detalles.isEmpty()}">
         <table class="min-w-full bg-white">
             <thead>
             <tr>
@@ -24,28 +24,28 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="producto : ${productos}">
-                <td class="py-2 text-center" th:text="${producto.getProducto().nombre}">Nombre del producto</td>
+            <tr th:each="detalle : ${detalles}">
+                <td class="py-2 text-center" th:text="${detalle.getProducto().nombre}">Nombre del producto</td>
                 <td class="py-2 text-center">
                     <div class="flex items-center justify-center">
                         <input type="number"
                                inputmode="number"
                                name="quantity-input"
                                class="bg-gray-50 border-x-0 border-gray-300 h-8 text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-12 mx-2"0
-                               th:value="${producto.getProducto().cantidad}" />
+                               th:value="${detalle.getProducto().cantidad}" />
                     </div>
                 </td>
-                <td class="py-2 text-center" th:text="${'$ ' + producto.precio}">Precio</td>
+                <td class="py-2 text-center" th:text="${'$ ' + detalle.precio}">Precio</td>
                 <td class="py-2 text-center"
-                    th:text="${producto.getProducto().precioConDescuento != null ? '$ ' + (producto.getProducto().precioConDescuento) : '$ ' + producto.getProducto().precio}">Precio con descuento</td>
+                    th:text="${detalle.getProducto().precioConDescuento != null ? '$ ' + (detalle.getProducto().precioConDescuento) : '$ ' + detalle.getProducto().precio}">Precio con descuento</td>
 
                 <td class="py-2 text-center"
-                    th:text="${producto.getProducto().precioConDescuento != null ? '$ ' + (producto.getProducto().precioConDescuento * producto.getProducto().cantidad) : '$ ' + (producto.getProducto().precio * producto.getProducto().cantidad)}">
+                    th:text="${detalle.getProducto().precioConDescuento != null ? '$ ' + (detalle.getProducto().precioConDescuento * detalle.getProducto().cantidad) : '$ ' + (detalle.getProducto().precio * detalle.getProducto().cantidad)}">
                     Total
                 </td>
                 <td>
                     <form th:action="@{'/cart/eliminarDelCarrito'}" th:method="post" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este producto?');">
-                        <input type="hidden" name="id" th:value="${producto.getId()}" />
+                        <input type="hidden" name="id" th:value="${detalle.getId()}" />
                         <button type="submit" class="block py-2 px-4 text-sm hover:bg-red-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-300">
                             Eliminar
                         </button>
