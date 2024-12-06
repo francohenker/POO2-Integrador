@@ -1,15 +1,8 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
-<!-- Botón para abrir el modal -->
-<div th:fragment="comprar" class="flex justify-center mt-10">
-    <button id="openModal" class="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-700">
-        Abrir Formulario
-    </button>
-</div>
-
 <!-- Modal -->
-<div id="modal" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-black bg-opacity-50">
+<div th:fragment="comprar" id="modal" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-black bg-opacity-50">
     <div class="bg-white rounded-lg shadow-lg w-11/12 max-w-3xl p-6">
         <!-- Encabezado del modal -->
         <div class="flex justify-between items-center border-b pb-2 mb-4">
@@ -20,166 +13,151 @@
         </div>
 
         <!-- Contenido del modal (formulario) -->
-        <section class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
-            <div class="bg-white rounded-lg shadow-md w-full max-w-3xl mx-4 sm:mx-auto max-h-[90vh] overflow-y-auto">
-                <form action="#" class="p-6">
-                    <!-- Encabezado del Modal -->
-                    <header class="flex justify-between items-center mb-4 border-b pb-2">
-                        <h2 class="text-xl font-semibold text-gray-900">Formulario de Envío y Pago</h2>
-                        <button type="button" class="text-gray-600 hover:text-gray-800 focus:outline-none">
-                            &#x2715;
-                        </button>
-                    </header>
-
-                    <!-- Datos de Envío -->
-                    <fieldset class="mb-8">
-                        <legend class="text-lg font-semibold text-gray-900 border-b pb-2 mb-4">Datos de Envío</legend>
-                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                            <!-- Campo Teléfono -->
-                            <div>
-                                <label for="phone-input" class="block text-sm font-medium text-gray-900">Número de Teléfono</label>
-                                <input type="text" id="phone-input" name="telefono" placeholder="3758 540829" required
-                                       class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500" />
-                            </div>
-
-                            <!-- Campo Provincia -->
-                            <div>
-                                <label for="select-province" class="block text-sm font-medium text-gray-900">Provincia*</label>
-                                <select id="select-province" name="provincia"
-                                        class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500">
-                                    <option selected value="Misiones">Misiones</option>
-                                    <option value="Corrientes">Corrientes</option>
-                                </select>
-                            </div>
-
-                            <!-- Campo Ciudad -->
-                            <div>
-                                <label for="select-city" class="block text-sm font-medium text-gray-900">Ciudad*</label>
-                                <select id="select-city" name="ciudad"
-                                        class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500">
-                                    <option selected value="Apostoles">Apostoles</option>
-                                    <option value="Posadas">Posadas</option>
-                                    <option value="San Vicente">San Vicente</option>
-                                    <option value="Leandro N Alem">Leandro N Alem</option>
-                                    <option value="2 de Mayo">2 de Mayo</option>
-                                </select>
-                            </div>
-
-                            <!-- Campo Dirección -->
-                            <div>
-                                <label for="street" class="block text-sm font-medium text-gray-900">Dirección</label>
-                                <input type="text" id="street" name="direccion" placeholder="Calle Falsa 123" required
-                                       class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500" />
-                            </div>
-
-                            <!-- Campo Código Postal -->
-                            <div>
-                                <label for="codPostal" class="block text-sm font-medium text-gray-900">Código Postal</label>
-                                <input type="number" id="codPostal" name="codigo_postal" placeholder="3350" required min="1000" max="99999"
-                                       class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500" />
-                            </div>
-                        </div>
-                        <!-- Campo Referencia de Entrega -->
-                        <div class="mt-6">
-                            <label for="delivery-reference" class="block text-sm font-medium text-gray-900">Referencia de Entrega</label>
-                            <textarea id="delivery-reference" name="referencia_entrega" rows="3" placeholder="Ej: Casa blanca, portón verde"
-                                      class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"></textarea>
-                        </div>
-                    </fieldset>
-
-                    <!-- Datos de Pago -->
-                    <fieldset>
-                        <legend class="text-lg font-semibold text-gray-900 border-b pb-2 mb-4">Datos de Pago</legend>
-                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                            <!-- Método de Pago -->
-                            <div>
-                                <label for="payment-method" class="block text-sm font-medium text-gray-900">Método de Pago</label>
-                                <select id="payment-method" name="metodo_pago" onchange="toggleCardFields()"
-                                        class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500">
-                                    <option selected value="Efectivo">Efectivo</option>
-                                    <option value="Tarjeta">Tarjeta</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <!-- Datos de la Tarjeta -->
-                        <div id="card-fields" class="grid grid-cols-1 gap-6 sm:grid-cols-2 mt-6 hidden">
-                            <!-- Campo Titular de la Tarjeta -->
-                            <div>
-                                <label for="card-holder" class="block text-sm font-medium text-gray-900">Titular de la Tarjeta</label>
-                                <input type="text" id="card-holder" name="titular_tarjeta" placeholder="Nombre como aparece en la tarjeta"
-                                       class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500" />
-                            </div>
-
-                            <!-- Campo Número de Tarjeta -->
-                            <div>
-                                <label for="card-number" class="block text-sm font-medium text-gray-900">Número de Tarjeta</label>
-                                <input type="text" id="card-number" name="numero_tarjeta" placeholder="1234 5678 9012 3456"
-                                       class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500" />
-                            </div>
-
-                            <!-- Campo Fecha de Expiración -->
-                            <div>
-                                <label for="card-expiry" class="block text-sm font-medium text-gray-900">Fecha de Expiración</label>
-                                <input type="text" id="card-expiry" name="fecha_expiracion" placeholder="MM/AA"
-                                       class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500" />
-                            </div>
-
-                            <!-- Campo CVC -->
-                            <div>
-                                <label for="card-cvc" class="block text-sm font-medium text-gray-900">CVC</label>
-                                <input type="text" id="card-cvc" name="cvc_tarjeta" placeholder="123"
-                                       class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500" />
-                            </div>
-                        </div>
-
-                    </fieldset>
-
-                    <!-- Botones de acción -->
-                    <div class="mt-8 flex justify-end">
-                        <button type="reset" class="px-4 py-2 text-sm text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300">
-                            Cancelar
-                        </button>
-                        <button type="submit" class="ml-4 px-4 py-2 text-sm text-white bg-blue-500 rounded-lg hover:bg-blue-600">
-                            Enviar
-                        </button>
+        <form th:action="@{/venta}" method="post" class="p-6">
+            <!-- Datos de Envío -->
+            <fieldset class="mb-8">
+                <legend class="text-lg font-semibold text-gray-900 border-b pb-2 mb-4">Datos de Envío</legend>
+                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                    <!-- Campo Teléfono -->
+                    <div>
+                        <label for="phone-input" class="block text-sm font-medium text-gray-900">Número de Teléfono*</label>
+                        <input type="text" id="phone-input" name="telefono" placeholder="3758 540829" required
+                               class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500" />
                     </div>
-                </form>
+
+                    <!-- Campo Provincia -->
+                    <div>
+                        <label for="select-province" class="block text-sm font-medium text-gray-900">Provincia*</label>
+                        <select id="select-province" name="provincia"
+                                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500">
+                            <option selected value="Misiones">Misiones</option>
+                            <option value="Corrientes">Corrientes</option>
+                        </select>
+                    </div>
+
+                    <!-- Campo Ciudad -->
+                    <div>
+                        <label for="select-city" class="block text-sm font-medium text-gray-900">Ciudad*</label>
+                        <select id="select-city" name="ciudad"
+                                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500">
+                            <option selected value="Apostoles">Apostoles</option>
+                            <option value="Posadas">Posadas</option>
+                            <option value="San Vicente">San Vicente</option>
+                            <option value="Leandro N Alem">Leandro N Alem</option>
+                            <option value="2 de Mayo">2 de Mayo</option>
+                        </select>
+                    </div>
+
+                    <!-- Campo Dirección -->
+                    <div>
+                        <label for="street" class="block text-sm font-medium text-gray-900">Dirección*</label>
+                        <input type="text" id="street" name="direccion" placeholder="Calle Falsa 123" required
+                               class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500" />
+                    </div>
+
+                    <!-- Campo Código Postal -->
+                    <div>
+                        <label for="codPostal" class="block text-sm font-medium text-gray-900">Código Postal*</label>
+                        <input type="number" id="codPostal" name="codigo_postal" placeholder="3350" required min="1000" max="99999"
+                               class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500" />
+                    </div>
+                </div>
+                <!-- Campo Referencia de Entrega -->
+                <div class="mt-6">
+                    <label for="delivery-reference" class="block text-sm font-medium text-gray-900">Referencia de Entrega</label>
+                    <textarea id="delivery-reference" name="referencia_entrega" rows="3" placeholder="Ej: Casa blanca, portón verde"
+                              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"></textarea>
+                </div>
+            </fieldset>
+
+            <!-- Datos de Pago -->
+            <fieldset>
+                <legend class="text-lg font-semibold text-gray-900 border-b pb-2 mb-4">Datos de Pago</legend>
+                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                    <!-- Método de Pago -->
+                    <div>
+                        <label for="payment-method" class="block text-sm font-medium text-gray-900">Método de Pago</label>
+                        <select id="payment-method" name="metodo_pago" onchange="toggleCardFields()"
+                                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500">
+                            <option selected value="Efectivo">Efectivo</option>
+                            <option value="Tarjeta">Tarjeta</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Datos de la Tarjeta -->
+                <div id="card-fields" class="grid grid-cols-1 gap-6 sm:grid-cols-2 mt-6 hidden">
+                    <!-- Campo Titular de la Tarjeta -->
+                    <div>
+                        <label for="card-holder" class="block text-sm font-medium text-gray-900">Titular de la Tarjeta</label>
+                        <input type="text" id="card-holder" name="titular_tarjeta" placeholder="Nombre como aparece en la tarjeta"
+                               class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500" />
+                    </div>
+
+                    <!-- Campo Número de Tarjeta -->
+                    <div>
+                        <label for="card-number" class="block text-sm font-medium text-gray-900">Número de Tarjeta</label>
+                        <input type="text" id="card-number" name="numero_tarjeta" placeholder="1234 5678 9012 3456"
+                               class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500" />
+                    </div>
+
+                    <!-- Campo Fecha de Expiración -->
+                    <div>
+                        <label for="card-expiry" class="block text-sm font-medium text-gray-900">Fecha de Expiración</label>
+                        <input type="text" id="card-expiry" name="fecha_expiracion" placeholder="MM/AA"
+                               class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500" />
+                    </div>
+
+                    <!-- Campo CVC -->
+                    <div>
+                        <label for="card-cvc" class="block text-sm font-medium text-gray-900">CVC</label>
+                        <input type="text" id="card-cvc" name="cvc_tarjeta" placeholder="123"
+                               class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500" />
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Botones de acción -->
+            <div class="mt-8 flex justify-end">
+                <button type="reset" id="cancelButton" class="px-4 py-2 text-sm text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300">
+                    Cancelar
+                </button>
+                <button type="submit" class="ml-4 px-4 py-2 text-sm text-white bg-blue-500 rounded-lg hover:bg-blue-600">
+                    Comprar
+                </button>
             </div>
-        </section>
-
-        <script>
-            function toggleCardFields() {
-                const paymentMethod = document.getElementById('payment-method').value;
-                const cardFields = document.getElementById('card-fields');
-                if (paymentMethod === 'Tarjeta') {
-                    cardFields.classList.remove('hidden');
-                } else {
-                    cardFields.classList.add('hidden');
-                }
-            }
-        </script>
-
-
+        </form>
     </div>
+</div>
 
 <script>
-    // Obtener elementos del DOM
-    const openModal = document.getElementById('openModal');
-    const closeModal = document.getElementById('closeModal');
-    const closeModalFooter = document.getElementById('closeModalFooter');
-    const modal = document.getElementById('modal');
+    function toggleCardFields() {
+        const paymentMethod = document.getElementById('payment-method').value;
+        const cardFields = document.getElementById('card-fields');
+        if (paymentMethod === 'Tarjeta') {
+            cardFields.classList.remove('hidden');
+        } else {
+            cardFields.classList.add('hidden');
+        }
+    }
 
-    // Abrir el modal
-    openModal.addEventListener('click', () => {
-        modal.classList.remove('hidden');
-    });
+    // Obtener elementos del DOM
+    const closeModal = document.getElementById('closeModal');
+    const modal = document.getElementById('modal');
+    const cancelButton = document.getElementById('cancelButton');
 
     // Cerrar el modal
-    const closeModalFunc = () => {
+    closeModal.addEventListener('click', () => {
         modal.classList.add('hidden');
-    };
+    });
 
-    closeModal.addEventListener('click', closeModalFunc);
-    closeModalFooter.addEventListener('click', closeModalFunc);
+    cancelButton.addEventListener('click', () => {
+        modal.classList.add('hidden');
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            modal.classList.add('hidden');
+        }
+    });
 </script>

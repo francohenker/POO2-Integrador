@@ -10,7 +10,8 @@
     <!-- Incluir el fragmento header -->
     <div th:insert="~{fragments/header :: header}"></div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 p-1">
+    <h1 class="text-4xl font-bold text-center text-gray-900 my-4">Productos</h1>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 p-1">
         <div th:each="producto : ${productos}">
             <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
                 <a th:href="@{'/producto/' + ${producto.id}}">
@@ -32,8 +33,27 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
 
-
+    <h1 class="text-4xl font-bold text-center text-gray-900 my-4">Paquetes</h1>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 p-1">
+        <div th:each="paquete : ${paquetes}">
+            <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
+                <div class="p-5">
+                    <a th:href="@{'/paquete/' + ${paquete.id}}">
+                        <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white" th:text="${paquete.nombre}">Package Name</h5>
+                    </a>
+                    <div class="flex items-center mt-2.5 mb-5">
+                        <div class="flex items-center space-x-1 rtl:space-x-reverse">
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-3xl font-bold text-gray-900 dark:text-white" th:text="${'$' + paquete.precio}">$599</span>
+                        <a th:href="@{'/paquete/' + ${paquete.id}}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Ver paquete</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

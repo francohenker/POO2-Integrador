@@ -7,14 +7,17 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import unam.edu.ecomarket.servicios.PaqueteServicio;
 import unam.edu.ecomarket.servicios.ProductoServicio;
 
 @Controller
 public class HomeControlador {
     @Autowired
     private ProductoServicio productoServicio;
+    @Autowired
+    private PaqueteServicio paqueteServicio;
 
-    @GetMapping({"/home", "/home/"})
+    @GetMapping({"/home", "/home/", "/"})
     public String home(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
@@ -24,6 +27,7 @@ public class HomeControlador {
         model.addAttribute("username", username);
         model.addAttribute("role", role);
         model.addAttribute("productos", productoServicio.obtenerTodosLosProductos());
+        model.addAttribute("paquetes", paqueteServicio.obtenerTodosLosPaquetes());
         return "index";
     }
 
