@@ -1,5 +1,6 @@
 package unam.edu.ecomarket.controladores;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import unam.edu.ecomarket.modelo.Producto;
 import unam.edu.ecomarket.servicios.CarritoServicio;
 import unam.edu.ecomarket.servicios.ProductoServicio;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/cart")
@@ -32,7 +36,6 @@ public class CarritoControlador {
         return "carritoCompras";
     }
 
-
     @PostMapping("/agregarAlCarrito")
     public String agregarAlCarrito(@RequestParam Integer id, @RequestParam Integer cantidad) {
         Producto producto = productoServicio.obtenerProductoPorId(id);
@@ -40,7 +43,7 @@ public class CarritoControlador {
         return "redirect:/producto/" + id;
     }
 
-
+//    @Transactional
     @PostMapping("/eliminarDelCarrito")
     public String eliminarDelCarrito(@RequestParam Integer id) {
         Producto producto = productoServicio.obtenerProductoPorId(id);
