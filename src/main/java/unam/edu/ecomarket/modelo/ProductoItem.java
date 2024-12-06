@@ -2,7 +2,9 @@ package unam.edu.ecomarket.modelo;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import unam.edu.ecomarket.modelo.descuento.TipoDescuento;
 
 @Entity
@@ -10,6 +12,7 @@ import unam.edu.ecomarket.modelo.descuento.TipoDescuento;
 @DiscriminatorColumn(name = "tipo", discriminatorType = DiscriminatorType.STRING)
 @Data
 @NoArgsConstructor
+@Getter @Setter
 public abstract class ProductoItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
