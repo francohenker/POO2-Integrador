@@ -1,7 +1,10 @@
 package unam.edu.ecomarket.repositorios;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import unam.edu.ecomarket.modelo.DetalleOrden;
 
 import java.util.Optional;
@@ -12,4 +15,10 @@ public interface DetalleOrdenRepositorio extends JpaRepository<DetalleOrden, Int
     Optional<DetalleOrden> findById(Integer id);
 
     void removeById(Integer id);
+
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM DetalleOrden d WHERE d.producto.id = :productoId")
+    void removeByProductoId(Integer productoId);
 }
