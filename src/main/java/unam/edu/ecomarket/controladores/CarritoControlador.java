@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import unam.edu.ecomarket.modelo.DetalleOrden;
 import unam.edu.ecomarket.modelo.Producto;
 import unam.edu.ecomarket.modelo.Usuario;
+import unam.edu.ecomarket.repositorios.DetalleOrdenRepositorio;
 import unam.edu.ecomarket.repositorios.UsuarioRepositorio;
 import unam.edu.ecomarket.servicios.CarritoServicio;
 import unam.edu.ecomarket.servicios.ProductoServicio;
@@ -30,6 +32,8 @@ public class CarritoControlador {
     private ProductoServicio productoServicio;
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
+    @Autowired
+    private DetalleOrdenRepositorio detalleOrdenRepositorio;
 
     @GetMapping
     public String verCarrito(Model model) {
@@ -57,9 +61,29 @@ public class CarritoControlador {
 
 //    @Transactional
     @PostMapping("/eliminarDelCarrito")
-    public String eliminarDelCarrito(@RequestParam Integer id) {
-        Producto producto = productoServicio.obtenerProductoPorId(id);
-//        carritoServicio.eliminarProducto(producto);
+    public String eliminarDelCarrito(@RequestParam Long id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        DetalleOrden detalle = detalleOrdenRepositorio.findById(id);
+        carritoServicio.eliminarDetalle(detalle, usuarioRepositorio.findByCorreo(username));
         return "redirect:/cart";
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
