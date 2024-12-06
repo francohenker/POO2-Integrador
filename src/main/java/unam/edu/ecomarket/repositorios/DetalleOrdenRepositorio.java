@@ -6,10 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import unam.edu.ecomarket.modelo.DetalleOrden;
-import unam.edu.ecomarket.modelo.Usuario;
 
-import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface DetalleOrdenRepositorio extends JpaRepository<DetalleOrden, Integer> {
@@ -18,7 +15,6 @@ public interface DetalleOrdenRepositorio extends JpaRepository<DetalleOrden, Int
 
     void removeById(Integer id);
 
-//    List<DetalleOrden> findByUser(Usuario usuario);
 
     @Modifying
     @Transactional

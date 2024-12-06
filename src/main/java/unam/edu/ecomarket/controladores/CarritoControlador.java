@@ -39,7 +39,7 @@ public class CarritoControlador {
     public String verCarrito(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-        model.addAttribute("productos", carritoServicio.obtenerProductos(usuarioRepositorio.findByCorreo(username)));
+        model.addAttribute("detalles", carritoServicio.obtenerProductos(usuarioRepositorio.findByCorreo(username)));
         return "carritoCompras";
     }
 
