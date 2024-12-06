@@ -36,23 +36,17 @@ public class CarritoServicio {
         int cant = 0;
 
         for(DetalleOrden detalleOrden : detalleProductoEnCarrito){
-            if(detalleProductoEnCarrito.contains(producto)){
-                cant = detalleProductoEnCarrito.get(detalleProductoEnCarrito.indexOf(detalleOrden)).getCantidad();
+            if(detalleOrden.getProducto().getId() == producto.getId()){
+                cant = detalleProductoEnCarrito.get(detalleProductoEnCarrito.indexOf(detalleOrden)).getProducto().getCantidad();
                 eliminarDetalle(detalleOrden, usuario);
+                break;
             }
         }
 
-//        if(detalleProductoEnCarrito.contains(producto)){
-//            cant = detalleProductoEnCarrito.get(detalleProductoEnCarrito.indexOf(detalleOrden)).getCantidad();
-//            eliminarDetalle(detalleOrden);
-//        }
-//
-//        detalleOrden.setCantidad(cantidad + cant);
-//        productosEnCarrito.add(detalleOrden.getProducto());
 
         DetalleOrden detalleOrden = new DetalleOrden();
         detalleOrden.setProducto(producto);
-        detalleOrden.setCantidad(cantidad);
+        detalleOrden.getProducto().setCantidad(cantidad + cant);
         detalleOrden.setPrecio(producto.getPrecio());
         if(producto.getPrecioConDescuento() != null) {
             detalleOrden.setDescuento(producto.getPrecioConDescuento());
@@ -72,7 +66,7 @@ public class CarritoServicio {
         ordenRepositorio.save(orden.get(0));
     }
 
-    @Transactional
+//    @Transactional
     public void eliminarDetalle(DetalleOrden detalleOrden, Usuario usuario) {
         List<Orden> orden = obtenerProductosEnCarrito(usuario);
         List<DetalleOrden> detalleProductoEnCarrito = orden.get(0).getDetalleOrden();
@@ -89,15 +83,6 @@ public class CarritoServicio {
     public List<Orden> obtenerProductosEnCarrito(Usuario user) {
         List<Orden> orden = ordenRepositorio.findByUsuarioN(user);
         return orden.size() > 0 ? orden : new ArrayList<>();
-
-//        List<DetalleOrden> productos = detalleOrdenRepositorio.findAll();
-//        List<Producto> productosEnCarrito = new ArrayList<>();
-//        for (DetalleOrden detalleOrden : productos) {
-//            productosEnCarrito.add(detalleOrden.getProducto());
-//        }
-//        return productosEnCarrito;
-
-
     }
 
     public List<DetalleOrden> obtenerProductos(Usuario user) {
