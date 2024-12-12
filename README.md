@@ -71,3 +71,6 @@ Este proyecto es parte del trabajo integrador de la materia **Programación Orie
 
 ## **Licencia**
 El proyecto EcoMarket está disponible bajo la licencia MIT. Consulta el archivo `LICENSE` para más detalles.
+
+## **Presentacion**
+Se encuentra [aqui](docs/Presentacion.pdf) el pdf de la presentacion realizada.
