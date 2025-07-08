@@ -22,7 +22,7 @@ El sistema está desarrollado en **Java**, utilizando el framework **Spring Boot
 ### **1. Clonar el Repositorio**
 Clona este repositorio en tu máquina local utilizando el siguiente comando:
 ```bash
-git clone https://github.com/usuario/EcoMarket.git
+git clone https://github.com/francohenker/EcoMarket.git
 ```
 
 ### **2. Abrir el Proyecto**
@@ -32,7 +32,7 @@ git clone https://github.com/usuario/EcoMarket.git
 ### **3. Configurar la Base de Datos**
 1. Instala PostgreSQL en tu sistema si no lo tienes configurado.
 2. Crea una base de datos con el nombre `ecomarket`.
-3. Configura las credenciales de acceso a la base de datos en el archivo `src/main/resources/application.properties`. Por ejemplo:
+3. Configura las credenciales de acceso a la base de datos en el siguiente [archivo](src/main/resources/application.properties). Por ejemplo:
     ```properties
     spring.datasource.url=jdbc:postgresql://localhost:5432/ecomarket
     spring.datasource.username=TU_USUARIO
@@ -47,7 +47,7 @@ mvn clean install
 ```
 
 ### **5. Ejecutar el Proyecto**
-1. Corre la aplicación desde el archivo principal (`EcoMarketApplication.java`) en el IDE o desde la terminal:
+1. Corre la aplicación desde el archivo principal [EcoMarketApplication.java](/src/main/java/unam/edu/ecomarket/EcomarketApplication.java) en el IDE o desde la terminal:
     ```bash
     mvn spring-boot:run
     ```
